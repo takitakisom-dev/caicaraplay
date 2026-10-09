@@ -15,7 +15,7 @@ body{background:#000;color:#fff;overflow:hidden}
 .chip.active{background:#fff;color:#000}
 .feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
 .feed::-webkit-scrollbar{display:none}
-.card{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#111;display:flex;align-items:center;justify-content:center}
+.card{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#000;display:flex;align-items:center;justify-content:center}
 .card video{width:100%;height:100%;object-fit:cover}
 .info{position:absolute;bottom:100px;left:12px;right:80px;z-index:5}
 .user{font-weight:800;font-size:16px;margin-bottom:6px;text-shadow:0 1px 8px #000}
@@ -25,11 +25,14 @@ body{background:#000;color:#fff;overflow:hidden}
 .b{width:56px;height:56px;background:rgba(255,255,255,.18);backdrop-filter:blur(10px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:none;color:#fff}
 .b.liked{background:rgba(255,50,50,.4)}
 .side p{font-size:12px;font-weight:800;margin-top:4px}
+.sound{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.6);width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;z-index:6;pointer-events:none;opacity:0;transition:.3s}
+.sound.show{opacity:1}
 .bottom{position:fixed;bottom:0;left:0;right:0;height:74px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:20}
 .bottom button{background:none;border:none;color:#fff;font-size:26px;opacity:.6}
 .bottom button.active{opacity:1}
 .plus{width:54px;height:36px;background:#fff;color:#000;border-radius:10px;font-weight:900;font-size:28px;opacity:1!important}
-#file{ display:none }
+#file{display:none}
+.vol{position:absolute;top:90px;right:12px;z-index:10;background:rgba(0,0,0,.5);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99;display:none;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
 .box{background:#18181b;width:100%;max-width:360px;border-radius:16px;padding:20px}
@@ -39,22 +42,20 @@ body{background:#000;color:#fff;overflow:hidden}
 </head>
 <body>
 <input type="file" id="file" accept="video/*">
-<div class="top"><div class="logo">CAIÇARA <b>PLAY</b></div><div onclick="alert('Busca em breve!')">🔍</div></div>
+<div class="top"><div class="logo">CAIÇARA <b>PLAY</b></div><div>🔍</div></div>
 <div class="chips" id="chips"></div>
 <div class="feed" id="feed"></div>
-<div class="bottom"><button class="active">⌂</button><button onclick="alert('Explorar vem aí')">◎</button><button class="plus" onclick="document.getElementById('file').click()">+</button><button onclick="alert('DM em breve')">✉</button><button onclick="alert('Seu perfil')">👤</button></div>
-
-<div class="modal" id="modal"><div class="box"><h3>Novo rolê caiçara 🔥</h3><input id="mUser" placeholder="@seu_user"><input id="mLocal" placeholder="Local: Caraguá / Ubatuba / etc"><textarea id="mDesc" placeholder="Legenda..."></textarea><button onclick="salvarNovo()">Publicar no Caiçara Play</button><button style="background:#333;color:#fff" onclick="fecharModal()">Cancelar</button></div></div>
+<div class="bottom"><button class="active">⌂</button><button>◎</button><button class="plus" onclick="document.getElementById('file').click()">+</button><button>✉</button><button>👤</button></div>
+<div class="modal" id="modal"><div class="box"><h3>Novo rolê caiçara 🔥</h3><input id="mUser" placeholder="@seu_user" value="@Taki"><input id="mLocal" placeholder="Local" value="Caraguá"><textarea id="mDesc" placeholder="Legenda..."></textarea><button onclick="salvarNovo()">Publicar</button><button style="background:#333;color:#fff" onclick="fecharModal()">Cancelar</button></div></div>
 
 <script>
 const cidades=["Todos","Caraguá","Ubatuba","São Seba","Ilhabela","Músicos 🎤"];
-let filtro="Todos";
-let novoVideoBlob=null;
+let filtro="Todos"; let novoVideoBlob=null; let somAtivo=false;
 
 let videos=JSON.parse(localStorage.getItem('caicara_videos')||'null') || [
-{user:"@moraes_vozao",local:"Caraguá",desc:"Sambinha na Martim de Sá hoje! Quem colou? 🎤🌊 #caiçara",src:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",likes:1200,com:89},
-{user:"@acai_top_caragua",local:"Caraguá",desc:"COPÃO QUE O LITORAL AMA! Comenta EU QUERO 😱",src:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",likes:3400,com:212},
-{user:"@surf_ubata",local:"Ubatuba",desc:"Hoje na Praia Brava 1,5m liso! Quem bora? 🏄‍♂️",src:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",likes:892,com:34}
+{user:"@moraes_vozao",local:"Caraguá",desc:"Sambinha na Martim de Sá hoje! 🎤🌊",src:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",likes:1200,com:89},
+{user:"@acai_top_caragua",local:"Caraguá",desc:"COPÃO QUE O LITORAL AMA! 😱",src:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",likes:3400,com:212},
+{user:"@surf_ubata",local:"Ubatuba",desc:"Hoje na Praia Brava 1,5m liso! 🏄‍♂️",src:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",likes:892,com:34}
 ];
 
 function renderChips(){
@@ -64,34 +65,42 @@ function setFiltro(c){filtro=c;renderChips();renderFeed();}
 
 function renderFeed(){
  const f=document.getElementById('feed');
- const lista=filtro==="Todos"?videos:videos.filter(v=>v.local.includes(filtro)||v.desc.includes(filtro));
+ const lista=filtro==="Todos"?videos:videos.filter(v=>v.local.includes(filtro));
  f.innerHTML=lista.map((v,i)=>`
- <div class="card">
- <video loop playsinline muted onclick="this.paused?this.play():this.pause()" src="${v.src}"></video>
+ <div class="card" onclick="togglePlay(this)">
+ <video loop playsinline ${somAtivo?'':'muted'} src="${v.src}"></video>
+ <button class="vol" onclick="event.stopPropagation();toggleSom()">${somAtivo?'🔊':'🔇'}</button>
+ <div class="sound" id="s${i}">${somAtivo?'🔊':'🔇'}</div>
  <div class="info"><div class="user">${v.user}<span>${v.local}</span></div><div class="desc">${v.desc}</div></div>
  <div class="side">
- <div><button class="b ${v.liked?'liked':''}" onclick="like(${i})">${v.liked?'❤️':'🤍'}</button><p>${v.likes}</p></div>
- <div><button class="b" onclick="comentar()">💬</button><p>${v.com}</p></div>
- <div><button class="b" onclick="zap('${v.user}')">🔗</button><p>Whats</p></div>
+ <div><button class="b" onclick="event.stopPropagation();like(${i})">❤️</button><p>${v.likes}</p></div>
+ <div><button class="b" onclick="event.stopPropagation();comentar()">💬</button><p>${v.com}</p></div>
+ <div><button class="b" onclick="event.stopPropagation();zap('${v.user}')">🔗</button><p>Whats</p></div>
  </div>
  </div>`).join('');
  observar();
 }
 function observar(){
  const vs=document.querySelectorAll('video');
- const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.play().catch(()=>{});else e.target.pause();})},{threshold:0.6});
+ const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.muted=!somAtivo;e.target.play().catch(()=>{});}else e.target.pause();})},{threshold:0.6});
  vs.forEach(x=>o.observe(x));
 }
-function like(i){
- const lista=filtro==="Todos"?videos:videos.filter(v=>v.local.includes(filtro));
- const realIndex=videos.indexOf(lista[i]);
- videos[realIndex].liked=!videos[realIndex].liked;
- videos[realIndex].likes+=videos[realIndex].liked?1:-1;
- localStorage.setItem('caicara_videos',JSON.stringify(videos));
- renderFeed();
+function togglePlay(card){
+ const v=card.querySelector('video');
+ if(v.paused) v.play(); else v.pause();
 }
-function comentar(){ const c=prompt('Comenta aí:'); if(c) alert('Comentário enviado! (em breve vai aparecer)'); }
-function zap(user){ const num=prompt('Whats do '+user+' (com DDD):','129...'); if(num) window.open('https://wa.me/55'+num.replace(/\D/g,''),'_blank'); }
+function toggleSom(){
+ somAtivo=!somAtivo;
+ document.querySelectorAll('video').forEach(v=>{v.muted=!somAtivo;});
+ document.querySelectorAll('.vol').forEach(b=>{b.textContent=somAtivo?'🔊':'🔇';});
+ // feedback visual
+ const s=document.querySelector('.card video:not([paused])')?.parentElement?.querySelector('.sound');
+ if(s){s.textContent=somAtivo?'🔊':'🔇'; s.classList.add('show'); setTimeout(()=>s.classList.remove('show'),800);}
+ if(somAtivo) alert('Som ATIVADO! 🔊 Agora todos os vídeos vão com áudio.');
+}
+function like(i){ videos[i].likes++; localStorage.setItem('caicara_videos',JSON.stringify(videos)); renderFeed(); }
+function comentar(){ const c=prompt('Comenta:'); if(c) alert('Comentário: '+c); }
+function zap(u){ const n=prompt('Whats do '+u+' (com DDD):','12'); if(n) window.open('https://wa.me/55'+n.replace(/\D/g,''),'_blank'); }
 
 document.getElementById('file').addEventListener('change',e=>{
  const file=e.target.files[0]; if(!file) return;
@@ -100,14 +109,14 @@ document.getElementById('file').addEventListener('change',e=>{
 });
 function fecharModal(){document.getElementById('modal').classList.remove('show');}
 function salvarNovo(){
- const u=document.getElementById('mUser').value||"@voce";
- const l=document.getElementById('mLocal').value||"Caraguá";
- const d=document.getElementById('mDesc').value||"Novo vídeo no Caiçara Play 🌊";
+ const u=document.getElementById('mUser').value; const l=document.getElementById('mLocal').value; const d=document.getElementById('mDesc').value||"Segue aí galera";
  videos.unshift({user:u,local:l,desc:d,src:novoVideoBlob,likes:0,com:0});
  localStorage.setItem('caicara_videos',JSON.stringify(videos));
- fecharModal(); renderFeed(); alert('Publicado! Já tá no seu feed.');
+ fecharModal(); renderFeed();
 }
 renderChips();renderFeed();
+// Libera áudio no primeiro toque em qualquer lugar
+document.body.addEventListener('click',()=>{ if(!somAtivo){/* aguarda botão */}}, {once:true});
 </script>
 </body>
 </html>
