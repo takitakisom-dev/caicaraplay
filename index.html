@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Caiçara Play</title>
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQ2Fpw6dhcmEgUGxheSIsInNob3J0X25hbWUiOiJDYWnDp2FyYSIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMDAwIiwiIHRoZW1lX2NvbG9yIjoiI2ZiOTIzYyIsImljb25zIjpbXX0=">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQ2Fpw6dhcmEgUGxheSIsInNob3J0X25hbWUiOiJDYWnDp2FyYSIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwidGhlbWVfY29sb3IiOiIjZmI5MjNjIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwMDAwMDAifQ==">
 <meta name="theme-color" content="#fb923c">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
@@ -14,12 +14,11 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .top button.active{color:#fff;border-bottom:2px solid #fff}
 .liveBtn{background:#ff2d55!important;color:#fff!important;padding:5px 10px!important;border-radius:20px!important;font-size:12px!important;font-weight:900!important}
 .feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory}
-.card{height:100dvh;width:100vw;scroll-snap-align:start;position:relative;background:#111;display:flex;align-items:center;justify-content:center}
+.card{height:100dvh;width:100vw;scroll-snap-align:start;position:relative;background:#111}
 .card video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.side{position:absolute;right:8px;bottom:100px;display:flex;flex-direction:column;gap:14px;align-items:center;z-index:50}
-.side button{width:52px;height:52px;border-radius:50%;border:none;background:rgba(255,255,255,.22);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.side button:active{transform:scale(.9)}
-.side span{font-size:11px;font-weight:700;margin-top:2px}
+.side{position:absolute;right:8px;bottom:110px;display:flex;flex-direction:column;gap:14px;align-items:center;z-index:50}
+.side button{width:52px;height:52px;border-radius:50%;border:none;background:rgba(255,255,255,.22);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center}
+.side span{font-size:11px;font-weight:700}
 .info{position:absolute;left:12px;right:80px;bottom:90px;z-index:40}
 .bottom{position:fixed;bottom:0;left:0;right:0;height:70px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:60}
 .bottom button{background:none;border:none;color:#fff;display:flex;flex-direction:column;align-items:center;font-size:10px;opacity:.6;flex:1}
@@ -43,6 +42,9 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .grid video{width:100%;aspect-ratio:9/16;object-fit:cover;background:#111}
 #installBanner{position:fixed;bottom:80px;left:10px;right:10px;background:#fb923c;color:#000;padding:14px;border-radius:12px;z-index:70;display:none;justify-content:space-between;align-items:center;font-weight:800}
 #installBanner.show{display:flex}
+.amigosList{padding:80px 12px 80px 12px;overflow-y:auto;height:100dvh}
+.userRow{display:flex;align-items:center;gap:12px;padding:12px;background:#111;border-radius:12px;margin-bottom:8px;border:1px solid #222}
+.userRow b{flex:1}
 </style>
 </head>
 <body>
@@ -55,6 +57,16 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 
 <div class="feed" id="feed"></div>
 <div class="grid" id="grid" style="display:none"></div>
+<div class="amigosList" id="amigos" style="display:none">
+<div style="font-weight:900;font-size:18px;margin-bottom:12px">👥 Amigos Caiçaras</div>
+<div class="userRow"><div style="width:40px;height:40px;background:#fb923c;border-radius:50%;display:flex;align-items:center;justify-content:center">🏄</div><b>@Surf_Caragua<br><span style="font-size:11px;opacity:.6">Caraguatatuba</span></b><button style="background:#fb923c;border:none;color:#000;padding:6px 12px;border-radius:20px;font-weight:800" onclick="alert('Seguindo!')">Seguir</button></div>
+<div class="userRow"><div style="width:40px;height:40px;background:#00f2ea;border-radius:50%;display:flex;align-items:center;justify-content:center">🐟</div><b>@Pescador_Zeca<br><span style="font-size:11px;opacity:.6">Ubatuba</span></b><button style="background:#fb923c;border:none;color:#000;padding:6px 12px;border-radius:20px;font-weight:800">Seguir</button></div>
+<div class="userRow"><div style="width:40px;height:40px;background:#ff0050;border-radius:50%;display:flex;align-items:center;justify-content:center">🌊</div><b>@Taki<br><span style="font-size:11px;opacity:.6">Você - Admin</span></b><button style="background:#222;border:1px solid #444;color:#fff;padding:6px 12px;border-radius:20px">Você</button></div>
+<div style="margin-top:20px;background:#111;padding:12px;border-radius:12px;border:1px solid #222">
+<b>💬 Mensagens</b><div style="margin-top:8px;opacity:.7;font-size:13px">Chat em breve aqui</div>
+<button style="margin-top:10px;width:100%;background:#222;color:#fff;border:none;padding:10px;border-radius:10px" onclick="window.open('https://wa.me/5512999999999')">WhatsApp</button>
+</div>
+</div>
 
 <div id="installBanner">
 <span>📲 Instalar Caiçara Play?</span>
@@ -63,10 +75,10 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 </div>
 
 <div class="bottom">
-<button class="active" onclick="showFeed()"><span style="font-size:22px">⌂</span>Início</button>
-<button onclick="showGrade()"><span style="font-size:20px">⊞</span>Galeria</button>
+<button class="active" id="bInicio" onclick="showFeed()"><span style="font-size:20px">⌂</span>Início</button>
+<button id="bAmigos" onclick="showAmigos()"><span style="font-size:20px">👥</span>Amigos</button>
 <button onclick="abrirEscolha()" style="opacity:1"><div class="plus">+</div></button>
-<button onclick="alert('Msgs em breve')"><span style="font-size:20px">💬</span>Msgs</button>
+<button id="bGaleria" onclick="showGrade()"><span style="font-size:20px">⊞</span>Galeria</button>
 <button onclick="location.href='admin.html'"><span style="font-size:20px">🛡️</span>Admin</button>
 </div>
 
@@ -99,15 +111,32 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 
 <script>
 const DB_NAME='caicara_v12';let db;
-function openDB(){return new Promise(res=>{const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=e=>{e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true});};r.onsuccess=e=>{db=e.target.result;res();}});}
+function openDB(){return new Promise(res=>{const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains('videos')) db.createObjectStore('videos',{keyPath:'id',autoIncrement:true});};r.onsuccess=e=>{db=e.target.result;res();}});}
 function addVideo(v){return new Promise(r=>{const tx=db.transaction('videos','readwrite');tx.objectStore('videos').add(v).onsuccess=r;});}
 function getVideos(){return new Promise(res=>{const tx=db.transaction('videos','readonly');tx.objectStore('videos').getAll().onsuccess=e=>res(e.target.result.reverse());});}
 let tempBlob=null, filterCSS='none', stream=null, recorder=null, chunks=[], recTimer=null, recSec=0, isRecording=false, deferredPrompt=null;
 const filtros=[{id:'none',nome:'Normal',css:'none'},{id:'bw',nome:'P&B',css:'grayscale(1)'},{id:'sepia',nome:'Retrô',css:'sepia(1)'},{id:'vivid',nome:'Vivid',css:'saturate(2) contrast(1.2)'},{id:'praia',nome:'Praia',css:'saturate(1.4) brightness(1.1)'}];
 
-function showFeed(){document.getElementById('feed').style.display='block';document.getElementById('grid').style.display='none';document.getElementById('tabForYou').classList.add('active');document.getElementById('tabGaleria').classList.remove('active');render();}
-function showGrade(){document.getElementById('feed').style.display='none';document.getElementById('grid').style.display='grid';document.getElementById('tabGaleria').classList.add('active');document.getElementById('tabForYou').classList.remove('active');render();}
-function curtir(btn){const c=btn.nextElementSibling;let n=parseInt(c.innerText||'0');if(btn.style.color!=='red'){btn.innerText='❤️';btn.style.color='red';c.innerText=n+1+'k';btn.style.background='rgba(255,0,0,.3)'}else{btn.innerText='🤍';btn.style.color='#fff';c.innerText=(n-1)+'k';btn.style.background='rgba(255,255,255,.22)'}}
+function hideAll(){document.getElementById('feed').style.display='none';document.getElementById('grid').style.display='none';document.getElementById('amigos').style.display='none';document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));document.getElementById('tabForYou').classList.remove('active');document.getElementById('tabGaleria').classList.remove('active');}
+function showFeed(){hideAll();document.getElementById('feed').style.display='block';document.getElementById('bInicio').classList.add('active');document.getElementById('tabForYou').classList.add('active');render();}
+function showGrade(){hideAll();document.getElementById('grid').style.display='grid';document.getElementById('bGaleria').classList.add('active');document.getElementById('tabGaleria').classList.add('active');render();}
+function showAmigos(){hideAll();document.getElementById('amigos').style.display='block';document.getElementById('bAmigos').classList.add('active');}
+
+async function curtir(btn, id){
+  const tx = db.transaction('videos','readwrite');
+  const store = tx.objectStore('videos');
+  const req = store.get(id);
+  req.onsuccess = ()=>{
+    const v = req.result;
+    if(!v) return;
+    v.liked =!v.liked;
+    if(v.liked){ v.likes = (v.likes||0)+1; } else { v.likes = Math.max(0,(v.likes||1)-1); }
+    store.put(v);
+    btn.innerText = v.liked? '❤️' : '🤍';
+    btn.nextElementSibling.innerText = v.likes;
+  };
+}
+
 function abrirEscolha(){document.getElementById('escolha').classList.add('show');}
 function abrirGaleria(){document.getElementById('escolha').classList.remove('show');document.getElementById('fileGaleria').click();}
 async function abrirCamera(){
@@ -147,8 +176,7 @@ function toggleRec(){
     if(recSec>=600) toggleRec();
   },1000);
  }else{
-  isRecording=false;
-  recorder.stop();
+  isRecording=false;recorder.stop();
   document.getElementById('btnRec').classList.remove('rec');
   document.getElementById('editTitle').innerText='Pronto! Postar';
   clearInterval(recTimer);
@@ -165,9 +193,7 @@ document.getElementById('fileGaleria').addEventListener('change',e=>{
  document.getElementById('editor').classList.add('show');
  montar();
 });
-function montar(){
- document.getElementById('filters').innerHTML=filtros.map(f=>`<div class="f ${f.css===filterCSS?'active':''}" onclick="setF('${f.id}')"><div style="filter:${f.css}">${f.nome}</div><div style="font-size:10px;margin-top:4px">${f.nome}</div></div>`).join('');
-}
+function montar(){document.getElementById('filters').innerHTML=filtros.map(f=>`<div class="f ${f.css===filterCSS?'active':''}" onclick="setF('${f.id}')"><div style="filter:${f.css}">${f.nome}</div><div style="font-size:10px;margin-top:4px">${f.nome}</div></div>`).join('');}
 function setF(id){const f=filtros.find(x=>x.id===id);filterCSS=f.css;document.getElementById('prevVideo').style.filter=f.css;document.getElementById('camVideo').style.filter=f.css;document.querySelectorAll('.f').forEach((el,i)=>el.classList.toggle('active',filtros[i].id===id));}
 function fecharEditor(){
  document.getElementById('editor').classList.remove('show');
@@ -185,16 +211,17 @@ async function render(){
  const feed=document.getElementById('feed');
  const grid=document.getElementById('grid');
  if(!vids.length){
-   feed.innerHTML=`<div class="card" style="display:flex;align-items:center;justify-content:center;flex-direction:column"><p style="font-size:40px">🌊</p><p style="font-weight:900;margin-top:10px">Caiçara Play</p><p style="opacity:.5;font-size:13px;margin-top:8px">Seus vídeos ficam salvos aqui</p><button onclick="abrirEscolha()" style="margin-top:16px;background:#fb923c;color:#000;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Gravar até 10 min</button></div>`;
+   feed.innerHTML=`<div class="card" style="display:flex;align-items:center;justify-content:center;flex-direction:column"><p style="font-size:40px">🌊</p><p style="font-weight:900;margin-top:10px">Caiçara Play</p><button onclick="abrirEscolha()" style="margin-top:16px;background:#fb923c;color:#000;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Gravar até 10 min</button></div>`;
+   grid.innerHTML=`<div style="grid-column:1/4;text-align:center;padding:40px;opacity:.5">Nenhum vídeo</div>`;
    return;
  }
  feed.innerHTML=vids.map((v,i)=>`
  <div class="card">
- <video id="v${i}" loop playsinline preload="metadata" src="${URL.createObjectURL(v.blob)}" style="filter:${v.filter||'none'}" muted onclick="const vd=document.getElementById('v${i}'); vd.muted=false; vd.paused?vd.play():vd.pause()"></video>
+ <video id="v${i}" loop playsinline preload="metadata" src="${URL.createObjectURL(v.blob)}" style="filter:${v.filter||'none'}" muted onclick="const vd=document.getElementById('v${i}');vd.muted=false;vd.paused?vd.play():vd.pause()"></video>
  <div class="side">
- <div style="display:flex;flex-direction:column;align-items:center"><button onclick="curtir(this)">🤍</button><span>12k</span></div>
- <div style="display:flex;flex-direction:column;align-items:center"><button onclick="alert('Comentários: ${v.desc}')">💬</button><span>345</span></div>
- <div style="display:flex;flex-direction:column;align-items:center"><button onclick="if(navigator.share){navigator.share({title:'Caiçara Play',text:'${v.desc}',url:location.href})}else{alert('Link copiado!')}">↗️</button><span>Share</span></div>
+ <div style="display:flex;flex-direction:column;align-items:center"><button onclick="curtir(this, ${v.id})">${v.liked? '❤️' : '🤍'}</button><span style="font-size:11px">${v.likes||0}</span></div>
+ <div style="display:flex;flex-direction:column;align-items:center"><button onclick="alert('Comentário: ${v.desc}')">💬</button><span style="font-size:11px">0</span></div>
+ <div style="display:flex;flex-direction:column;align-items:center"><button onclick="alert('Link copiado!')">↗️</button><span style="font-size:11px">Share</span></div>
  </div>
  <div class="info"><b>${v.user}</b> <span style="background:#fb923c;color:#000;font-size:10px;padding:2px 6px;border-radius:8px">${v.local}</span><div style="font-size:13px;margin-top:4px">${v.desc}</div></div>
  </div>`).join('');
@@ -204,14 +231,12 @@ document.getElementById('btnPost').onclick=async()=>{
  const desc=document.getElementById('leg').value||'Segue aí 🌊';const city=document.getElementById('city').value;
  if(!tempBlob){alert('Grava ou escolhe vídeo primeiro');return;}
  document.getElementById('btnPost').innerText='Salvando...';
- await addVideo({user:'@Taki',local:city,desc:desc,blob:tempBlob,filter:filterCSS,created:Date.now()});
+ await addVideo({user:'@Taki',local:city,desc:desc,blob:tempBlob,filter:filterCSS,likes:0,liked:false,created:Date.now()});
  fecharEditor();tempBlob=null;document.getElementById('leg').value='';document.getElementById('btnPost').innerText='Postar';showFeed();
 };
 openDB().then(()=>{render();showFeed();});
-
-// INSTALADOR
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show');});
-function instalar(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBanner').style.display='none';});}else{alert('Vai nos 3 pontinhos (⋮) > Instalar app > Instalar\n\nDepois aparece o ícone laranja na sua tela inicial!');}}
+function instalar(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBanner').style.display='none';});}else{alert('Vai nos 3 pontinhos (⋮) > Instalar app > Instalar');}}
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register(URL.createObjectURL(new Blob([`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(clients.claim()))`],{type:'text/javascript'})));
 }
