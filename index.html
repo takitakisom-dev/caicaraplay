@@ -15,17 +15,18 @@ body{background:#000;color:#fff}
 .feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
 .card{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#000;display:flex;align-items:center;justify-content:center}
 .card video{width:100%;height:100%;object-fit:cover}
-.info{position:absolute;bottom:100px;left:12px;right:80px;z-index:5}
+.tap-area{position:absolute;inset:0;z-index:2}
+.info{position:absolute;bottom:100px;left:12px;right:80px;z-index:5;pointer-events:none}
 .user{font-weight:800}.user span{background:#fb923c;color:#000;font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px}
 .desc{font-size:14px;margin-top:6px;text-shadow:0 1px 8px #000}
-.side{position:absolute;right:10px;bottom:110px;display:flex;flex-direction:column;gap:18px;align-items:center;z-index:5}
-.b{width:56px;height:56px;background:rgba(255,255,255,.22);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:none;color:#fff}
-.vol{position:absolute;top:95px;right:12px;z-index:10;background:rgba(0,0,0,.7);border:1px solid #fff3;color:#fff;width:48px;height:48px;border-radius:50%;font-size:24px}
-.center-sound{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.7);width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;z-index:6;opacity:0;transition:.3s;pointer-events:none}
-.center-sound.show{opacity:1}
+.side{position:absolute;right:10px;bottom:110px;display:flex;flex-direction:column;gap:18px;align-items:center;z-index:10}
+.b{width:58px;height:58px;background:rgba(255,255,255,.22);backdrop-filter:blur(10px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:none;color:#fff}
+.side p{font-size:12px;font-weight:800;text-align:center;margin-top:4px}
+.vol{position:absolute;top:95px;right:12px;z-index:11;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px}
+.center-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.55);width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;z-index:6;opacity:0;transition:.2s;pointer-events:none}
+.center-icon.show{opacity:1}
 .bottom{position:fixed;bottom:0;left:0;right:0;height:74px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:20}
 .bottom button{background:none;border:none;color:#fff;font-size:26px;opacity:.6}
-.bottom button.active{opacity:1}
 .plus{width:54px;height:36px;background:#fff;color:#000;border-radius:10px;font-weight:900;font-size:28px;opacity:1!important}
 #file{display:none}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99;display:none;align-items:center;justify-content:center;padding:20px}
@@ -40,16 +41,12 @@ body{background:#000;color:#fff}
 <div class="top"><div class="logo">CAIÇARA <b>PLAY</b></div></div>
 <div class="chips" id="chips"></div>
 <div class="feed" id="feed"></div>
-<div class="bottom"><button class="active">⌂</button><button>◎</button><button class="plus" onclick="document.getElementById('file').click()">+</button><button>✉</button><button>👤</button></div>
-<div class="modal" id="modal"><div class="box"><h3>Novo vídeo 🔊 com som</h3><input id="mUser" value="@Taki"><input id="mLocal" value="Caraguá"><textarea id="mDesc">Segue aí galera</textarea><button id="btnPub">Publicar Agora</button><button style="background:#333;color:#fff" onclick="document.getElementById('modal').classList.remove('show')">Cancelar</button><p id="aviso" style="font-size:11px;opacity:.6;margin-top:10px"></p></div></div>
+<div class="bottom"><button>⌂</button><button>◎</button><button class="plus" onclick="document.getElementById('file').click()">+</button><button>✉</button><button>👤</button></div>
+<div class="modal" id="modal"><div class="box"><h3>Novo vídeo</h3><input id="mUser" value="@Taki"><input id="mLocal" value="Caraguá"><textarea id="mDesc">Segue aí galera</textarea><button id="btnPub">Publicar</button><button style="background:#333;color:#fff" onclick="document.getElementById('modal').classList.remove('show')">Cancelar</button></div></div>
 <script>
 let somAtivo=true;
 let blobTemp=null;
-let videos=[
-{user:"@moraes_vozao",local:"Caraguá",desc:"Sambinha na Martim de Sá 🎤🌊",src:"https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"}
-];
-try{const s=localStorage.getItem('caicara_v5'); if(s) videos=JSON.parse(s);}catch(e){}
-
+let videos=[]; try{const s=localStorage.getItem('caicara_v5'); if(s) videos=JSON.parse(s);}catch(e){} if(videos.length===0){videos=[{user:"@Taki",local:"Caraguá",desc:"Segue aí galera",src:""}];}
 let filtro="Todos";
 const cidades=["Todos","Caraguá","Ubatuba","São Seba","Ilhabela"];
 function renderChips(){document.getElementById('chips').innerHTML=cidades.map(c=>`<button class="chip ${c===filtro?'active':''}" onclick="filtro='${c}';renderChips();renderFeed()">${c}</button>`).join('');}
@@ -57,24 +54,40 @@ function renderFeed(){
  const f=document.getElementById('feed');
  const lista=filtro==="Todos"?videos:videos.filter(v=>v.local.includes(filtro));
  f.innerHTML=lista.map((v,i)=>`
- <div class="card" onclick="togglePlay(this)">
+ <div class="card">
  <video loop playsinline src="${v.src}" ${somAtivo?'':'muted'}></video>
- <button class="vol" onclick="event.stopPropagation();toggleSom()">${somAtivo?'🔊':'🔇'}</button>
- <div class="center-sound">${somAtivo?'🔊':'🔇'}</div>
+ <div class="tap-area" onclick="togglePlay(this)"></div>
+ <button class="vol" onclick="toggleSom()">${somAtivo?'🔊':'🔇'}</button>
+ <div class="center-icon">⏸️</div>
  <div class="info"><div class="user">${v.user} <span>${v.local}</span></div><div class="desc">${v.desc}</div></div>
- <div class="side"><div><button class="b">❤️</button><p>1</p></div><div><button class="b">💬</button><p>0</p></div><div><button class="b" onclick="event.stopPropagation();zap()">🔗</button><p>Whats</p></div></div>
+ <div class="side">
+ <div><button class="b" onclick="like(this)">❤️</button><p>1</p></div>
+ <div><button class="b" onclick="comentar()">💬</button><p>0</p></div>
+ <div><button class="b" onclick="zap()">🔗</button><p style="font-size:10px">Whats</p></div>
+ </div>
  </div>`).join('');
  const vs=document.querySelectorAll('video');
  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.muted=!somAtivo; e.target.play().catch(()=>{});}else e.target.pause();})},{threshold:0.6});
- vs.forEach(x=>obs.observe(x));
+ vs.forEach(x=>{if(x.src) obs.observe(x);});
 }
-function togglePlay(card){const v=card.querySelector('video'); if(v.paused){v.muted=!somAtivo; v.play();}else v.pause(); const cs=card.querySelector('.center-sound'); cs.textContent=v.muted?'🔇':'🔊'; cs.classList.add('show'); setTimeout(()=>cs.classList.remove('show'),700);}
-function toggleSom(){somAtivo=!somAtivo; document.querySelectorAll('video').forEach(v=>{v.muted=!somAtivo; if(somAtivo) v.play();}); document.querySelectorAll('.vol').forEach(b=>b.textContent=somAtivo?'🔊':'🔇');}
+function togglePlay(tap){
+ const card=tap.parentElement; const v=card.querySelector('video'); const ic=card.querySelector('.center-icon');
+ if(v.paused){v.play(); ic.textContent='▶️';} else {v.pause(); ic.textContent='⏸️';}
+ ic.classList.add('show'); setTimeout(()=>ic.classList.remove('show'),600);
+}
+function toggleSom(){
+ somAtivo=!somAtivo;
+ document.querySelectorAll('video').forEach(v=>{v.muted=!somAtivo; if(somAtivo && v.paused===false) v.play();});
+ document.querySelectorAll('.vol').forEach(b=>b.textContent=somAtivo?'🔊':'🔇');
+ const ic=document.querySelector('.card.center-icon');
+ if(ic){ ic.textContent=somAtivo?'🔊':'🔇'; ic.classList.add('show'); setTimeout(()=>ic.classList.remove('show'),600); }
+}
+function like(btn){btn.textContent=btn.textContent==='❤️'?'🤍':'❤️';}
+function comentar(){const c=prompt('Seu comentário:'); if(c) alert('Comentado: '+c);}
 function zap(){const n=prompt('Whats com DDD:','12'); if(n) window.open('https://wa.me/55'+n.replace(/\D/g,''),'_blank');}
 
 document.getElementById('file').addEventListener('change',e=>{
  const file=e.target.files[0]; if(!file) return;
- document.getElementById('aviso').textContent='Tamanho: '+(file.size/1024/1024).toFixed(1)+'MB - vai funcionar com som!';
  blobTemp=URL.createObjectURL(file);
  document.getElementById('modal').classList.add('show');
 });
@@ -82,11 +95,9 @@ document.getElementById('btnPub').onclick=()=>{
  const u=document.getElementById('mUser').value; const l=document.getElementById('mLocal').value; const d=document.getElementById('mDesc').value;
  if(!blobTemp) return;
  videos.unshift({user:u,local:l,desc:d,src:blobTemp});
- try{localStorage.setItem('caicara_v5',JSON.stringify(videos));}catch(e){console.log('local cheio, mas vai tocar');}
+ try{localStorage.setItem('caicara_v5',JSON.stringify(videos));}catch(e){}
  document.getElementById('modal').classList.remove('show');
- somAtivo=true;
- renderFeed();
- alert('Pronto! Vídeo com SOM! Se tiver mudo clica no 🔊 no topo.');
+ somAtivo=true; renderFeed();
 };
 renderChips();renderFeed();
 </script>
