@@ -10,20 +10,17 @@ body{background:#000;color:#fff}
 .top{position:fixed;top:0;left:0;right:0;z-index:20;padding:14px 16px;display:flex;justify-content:space-between;background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent)}
 .logo{font-weight:900;font-size:22px}.logo b{color:#fb923c}
 .chips{position:fixed;top:52px;left:0;right:0;z-index:20;display:flex;gap:8px;padding:8px 12px;overflow-x:auto}
-.chips::-webkit-scrollbar{display:none}
 .chip{background:rgba(255,255,255,.15);border:none;color:#fff;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:700}
 .chip.active{background:#fff;color:#000}
 .feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
-.feed::-webkit-scrollbar{display:none}
 .card{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#000;display:flex;align-items:center;justify-content:center}
 .card video{width:100%;height:100%;object-fit:cover}
 .info{position:absolute;bottom:100px;left:12px;right:80px;z-index:5}
-.user{font-weight:800;text-shadow:0 1px 8px #000}
-.user span{background:#fb923c;color:#000;font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px}
-.desc{font-size:14px;text-shadow:0 1px 8px #000;margin-top:6px}
+.user{font-weight:800}.user span{background:#fb923c;color:#000;font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px}
+.desc{font-size:14px;margin-top:6px;text-shadow:0 1px 8px #000}
 .side{position:absolute;right:10px;bottom:110px;display:flex;flex-direction:column;gap:18px;align-items:center;z-index:5}
-.b{width:56px;height:56px;background:rgba(255,255,255,.22);backdrop-filter:blur(10px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:none;color:#fff}
-.vol{position:absolute;top:95px;right:12px;z-index:10;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);color:#fff;width:44px;height:44px;border-radius:50%;font-size:22px}
+.b{width:56px;height:56px;background:rgba(255,255,255,.22);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:none;color:#fff}
+.vol{position:absolute;top:95px;right:12px;z-index:10;background:rgba(0,0,0,.7);border:1px solid #fff3;color:#fff;width:48px;height:48px;border-radius:50%;font-size:24px}
 .center-sound{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.7);width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;z-index:6;opacity:0;transition:.3s;pointer-events:none}
 .center-sound.show{opacity:1}
 .bottom{position:fixed;bottom:0;left:0;right:0;height:74px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:20}
@@ -44,79 +41,53 @@ body{background:#000;color:#fff}
 <div class="chips" id="chips"></div>
 <div class="feed" id="feed"></div>
 <div class="bottom"><button class="active">⌂</button><button>◎</button><button class="plus" onclick="document.getElementById('file').click()">+</button><button>✉</button><button>👤</button></div>
-<div class="modal" id="modal"><div class="box"><h3>Seu vídeo com som 🔊</h3><p style="font-size:12px;opacity:.7;margin-top:6px">Esse vídeo vai ficar salvo com áudio</p><input id="mUser" value="@Taki"><input id="mLocal" value="Caraguá"><textarea id="mDesc">Segue aí galera</textarea><button id="btnPub">Publicar</button><button style="background:#333;color:#fff" onclick="fechar()">Cancelar</button></div></div>
-
+<div class="modal" id="modal"><div class="box"><h3>Novo vídeo 🔊 com som</h3><input id="mUser" value="@Taki"><input id="mLocal" value="Caraguá"><textarea id="mDesc">Segue aí galera</textarea><button id="btnPub">Publicar Agora</button><button style="background:#333;color:#fff" onclick="document.getElementById('modal').classList.remove('show')">Cancelar</button><p id="aviso" style="font-size:11px;opacity:.6;margin-top:10px"></p></div></div>
 <script>
-let som=true; // começa com som ligado
-let novoBase64=null;
+let somAtivo=true;
+let blobTemp=null;
 let videos=[
-{user:"@moraes_vozao",local:"Caraguá",desc:"Sambinha na Martim de Sá 🎤🌊",src:"https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"},
-{user:"@acai_top_caragua",local:"Caraguá",desc:"COPÃO QUE O LITORAL AMA! 😱",src:"https://test-videos.co.uk/vids/sintel/mp4/h264/720/Sintel_720_10s_1MB.mp4"}
+{user:"@moraes_vozao",local:"Caraguá",desc:"Sambinha na Martim de Sá 🎤🌊",src:"https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"}
 ];
-// tenta carregar do local
-try{ const s=localStorage.getItem('caicara_v4'); if(s) videos=JSON.parse(s); }catch(e){}
+try{const s=localStorage.getItem('caicara_v5'); if(s) videos=JSON.parse(s);}catch(e){}
 
-const cidades=["Todos","Caraguá","Ubatuba","São Seba","Ilhabela"];
 let filtro="Todos";
-
-function renderChips(){
- document.getElementById('chips').innerHTML=cidades.map(c=>`<button class="chip ${c===filtro?'active':''}" onclick="filtro='${c}';renderChips();renderFeed()">${c}</button>`).join('');
-}
+const cidades=["Todos","Caraguá","Ubatuba","São Seba","Ilhabela"];
+function renderChips(){document.getElementById('chips').innerHTML=cidades.map(c=>`<button class="chip ${c===filtro?'active':''}" onclick="filtro='${c}';renderChips();renderFeed()">${c}</button>`).join('');}
 function renderFeed(){
  const f=document.getElementById('feed');
  const lista=filtro==="Todos"?videos:videos.filter(v=>v.local.includes(filtro));
- if(lista.length===0){ f.innerHTML=`<div class="card" style="flex-direction:column;gap:12px"><p>Nenhum vídeo em ${filtro}</p><button onclick="filtro='Todos';renderChips();renderFeed()" style="padding:10px 16px;border-radius:10px;border:none;font-weight:800">Ver Todos</button></div>`; return;}
  f.innerHTML=lista.map((v,i)=>`
  <div class="card" onclick="togglePlay(this)">
- <video loop playsinline src="${v.src}" ${som?'':'muted'}></video>
- <button class="vol" onclick="event.stopPropagation();toggleSomGlobal()">${som?'🔊':'🔇'}</button>
- <div class="center-sound">${som?'🔊':'🔇'}</div>
+ <video loop playsinline src="${v.src}" ${somAtivo?'':'muted'}></video>
+ <button class="vol" onclick="event.stopPropagation();toggleSom()">${somAtivo?'🔊':'🔇'}</button>
+ <div class="center-sound">${somAtivo?'🔊':'🔇'}</div>
  <div class="info"><div class="user">${v.user} <span>${v.local}</span></div><div class="desc">${v.desc}</div></div>
- <div class="side">
- <div><button class="b" onclick="event.stopPropagation();this.textContent='❤️'">🤍</button><p>${Math.floor(Math.random()*999)}</p></div>
- <div><button class="b" onclick="event.stopPropagation();alert('Em breve')">💬</button><p>0</p></div>
- <div><button class="b" onclick="event.stopPropagation();zap()">🔗</button><p>Whats</p></div>
- </div>
+ <div class="side"><div><button class="b">❤️</button><p>1</p></div><div><button class="b">💬</button><p>0</p></div><div><button class="b" onclick="event.stopPropagation();zap()">🔗</button><p>Whats</p></div></div>
  </div>`).join('');
  const vs=document.querySelectorAll('video');
- const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.muted=!som; e.target.play().catch(()=>{e.target.muted=true; e.target.play();});}else e.target.pause();})},{threshold:0.6});
+ const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.muted=!somAtivo; e.target.play().catch(()=>{});}else e.target.pause();})},{threshold:0.6});
  vs.forEach(x=>obs.observe(x));
 }
-function togglePlay(card){
- const v=card.querySelector('video');
- if(v.paused){ v.muted=!som; v.play(); } else v.pause();
- const cs=card.querySelector('.center-sound'); cs.classList.add('show'); setTimeout(()=>cs.classList.remove('show'),600);
-}
-function toggleSomGlobal(){
- som=!som;
- document.querySelectorAll('video').forEach(v=>{v.muted=!som; if(som) v.play();});
- document.querySelectorAll('.vol').forEach(b=>b.textContent=som?'🔊':'🔇');
- if(som) {
-   // feedback
-   const cs=document.querySelector('.center-sound'); if(cs){cs.textContent='🔊'; cs.classList.add('show'); setTimeout(()=>cs.classList.remove('show'),700);}
- }
-}
-function zap(){ const n=prompt('Whats com DDD:','129'); if(n) window.open('https://wa.me/55'+n.replace(/\D/g,''),'_blank'); }
+function togglePlay(card){const v=card.querySelector('video'); if(v.paused){v.muted=!somAtivo; v.play();}else v.pause(); const cs=card.querySelector('.center-sound'); cs.textContent=v.muted?'🔇':'🔊'; cs.classList.add('show'); setTimeout(()=>cs.classList.remove('show'),700);}
+function toggleSom(){somAtivo=!somAtivo; document.querySelectorAll('video').forEach(v=>{v.muted=!somAtivo; if(somAtivo) v.play();}); document.querySelectorAll('.vol').forEach(b=>b.textContent=somAtivo?'🔊':'🔇');}
+function zap(){const n=prompt('Whats com DDD:','12'); if(n) window.open('https://wa.me/55'+n.replace(/\D/g,''),'_blank');}
 
 document.getElementById('file').addEventListener('change',e=>{
  const file=e.target.files[0]; if(!file) return;
- if(file.size>25*1024*1024){ alert('Vídeo muito grande, manda até 25MB'); return; }
- const reader=new FileReader();
- reader.onload=function(ev){
-   novoBase64=ev.target.result;
-   document.getElementById('modal').classList.add('show');
- };
- reader.readAsDataURL(file);
+ document.getElementById('aviso').textContent='Tamanho: '+(file.size/1024/1024).toFixed(1)+'MB - vai funcionar com som!';
+ blobTemp=URL.createObjectURL(file);
+ document.getElementById('modal').classList.add('show');
 });
-function fechar(){document.getElementById('modal').classList.remove('show');}
 document.getElementById('btnPub').onclick=()=>{
  const u=document.getElementById('mUser').value; const l=document.getElementById('mLocal').value; const d=document.getElementById('mDesc').value;
- if(!novoBase64){alert('Escolhe o vídeo de novo');return;}
- videos.unshift({user:u,local:l,desc:d,src:novoBase64});
- localStorage.setItem('caicara_v4',JSON.stringify(videos));
- fechar(); renderFeed(); alert('Vídeo salvo COM ÁUDIO! Agora clica no 🔊 se tiver mudo.');
+ if(!blobTemp) return;
+ videos.unshift({user:u,local:l,desc:d,src:blobTemp});
+ try{localStorage.setItem('caicara_v5',JSON.stringify(videos));}catch(e){console.log('local cheio, mas vai tocar');}
+ document.getElementById('modal').classList.remove('show');
+ somAtivo=true;
+ renderFeed();
+ alert('Pronto! Vídeo com SOM! Se tiver mudo clica no 🔊 no topo.');
 };
-
 renderChips();renderFeed();
 </script>
 </body>
