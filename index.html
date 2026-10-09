@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Caiçara Play V34 Foto Realista</title>
+<title>Caiçara Play V35 Simples</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#000;color:#fff;height:100dvh;overflow:hidden}
@@ -27,16 +27,17 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .f{flex:0 0 76px;text-align:center;cursor:pointer}.f div{width:76px;height:76px;border-radius:16px;background:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;border:3px solid transparent;gap:3px;font-weight:800}.f.active div{border-color:#ff2d55;background:#2a0a15}
 .grid{padding:70px 2px 80px 2px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;overflow-y:auto;height:100dvh}
 #fileGaleria,#fileFoto,#fileMusica{display:none}
-#camVideo,#faceCanvas,#stickerCanvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-#faceCanvas,#stickerCanvas{z-index:6;pointer-events:none}
-.status{position:absolute;top:60px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);padding:8px 14px;border-radius:20px;font-size:12px;z-index:20;font-weight:700}
+#camVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+#stickerLayer{position:absolute;top:0;left:0;right:0;height:35%;z-index:10;pointer-events:none;display:flex;justify-content:center;align-items:flex-start;padding-top:20px;gap:12px}
+.sticker{font-size:64px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5));animation:float 2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 </style>
 </head>
 <body>
 <div id="loginScreen" class="loginBg">
 <div style="font-size:52px">🌊🍓</div>
-<h2>Caiçara Play V34</h2>
-<p style="opacity:.7;font-size:12px">Foto Realista + Vídeo Fofo</p>
+<h2>Caiçara Play V35</h2>
+<p style="opacity:.7;font-size:12px">Só frutinhas no topo • Sem zoom</p>
 <div class="box" id="boxCadastro">
 <label>NOME</label><input id="nome" placeholder="João Silva">
 <label>USUÁRIO</label><input id="usuario" placeholder="@joao">
@@ -57,8 +58,8 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 <button class="link" onclick="mostrarCadastro()">Criar conta</button>
 </div>
 </div>
-<input type="file" id="fileGaleria" accept="video/*"><input type="file" id="fileFoto" accept="image/*"><input type="file" id="fileMusica" accept="audio/*">
-<div class="top"><button style="background:#ff2d55;color:#fff;padding:6px 12px;border-radius:20px;border:none;font-weight:900;font-size:12px">🔴 LIVE</button><b>Foto Realista 🍓</b><span id="eu" style="margin-left:auto;font-size:11px"></span></div>
+<input type="file" id="fileGaleria" accept="video/*"><input type="file" id="fileFoto" accept="image/*">
+<div class="top"><button style="background:#ff2d55;color:#fff;padding:6px 12px;border-radius:20px;border:none;font-weight:900;font-size:12px">🔴 LIVE</button><b>Frutinhas no Topo 🍓</b><span id="eu" style="margin-left:auto;font-size:11px"></span></div>
 <div class="feed" id="feed"></div>
 <div class="grid" id="grid" style="display:none"></div>
 <div class="bottom">
@@ -70,29 +71,27 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 </div>
 <div class="modal" id="escolha" style="background:rgba(0,0,0,.85);justify-content:flex-end;padding:16px">
 <div style="background:#1e1e1e;border-radius:16px;overflow:hidden">
-<button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO REALISTA (rosto vira fruta)</button>
-<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO FOFO (só frutinhas na tela)</button>
+<button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 Tirar FOTO com frutinhas no topo</button>
+<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 Gravar VÍDEO com frutinhas no topo</button>
 <button onclick="abrirGaleria()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">📁 Vídeo da Galeria</button>
 <button onclick="abrirFoto()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">🖼️ Foto da Galeria</button>
 <button onclick="document.getElementById('escolha').classList.remove('show')" style="width:100%;background:none;border:none;color:#999;padding:14px">Cancelar</button>
 </div>
 </div>
 <div class="modal" id="editor">
-<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Foto Realista</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
+<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Frutinhas no Topo</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
 <div style="flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden">
-<video id="prevVideo" loop playsinline style="width:100%;height:100%;object-fit:cover;display:none"></video>
-<img id="prevFoto" style="display:none;width:100%;height:100%;object-fit:cover">
+<video id="prevVideo" loop playsinline style="width:100%;height:100%;object-fit:contain;display:none"></video>
+<img id="prevFoto" style="display:none;width:100%;height:100%;object-fit:contain">
 <video id="camVideo" autoplay muted playsinline style="display:none"></video>
-<canvas id="faceCanvas"></canvas>
-<canvas id="stickerCanvas"></canvas>
-<div class="status" id="statusIA">Carregando...</div>
-<div style="position:absolute;bottom:14px;display:flex;gap:10px;align-items:center;z-index:10"><button id="btnRec" onclick="toggleRec()" style="width:70px;height:70px;border-radius:50%;background:#ff2d55;border:4px solid #fff;display:none"></button><button id="btnFoto" onclick="capturarFotoRealista()" style="width:70px;height:70px;border-radius:50%;background:#fff;border:4px solid #ff2d55;display:none;font-size:28px">📷</button><span id="timer" style="background:#000;padding:6px 10px;border-radius:20px;font-size:11px">00:00</span></div>
+<div id="stickerLayer"></div>
+<div style="position:absolute;bottom:14px;display:flex;gap:10px;align-items:center;z-index:20"><button id="btnRec" onclick="toggleRec()" style="width:70px;height:70px;border-radius:50%;background:#ff2d55;border:4px solid #fff;display:none"></button><button id="btnFoto" onclick="capturarFoto()" style="width:70px;height:70px;border-radius:50%;background:#fff;border:4px solid #ff2d55;display:none;font-size:28px">📷</button><span id="timer" style="background:#000;padding:6px 10px;border-radius:20px;font-size:11px">00:00</span></div>
 </div>
 <div class="filters" id="filters"></div>
-<div style="padding:10px;background:#000;display:flex;gap:8px"><button onclick="apagarVideo()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #4a1a1a;padding:12px 14px;border-radius:10px;font-weight:700">🗑️ Apagar</button><input id="leg" placeholder="Legenda..." style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:12px;border-radius:10px"></div>
+<div style="padding:10px;background:#000;display:flex;gap:8px"><button onclick="apagarVideo()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #4a1a1a;padding:12px 14px;border-radius:10px;font-weight:700">🗑️ Apagar</button><input id="leg" placeholder="Legenda com frutinha... 🍓" style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:12px;border-radius:10px"></div>
 </div>
 <script>
-let db;const DB_NAME='caicara_v34';
+let db;const DB_NAME='caicara_v35';
 function openDB(){return new Promise(res=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('videos')) e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true});};req.onsuccess=e=>{db=e.target.result;res();};});}
 function addVideo(v){return new Promise(r=>{const tx=db.transaction('videos','readwrite');tx.objectStore('videos').add(v).onsuccess=r;});}
 function getVideos(){return new Promise(r=>{try{const tx=db.transaction('videos','readonly');tx.objectStore('videos').getAll().onsuccess=e=>r(e.target.result.reverse());}catch(e){r([]);}});}
@@ -107,16 +106,21 @@ function fazerLogin(){let u=document.getElementById('loginUser').value.toLowerCa
 function sair(){localStorage.removeItem('caicara_user');location.reload();}
 function apagarVideo(){tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('leg').value='';}
 const filtros=[
-{id:'none',nome:'Normal',icon:'☀️',color:'transparent',emoji:''},
-{id:'morango',nome:'Morango',icon:'🍓',color:'#ff153d',emoji:'🍓'},
-{id:'laranja',nome:'Laranja',icon:'🍊',color:'#ff8c00',emoji:'🍊'},
-{id:'limao',nome:'Limão',icon:'🍋',color:'#d4ff00',emoji:'🍋'},
-{id:'uva',nome:'Uva',icon:'🍇',color:'#7a3ad6',emoji:'🍇'},
-{id:'banana',nome:'Banana',icon:'🍌',color:'#ffeb00',emoji:'🍌'},
+{id:'none',nome:'Normal',icon:'',emoji:''},
+{id:'morango',nome:'Morango',icon:'🍓',emoji:'🍓',stickers:['🍓','🍓','🍓']},
+{id:'laranja',nome:'Laranja',icon:'🍊',emoji:'🍊',stickers:['🍊','🍊','🍊']},
+{id:'limao',nome:'Limão',icon:'🍋',emoji:'🍋',stickers:['🍋','🍋','🍋']},
+{id:'uva',nome:'Uva',icon:'🍇',emoji:'🍇',stickers:['🍇','🍇','🍇']},
+{id:'caqui',nome:'Caqui',icon:'🍑',emoji:'🍑',stickers:['🍑','🍑','🍑']},
+{id:'banana',nome:'Banana',icon:'🍌',emoji:'🍌',stickers:['🍌','🍌','🍌']},
+{id:'coco',nome:'Coco',icon:'🥥',emoji:'🥥',stickers:['🥥','🥥','🥥']},
+{id:'pitanga',nome:'Pitanga',icon:'🍒',emoji:'🍒',stickers:['🍒','🍒','🍒']},
+{id:'condessa',nome:'F.Conde',icon:'🌿',emoji:'🌿',stickers:['🍈','🌿','🍈']},
 ];
-let currentFiltro=filtros[0],tempBlob=null,tempFoto=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,modo='foto',stickerAnim=null;
-function montarFiltros(){document.getElementById('filters').innerHTML=filtros.map(f=>`<div class="f ${currentFiltro.id===f.id?'active':''}" onclick="setFiltro('${f.id}')"><div><span style="font-size:22px">${f.icon}</span><span>${f.nome}</span></div></div>`).join('');}
-function setFiltro(id){currentFiltro=filtros.find(x=>x.id===id);document.querySelectorAll('.f').forEach((el,i)=>el.classList.toggle('active',filtros[i].id===id));document.getElementById('editorTit').innerText=modo==='foto'?currentFiltro.emoji+' Foto Realista '+currentFiltro.nome:currentFiltro.emoji+' Vídeo Fofo '+currentFiltro.nome;}
+let currentFiltro=filtros[0],tempBlob=null,tempFoto=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,modo='foto';
+function montarFiltros(){document.getElementById('filters').innerHTML=filtros.map(f=>`<div class="f ${currentFiltro.id===f.id?'active':''}" onclick="setFiltro('${f.id}')"><div><span style="font-size:26px">${f.icon||'☀️'}</span><span>${f.nome}</span></div></div>`).join('');updateStickers();}
+function setFiltro(id){currentFiltro=filtros.find(x=>x.id===id);document.querySelectorAll('.f').forEach((el,i)=>el.classList.toggle('active',filtros[i].id===id));document.getElementById('editorTit').innerText=currentFiltro.id==='none'?'Normal':currentFiltro.emoji+' '+currentFiltro.nome+' no topo';updateStickers();}
+function updateStickers(){const layer=document.getElementById('stickerLayer');if(currentFiltro.id==='none'){layer.innerHTML='';return;}layer.innerHTML=currentFiltro.stickers.map((s,i)=>`<div class="sticker" style="animation-delay:${i*0.3}s">${s}</div>`).join('');}
 function abrirEscolha(){document.getElementById('escolha').classList.add('show');}
 function abrirGaleria(){document.getElementById('escolha').classList.remove('show');modo='video';document.getElementById('fileGaleria').click();}
 function abrirFoto(){document.getElementById('escolha').classList.remove('show');modo='foto';document.getElementById('fileFoto').click();}
@@ -124,57 +128,37 @@ function tirarFotoAgora(){document.getElementById('escolha').classList.remove('s
 function gravarVideoAgora(){document.getElementById('escolha').classList.remove('show');modo='video';abrirCameraVideo();}
 async function startCamera(){
 if(stream)stream.getTracks().forEach(t=>t.stop());
-stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:720,height:1280},audio:modo==='video'});
+// SEM ZOOM - resolução menor e sem crop
+stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480}},audio:modo==='video'});
 const v=document.getElementById('camVideo');v.srcObject=stream;await v.play();
-const canvas=document.getElementById('faceCanvas');canvas.width=v.videoWidth;canvas.height=v.videoHeight;
-const sc=document.getElementById('stickerCanvas');sc.width=v.videoWidth;sc.height=v.videoHeight;
-if(modo==='video') startStickers();
 }
-function startStickers(){
-const sc=document.getElementById('stickerCanvas');const ctx=sc.getContext('2d');
-let fruits=[];for(let i=0;i<4;i++) fruits.push({x:Math.random()*sc.width,y:Math.random()*sc.height,vy:1+Math.random()*2,icon:currentFiltro.icon||'🍓'});
-if(stickerAnim) cancelAnimationFrame(stickerAnim);
-function loop(){
-ctx.clearRect(0,0,sc.width,sc.height);
-if(modo!=='video'||currentFiltro.id==='none'){stickerAnim=requestAnimationFrame(loop);return;}
-fruits.forEach(f=>{f.y+=f.vy;if(f.y>sc.height+50){f.y=-50;f.x=Math.random()*sc.width;} ctx.font='60px serif';ctx.fillText(f.icon,f.x,f.y);});
-stickerAnim=requestAnimationFrame(loop);
-}
-loop();
-}
-async function abrirCameraVideo(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('faceCanvas').style.display='none';document.getElementById('stickerCanvas').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('btnRec').style.display='block';document.getElementById('btnFoto').style.display='none';document.getElementById('statusIA').innerText='Vídeo fofo: só frutinhas 🍓';setTimeout(()=>document.getElementById('statusIA').style.display='none',2000);montarFiltros();await startCamera();recorder=new MediaRecorder(stream,{mimeType:'video/webm'});chunks=[];recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});document.getElementById('prevVideo').src=URL.createObjectURL(tempBlob);document.getElementById('prevVideo').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('stickerCanvas').style.display='none';document.getElementById('prevVideo').play();};}
-async function abrirCameraFoto(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('faceCanvas').style.display='none';document.getElementById('stickerCanvas').style.display='none';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('btnRec').style.display='none';document.getElementById('btnFoto').style.display='block';document.getElementById('statusIA').innerText='Foto realista: vai virar fruta de verdade! 🍓';montarFiltros();await startCamera();}
-function capturarFotoRealista(){
+async function abrirCameraVideo(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('btnRec').style.display='block';document.getElementById('btnFoto').style.display='none';montarFiltros();await startCamera();recorder=new MediaRecorder(stream,{mimeType:'video/webm'});chunks=[];recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});document.getElementById('prevVideo').src=URL.createObjectURL(tempBlob);document.getElementById('prevVideo').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('prevVideo').play();};document.getElementById('stickerLayer').style.display='flex';}
+async function abrirCameraFoto(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('btnRec').style.display='none';document.getElementById('btnFoto').style.display='block';document.getElementById('stickerLayer').style.display='flex';montarFiltros();await startCamera();}
+function capturarFoto(){
 const video=document.getElementById('camVideo');
 const canvas=document.createElement('canvas');canvas.width=video.videoWidth;canvas.height=video.videoHeight;
 const ctx=canvas.getContext('2d');ctx.drawImage(video,0,0);
-// Aplica efeito realista de fruta na foto capturada
-ctx.save();
-const cx=canvas.width/2,cy=canvas.height*0.42,r=Math.min(canvas.width,canvas.height)*0.35;
-ctx.beginPath();ctx.ellipse(cx,cy,r,r*1.15,0,0,Math.PI*2);
-ctx.fillStyle=currentFiltro.color;ctx.globalAlpha=0.78;ctx.fill();ctx.globalAlpha=1;
-// textura realista
-if(currentFiltro.id==='morango'){
-for(let i=0;i<35;i++){const a=Math.random()*Math.PI*2;const rad=Math.random()*r*0.85;const x=cx+Math.cos(a)*rad;const y=cy+Math.sin(a)*rad*1.1;ctx.fillStyle='#ffeb3b';ctx.beginPath();ctx.ellipse(x,y,4,6,0,0,Math.PI*2);ctx.fill();}
-}else if(currentFiltro.id==='laranja'){
-ctx.fillStyle='rgba(0,0,0,.12)';for(let i=0;i<120;i++){const a=Math.random()*Math.PI*2;const rad=Math.random()*r*0.85;const x=cx+Math.cos(a)*rad;const y=cy+Math.sin(a)*rad;ctx.beginPath();ctx.arc(x,y,1.8,0,Math.PI*2);ctx.fill();}
+// desenha frutinhas no topo da foto
+if(currentFiltro.id!=='none'){
+ctx.font=(canvas.width*0.15)+'px serif';
+const y=canvas.height*0.18;
+const gap=canvas.width*0.25;
+currentFiltro.stickers.forEach((s,i)=>{ctx.fillText(s, gap*(i+0.5), y);});
 }
-ctx.restore();
-ctx.font=r*0.45+'px serif';if(currentFiltro.id==='morango') ctx.fillText('🌿',cx-r*0.4,cy-r*1.05);
 tempFoto=canvas.toDataURL('image/jpeg',0.92);
 document.getElementById('prevFoto').src=tempFoto;
 document.getElementById('prevFoto').style.display='block';
 document.getElementById('camVideo').style.display='none';
-document.getElementById('statusIA').innerText='Foto realista pronta! 🍓';
+document.getElementById('stickerLayer').style.display='none';
 }
 function toggleRec(){if(!recorder){abrirCameraVideo();return;}if(!isRecording){chunks=[];recSec=0;isRecording=true;recorder.start(100);document.getElementById('btnRec').style.background='#fff';recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText=String(Math.floor(recSec/60)).padStart(2,'0')+':'+String(recSec%60).padStart(2,'0');},1000);}else{isRecording=false;recorder.stop();document.getElementById('btnRec').style.background='#ff2d55';clearInterval(recTimer);}}
-document.getElementById('fileGaleria').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;tempBlob=f;tempFoto=null;document.getElementById('prevVideo').src=URL.createObjectURL(f);document.getElementById('prevVideo').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('stickerCanvas').style.display='none';document.getElementById('prevVideo').play();document.getElementById('editor').classList.add('show');montarFiltros();});
+document.getElementById('fileGaleria').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;tempBlob=f;tempFoto=null;document.getElementById('prevVideo').src=URL.createObjectURL(f);document.getElementById('prevVideo').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('prevVideo').play();document.getElementById('editor').classList.add('show');montarFiltros();});
 document.getElementById('fileFoto').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{tempFoto=ev.target.result;document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('editor').classList.add('show');montarFiltros();};r.readAsDataURL(f);});
-function fecharEditor(){document.getElementById('editor').classList.remove('show');document.getElementById('camVideo').style.display='none';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}if(recorder&&recorder.state!=='inactive')recorder.stop();clearInterval(recTimer);isRecording=false;if(stickerAnim) cancelAnimationFrame(stickerAnim);}
+function fecharEditor(){document.getElementById('editor').classList.remove('show');document.getElementById('camVideo').style.display='none';document.getElementById('stickerLayer').style.display='none';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}if(recorder&&recorder.state!=='inactive')recorder.stop();clearInterval(recTimer);isRecording=false;}
 function togglePlay(card){const v=card.querySelector('video');if(!v)return;if(v.paused){v.play();}else{v.pause();}}
 function showFeed(){document.getElementById('feed').style.display='block';document.getElementById('grid').style.display='none';render();}
 function showGrid(){document.getElementById('feed').style.display='none';document.getElementById('grid').style.display='grid';render();}
-async function render(){const vids=await getVideos();const feed=document.getElementById('feed');const grid=document.getElementById('grid');if(!vids.length){feed.innerHTML=`<div class="card" style="flex-direction:column"><p style="font-size:56px">🌊🍓</p><p style="font-weight:900;margin-top:10px">V34 Foto Realista</p><p style="opacity:.6;font-size:12px">Foto vira fruta de verdade!</p><button onclick="abrirEscolha()" style="margin-top:18px;background:#ff2d55;color:#fff;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Postar</button></div>`;grid.innerHTML='';return;}feed.innerHTML=vids.map(v=>{const media=v.type==='foto'?`<img src="${v.fotoData}">`:`<video loop playsinline src="${URL.createObjectURL(v.blob)}" muted></video>`;return `<div class="card" onclick="togglePlay(this)">${media}<div class="side"><button>❤️</button><button>↗️</button></div><div class="info"><b>${v.user}</b><div>${v.emoji||''} ${v.desc}</div></div></div>`;}).join('');grid.innerHTML=vids.map(v=>v.type==='foto'?`<img src="${v.fotoData}" style="width:100%;aspect-ratio:9/16;object-fit:cover">`:`<video src="${URL.createObjectURL(v.blob)}" muted loop style="width:100%;aspect-ratio:9/16;object-fit:cover"></video>`).join('');}
+async function render(){const vids=await getVideos();const feed=document.getElementById('feed');const grid=document.getElementById('grid');if(!vids.length){feed.innerHTML=`<div class="card" style="flex-direction:column"><p style="font-size:56px">🌊🍓</p><p style="font-weight:900;margin-top:10px">V35 Frutinhas no Topo</p><p style="opacity:.6;font-size:12px">Sem zoom, só frutinha fofa no topo!</p><button onclick="abrirEscolha()" style="margin-top:18px;background:#ff2d55;color:#fff;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Postar</button></div>`;grid.innerHTML='';return;}feed.innerHTML=vids.map(v=>{const media=v.type==='foto'?`<img src="${v.fotoData}">`:`<video loop playsinline src="${URL.createObjectURL(v.blob)}" muted></video>`;return `<div class="card" onclick="togglePlay(this)">${media}<div class="info"><b>${v.user}</b><div>${v.emoji||''} ${v.desc}</div></div></div>`;}).join('');grid.innerHTML=vids.map(v=>v.type==='foto'?`<img src="${v.fotoData}" style="width:100%;aspect-ratio:9/16;object-fit:cover">`:`<video src="${URL.createObjectURL(v.blob)}" muted loop style="width:100%;aspect-ratio:9/16;object-fit:cover"></video>`).join('');}
 document.getElementById('btnPost').onclick=async()=>{const me=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');const desc=document.getElementById('leg').value||'Frutinha '+currentFiltro.emoji;if(!tempBlob&&!tempFoto){alert('Tira foto ou vídeo!');return;}document.getElementById('btnPost').innerText='Salvando...';if(tempFoto){await addVideo({user:me.usuario,desc,type:'foto',fotoData:tempFoto,emoji:currentFiltro.emoji,likes:0});}else{await addVideo({user:me.usuario,desc,type:'video',blob:tempBlob,emoji:currentFiltro.emoji,likes:0});}fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('btnPost').innerText='Postar';showFeed();};
 openDB().then(()=>{const users=getUsers();if(users.length==0){saveUsers([{usuario:'@taki',senha:'123456'}]);}checarLogin();render();});
 </script>
