@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Caiçara Play V72 STOP Real</title>
+<title>Caiçara Play V73 Play+Stop+Narr</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
@@ -17,15 +17,17 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 .feed{position:fixed;top:56px;bottom:88px;left:0;right:0;overflow-y:auto;scroll-snap-type:y mandatory;background:#000}
 .card{height:100%;width:100%;scroll-snap-align:start;position:relative;background:#0a0a0a;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .card video,.card img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.centerPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:25;width:88px;height:88px;background:rgba(0,0,0,.6);border:2px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;color:#fff}
-.side{position:absolute;right:10px;bottom:90px;z-index:30;display:flex;flex-direction:column;gap:14px;align-items:center}
-.sideBtn{width:58px;height:58px;border-radius:50%;border:none;background:rgba(255,255,255,.22);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center}
+.centerPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:25;width:92px;height:92px;background:rgba(0,0,0,.65);border:3px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;color:#fff;cursor:pointer}
+.centerPlay.hidden{display:none}
+.side{position:absolute;right:10px;bottom:90px;z-index:30;display:flex;flex-direction:column;gap:12px;align-items:center}
+.sideBtn{width:60px;height:60px;border-radius:50%;border:none;background:rgba(255,255,255,.22);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.sideBtnPlay{background:#00c950}
 .sideBtnStop{background:#ff2d55}
 .sideLabel{font-size:10px;font-weight:800;margin-top:4px;text-shadow:0 1px 3px #000;text-align:center}
 .followWrap{display:flex;flex-direction:column;align-items:center;position:relative}
 .followPlus{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:22px;height:22px;background:#ff2d55;border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
 .followPlus.following{background:#00c950}
-.info{position:absolute;left:14px;right:90px;bottom:14px;z-index:15;text-shadow:0 1px 6px #000;line-height:1.3}
+.info{position:absolute;left:14px;right:96px;bottom:14px;z-index:15;text-shadow:0 1px 6px #000;line-height:1.3}
 .bottom{position:fixed;bottom:0;left:0;right:0;height:88px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:300;padding-bottom:10px}
 .bottom button{background:none;border:none;color:#fff;font-size:11px;flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
 .plus{width:62px;height:42px;background:#fff;color:#000;border-radius:14px;font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center}
@@ -50,9 +52,9 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <div id="toast" class="toast"></div>
 
 <div id="loginScreen" class="loginBg">
-<div style="font-size:52px">🌊🍓⏹️</div>
+<div style="font-size:52px">🌊🍓⏯️</div>
 <h2>Caiçara Play</h2>
-<p style="opacity:.7;font-size:12px">V72 - STOP de verdade, sem repetição</p>
+<p style="opacity:.7;font-size:12px">V73 PERFEITO - Play + Stop + Narração</p>
 <div class="box" id="boxEntrar">
 <label>@USUÁRIO</label><input id="loginUser" value="@taki">
 <label>SENHA</label><input id="loginSenha" type="password" value="Tete1212">
@@ -91,7 +93,7 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <div class="modal" id="escolha" style="background:rgba(0,0,0,.85);justify-content:flex-end;padding:16px">
 <div style="background:#1e1e1e;border-radius:16px;overflow:hidden">
 <button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO</button>
-<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO (com STOP)</button>
+<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO</button>
 <button onclick="abrirGaleriaDireto()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">📁 GALERIA</button>
 <button onclick="document.getElementById('escolha').classList.remove('show')" style="width:100%;background:none;border:none;color:#999;padding:14px">Cancelar</button>
 </div></div>
@@ -113,21 +115,38 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 </div>
 </div>
 
-<div id="boxAudioEdit" style="display:none;background:#111;border-top:2px solid #ff2d55;padding:12px;max-height:50vh;overflow-y:auto">
-<div style="font-size:12px;font-weight:900">🎵 Música opcional (não trava)</div>
+<div id="boxAudioEdit" style="display:none;background:#111;border-top:2px solid #ff2d55;padding:12px;max-height:58vh;overflow-y:auto">
+<div style="font-size:12px;font-weight:900">🎵 Música + 🎙️ Narração - completo</div>
 <div style="display:flex;gap:8px;margin-top:8px">
-<button onclick="document.getElementById('fileMusica').click()" style="flex:1;background:#1a1a1a;border:1px dashed #ff2d55;color:#fff;padding:10px;border-radius:10px;font-weight:800;font-size:12px">🎵 Escolher música</button>
+<button onclick="document.getElementById('fileMusica').click()" style="flex:1;background:#1a1a1a;border:1px dashed #ff2d55;color:#fff;padding:10px;border-radius:10px;font-weight:800;font-size:12px">🎵 Música fundo</button>
 <button onclick="removerMusica()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #ff2d55;padding:10px;border-radius:10px">🗑️</button>
 </div>
 <div id="musicaBox" style="display:none;background:#0a0a0a;border-radius:10px;padding:10px;margin-top:8px">
 <div style="font-size:11px">🎵 <span id="nomeMusica">musica.mp3</span></div>
 <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-<span style="font-size:10px">Vol.</span>
+<span style="font-size:10px">Vol</span>
 <input type="range" id="volMusica" min="0" max="1" step="0.05" value="0.25" style="flex:1;accent-color:#ff2d55" oninput="document.getElementById('volTxt').innerText=Math.round(this.value*100)+'%'; document.getElementById('audioPreview').volume=this.value">
 <span id="volTxt" style="font-size:11px;width:30px">25%</span>
 <button onclick="previewMusica()" id="btnPreview" style="background:#00c950;color:#fff;border:none;padding:6px 10px;border-radius:8px">▶️</button>
-<button onclick="stopPreviewMusica()" style="background:#333;color:#fff;border:none;padding:6px 10px;border-radius:8px">⏹️ STOP</button>
+<button onclick="stopPreviewMusica()" style="background:#333;color:#fff;border:none;padding:6px 10px;border-radius:8px">⏹️</button>
 </div>
+</div>
+
+<div style="margin-top:12px;background:#0a1a0a;border:1px solid #00c950;border-radius:12px;padding:10px">
+<div style="font-size:12px;font-weight:900">🎙️ Narração por cima (VOLTOU!)</div>
+<div style="font-size:10px;opacity:.7;margin-top:2px">Grava sua voz explicando por cima do vídeo</div>
+<div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+<button id="btnNarracao" onclick="toggleNarracao()" style="flex:1;background:#00c950;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900">🎙️ Gravar narração</button>
+<button onclick="removerNarracao()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #ff2d55;padding:8px 10px;border-radius:8px">🗑️</button>
+</div>
+<div id="narrBox" style="display:none;background:#111;border-radius:8px;padding:8px;margin-top:8px">
+<div style="font-size:11px">🎙️ <span id="narrNome">narração gravada</span> • <span id="narrDur">--</span> <span id="narrStatus" style="color:#00ff88;font-weight:800"></span></div>
+</div>
+</div>
+
+<div style="display:flex;gap:8px;margin-top:10px">
+<button onclick="previewCompleto()" style="flex:1;background:#ff2d55;color:#fff;border:none;padding:10px;border-radius:10px;font-weight:900">▶️ Preview TUDO (voz+musica+narr)</button>
+<button onclick="stopPreviewMusica()" style="background:#333;color:#fff;border:none;padding:10px;border-radius:10px">⏹️ STOP</button>
 </div>
 </div>
 
@@ -139,35 +158,16 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <input type="file" id="fileGaleria" accept="video/*,image/*" style="display:none">
 <input type="file" id="fileMusica" accept="audio/*" style="display:none">
 <audio id="audioPreview" style="display:none"></audio>
+<audio id="audioNarrPreview" style="display:none"></audio>
 
 <script>
-let db,idParaDeletar=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,tempBlob=null,tempFoto=null,currentTab='frutinha',currentFiltro=null,tempMusicaBlob=null,tempMusicaNome='';
-const DB_NAME='caicara_v72_stop_real';
+let db,idParaDeletar=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,tempBlob=null,tempFoto=null,currentTab='frutinha',currentFiltro=null,tempMusicaBlob=null,tempMusicaNome='',tempNarracaoBlob=null,isNarrRecording=false,narrRecorder=null,narrChunks=[];
+const DB_NAME='caicara_v73_play_stop_narr';
 const ADMIN_USER='@taki'; const ADMIN_PASS='Tete1212';
 const allFiltros={
-frutinha:[
-{id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},
-{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},
-{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},
-{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.25) hue-rotate(230deg) saturate(1.3)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},
-{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.5) hue-rotate(15deg) saturate(1.2)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},
-],
-normal:[
-{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3)',stickers:[],emoji:'☀️'},
-{id:'suave',nome:'Suave',icon:'✨',filter:'brightness(1.18) contrast(0.92) saturate(1.15)',stickers:[],emoji:'✨'},
-{id:'nitido',nome:'Nítido',icon:'💎',filter:'contrast(1.35) saturate(1.25)',stickers:[],emoji:'💎'},
-{id:'pb',nome:'P&B',icon:'⚫',filter:'grayscale(1)',stickers:[],emoji:'⚫'},
-{id:'vintage',nome:'Vintage',icon:'📼',filter:'sepia(0.75)',stickers:[],emoji:'📼'},
-],
-desenho:[
-{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.9) saturate(2)',stickers:[],emoji:'🎨'},
-{id:'hq',nome:'HQ',icon:'💥',filter:'contrast(2.8) saturate(2.5)',stickers:[],emoji:'💥'},
-{id:'lapis',nome:'Lápis',icon:'✏️',filter:'grayscale(1) contrast(2.5)',stickers:[],emoji:'✏️'},
-{id:'anime',nome:'Anime',icon:'🌸',filter:'contrast(1.7) saturate(2.2)',stickers:[],emoji:'🌸'},
-]
+frutinha:[{id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.25) hue-rotate(230deg) saturate(1.3)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.5) hue-rotate(15deg) saturate(1.2)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},],
+normal:[{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3)',stickers:[],emoji:'☀️'},{id:'suave',nome:'Suave',icon:'✨',filter:'brightness(1.18) contrast(0.92) saturate(1.15)',stickers:[],emoji:'✨'},{id:'nitido',nome:'Nítido',icon:'💎',filter:'contrast(1.35) saturate(1.25)',stickers:[],emoji:'💎'},{id:'pb',nome:'P&B',icon:'⚫',filter:'grayscale(1)',stickers:[],emoji:'⚫'},{id:'vintage',nome:'Vintage',icon:'📼',filter:'sepia(0.75)',stickers:[],emoji:'📼'},],
+desenho:[{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.9) saturate(2)',stickers:[],emoji:'🎨'},{id:'hq',nome:'HQ',icon:'💥',filter:'contrast(2.8) saturate(2.5)',stickers:[],emoji:'💥'},{id:'lapis',nome:'Lápis',icon:'✏️',filter:'grayscale(1) contrast(2.5)',stickers:[],emoji:'✏️'},{id:'anime',nome:'Anime',icon:'🌸',filter:'contrast(1.7) saturate(2.2)',stickers:[],emoji:'🌸'},]
 };
 currentFiltro=allFiltros.frutinha[0];
 function openDB(){return new Promise(res=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>{e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true})};req.onsuccess=e=>{db=e.target.result;res()}})}
@@ -175,26 +175,17 @@ function addVideo(v){return new Promise(r=>{db.transaction('videos','readwrite')
 function getVideos(){return new Promise(r=>{try{db.transaction('videos','readonly').objectStore('videos').getAll().onsuccess=e=>r(e.target.result.reverse())}catch(e){r([])}})}
 function deleteVideo(id){return new Promise(r=>{db.transaction('videos','readwrite').objectStore('videos').delete(id).onsuccess=r})}
 
-// STOP DE VERDADE - para e volta pro começo, não repete
 function stopAll(showToast){
 try{
 document.querySelectorAll('.feed video').forEach(v=>{v.pause(); v.currentTime=0;});
 document.querySelectorAll('.feed audio').forEach(a=>{a.pause(); a.currentTime=0;});
 document.getElementById('audioPreview').pause();
-document.getElementById('audioPreview').currentTime=0;
+document.getElementById('audioNarrPreview').pause();
+document.querySelectorAll('.centerPlay').forEach(b=>{b.innerHTML='▶️'; b.classList.remove('hidden');});
 if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
-document.querySelectorAll('.centerPlay').forEach(b=>{b.innerHTML='▶️'; b.style.display='flex';});
 }catch(e){}
-if(showToast) toast('⏹️ STOP - tudo parado no início');
+if(showToast) toast('⏹️ STOP - tudo parado');
 }
-function pauseAll(){
-try{
-document.querySelectorAll('.feed video').forEach(v=>{v.pause();});
-document.querySelectorAll('.feed audio').forEach(a=>{a.pause();});
-document.getElementById('audioPreview').pause();
-}catch(e){}
-}
-
 function toast(m){const t=document.getElementById('toast');t.innerText=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
 function getUsers(){try{return JSON.parse(localStorage.getItem('caicara_users')||'[]')}catch(e){return[]}}
 function saveUsers(u){localStorage.setItem('caicara_users',JSON.stringify(u))}
@@ -227,13 +218,49 @@ async function abrirCameraVideo(){document.getElementById('editor').classList.ad
 async function abrirCameraFoto(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('recFoto').style.display='block';document.getElementById('recVideo').style.display='none';document.getElementById('boxAudioEdit').style.display='none';currentTab='frutinha';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-frutinha').classList.add('active');currentFiltro=allFiltros.frutinha[0];montarFiltros();await startCamera(false)}
 function capturarFoto(){const video=document.getElementById('camVideo');const canvas=document.createElement('canvas');canvas.width=video.videoWidth||1280;canvas.height=video.videoHeight||720;const ctx=canvas.getContext('2d');ctx.filter=currentFiltro.filter||'none';ctx.drawImage(video,0,0,canvas.width,canvas.height);if(currentFiltro.stickers&&currentFiltro.stickers.length>0){ctx.font=(canvas.width*0.13)+'px serif';const y=canvas.height*0.18;const gap=canvas.width*0.25;currentFiltro.stickers.forEach((s,i)=>{ctx.fillText(s,gap*(i+0.5),y);});}tempFoto=canvas.toDataURL('image/jpeg',0.92);document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('boxAudioEdit').style.display='block';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}
 async function iniciarGravacao(){if(isRecording) return;await startCamera(true);chunks=[];recSec=0;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(tempBlob);pv.style.display='block';pv.muted=false;pv.play();document.getElementById('camVideo').style.display='none';document.getElementById('recVideo').style.display='none';document.getElementById('boxAudioEdit').style.display='block';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};recorder.start();isRecording=true;document.getElementById('btnRec').innerText='Grav...';document.getElementById('btnStop').style.display='flex';recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText='00:'+String(recSec).padStart(2,'0')},1000)}
-function pararGravacao(){if(!isRecording) return;isRecording=false;recorder.stop();document.getElementById('btnRec').innerText='● REC';document.getElementById('btnStop').style.display='none';clearInterval(recTimer); toast('⏹️ Gravação parada');}
-function apagarFotoVideo(){stopAll();tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('boxAudioEdit').style.display='none';removerMusica();startCamera(false)}
-function fecharEditor(){stopAll();document.getElementById('editor').classList.remove('show');tempBlob=null;tempFoto=null;document.getElementById('boxAudioEdit').style.display='none';removerMusica();render()}
+function pararGravacao(){if(!isRecording) return;isRecording=false;recorder.stop();document.getElementById('btnRec').innerText='● REC';document.getElementById('btnStop').style.display='none';clearInterval(recTimer); toast('⏹️ Gravação parada - agora edite com música/narração');}
+function apagarFotoVideo(){stopAll();tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('boxAudioEdit').style.display='none';removerMusica();removerNarracao();startCamera(false)}
+function fecharEditor(){stopAll();document.getElementById('editor').classList.remove('show');tempBlob=null;tempFoto=null;document.getElementById('boxAudioEdit').style.display='none';removerMusica();removerNarracao();render()}
 
-function previewMusica(){const a=document.getElementById('audioPreview');a.volume=parseFloat(document.getElementById('volMusica').value);a.play();document.getElementById('btnPreview').innerText='⏸️';toast('🎵 Preview música')}
-function stopPreviewMusica(){document.getElementById('audioPreview').pause();document.getElementById('audioPreview').currentTime=0;document.getElementById('btnPreview').innerText='▶️';toast('⏹️ STOP música')}
-function removerMusica(){tempMusicaBlob=null;document.getElementById('musicaBox').style.display='none';document.getElementById('audioPreview').pause();document.getElementById('audioPreview').src='';toast('🗑️ Música removida')}
+function previewMusica(){const a=document.getElementById('audioPreview');a.volume=parseFloat(document.getElementById('volMusica').value);a.play();toast('🎵 Música 25%')}
+function stopPreviewMusica(){document.getElementById('audioPreview').pause();document.getElementById('audioPreview').currentTime=0;document.getElementById('audioNarrPreview').pause();document.getElementById('audioNarrPreview').currentTime=0;const v=document.getElementById('prevVideo');if(v){v.pause();}toast('⏹️ STOP preview')}
+function removerMusica(){tempMusicaBlob=null;document.getElementById('musicaBox').style.display='none';document.getElementById('audioPreview').pause();document.getElementById('audioPreview').src='';}
+async function toggleNarracao(){
+if(isNarrRecording){narrRecorder.stop();return;}
+try{
+const s=await navigator.mediaDevices.getUserMedia({audio:true});
+narrChunks=[];narrRecorder=new MediaRecorder(s);
+narrRecorder.ondataavailable=e=>{if(e.data.size>0)narrChunks.push(e.data)};
+narrRecorder.onstop=()=>{
+tempNarracaoBlob=new Blob(narrChunks,{type:'audio/webm'});
+const url=URL.createObjectURL(tempNarracaoBlob);
+document.getElementById('audioNarrPreview').src=url;
+document.getElementById('narrBox').style.display='block';
+document.getElementById('narrNome').innerText='gravada '+(tempNarracaoBlob.size/1000).toFixed(0)+'KB';
+document.getElementById('audioNarrPreview').onloadedmetadata=()=>{document.getElementById('narrDur').innerText=document.getElementById('audioNarrPreview').duration.toFixed(1)+'s';};
+document.getElementById('btnNarracao').innerText='🎙️ Regravar narração';
+document.getElementById('btnNarracao').style.background='#333';
+document.getElementById('narrStatus').innerText='✅ Gravada!';
+s.getTracks().forEach(t=>t.stop());isNarrRecording=false;
+toast('🎙️ Narração gravada!');
+};
+narrRecorder.start();isNarrRecording=true;
+document.getElementById('btnNarracao').innerText='⏹️ Parar narração (gravando...)';
+document.getElementById('btnNarracao').style.background='#ff2d55';
+document.getElementById('narrStatus').innerText='🔴 Gravando...';
+const v=document.getElementById('prevVideo');if(v&&v.src){v.currentTime=0; v.play().catch(()=>{});}
+}catch(e){toast('❌ Mic negado');}
+}
+function removerNarracao(){tempNarracaoBlob=null;document.getElementById('narrBox').style.display='none';document.getElementById('btnNarracao').innerText='🎙️ Gravar narração';document.getElementById('btnNarracao').style.background='#00c950';document.getElementById('narrStatus').innerText='';const a=document.getElementById('audioNarrPreview');a.pause();a.src='';}
+function previewCompleto(){
+const v=document.getElementById('prevVideo');
+const a=document.getElementById('audioPreview');
+const n=document.getElementById('audioNarrPreview');
+if(v&&v.src){v.currentTime=0; v.muted=false; v.play().catch(()=>{});}
+if(a&&a.src){a.volume=parseFloat(document.getElementById('volMusica').value); a.currentTime=0; a.play().catch(()=>{});}
+if(n&&n.src){n.volume=1; n.currentTime=0; n.play().catch(()=>{});}
+toast('▶️ Tocando TUDO: vídeo + música 25% + narração 100%');
+}
 
 document.getElementById('fileGaleria').addEventListener('change',e=>{
 const f=e.target.files[0];if(!f) return;
@@ -254,7 +281,6 @@ document.getElementById('boxAudioEdit').style.display='block';
 montarFiltros()
 }
 });
-
 document.getElementById('fileMusica').addEventListener('change',e=>{
 const f=e.target.files[0];if(!f) return;
 tempMusicaBlob=f;
@@ -263,53 +289,45 @@ document.getElementById('audioPreview').src=url;
 document.getElementById('audioPreview').volume=parseFloat(document.getElementById('volMusica').value);
 document.getElementById('musicaBox').style.display='block';
 document.getElementById('nomeMusica').innerText=f.name;
-toast('🎵 Música carregada! Volume 25%');
+toast('🎵 Música carregada!');
 });
 
-function stopCard(card){
+function playCard(card){
 const v=card.querySelector('video');
 const audio=card.querySelector('audio.musicaFundo');
+const narr=card.querySelector('audio.narrFundo');
 const btn=card.querySelector('.centerPlay');
-if(v){v.pause(); v.currentTime=0;}
-if(audio){audio.pause(); audio.currentTime=0;}
-if(btn){btn.innerHTML='▶️'; btn.style.display='flex';}
+if(!v) return;
+document.querySelectorAll('.feed.card').forEach(c=>{if(c!==card){const vv=c.querySelector('video'); const aa=c.querySelector('audio.musicaFundo'); const nn=c.querySelector('audio.narrFundo'); const bb=c.querySelector('.centerPlay'); if(vv){vv.pause(); vv.currentTime=0;} if(aa){aa.pause(); aa.currentTime=0;} if(nn){nn.pause(); nn.currentTime=0;} if(bb){bb.innerHTML='▶️'; bb.classList.remove('hidden');}}});
+v.muted=false; v.volume=1;
+if(v.currentTime>=v.duration-0.05) v.currentTime=0;
+v.play().then(()=>{
+if(audio){audio.volume=parseFloat(audio.dataset.vol||0.25); if(audio.currentTime>=audio.duration-0.05) audio.currentTime=0; audio.play().catch(()=>{});}
+if(narr){if(narr.currentTime>=narr.duration-0.05) narr.currentTime=0; narr.play().catch(()=>{});}
+if(btn){btn.innerHTML='⏸️'; setTimeout(()=>btn.classList.add('hidden'),800);}
+}).catch(()=>{});
 }
 function pauseCard(card){
 const v=card.querySelector('video');
 const audio=card.querySelector('audio.musicaFundo');
+const narr=card.querySelector('audio.narrFundo');
 const btn=card.querySelector('.centerPlay');
-if(v){v.pause();}
-if(audio){audio.pause();}
-if(btn){btn.innerHTML='▶️'; btn.style.display='flex';}
+if(v) v.pause();
+if(audio) audio.pause();
+if(narr) narr.pause();
+if(btn){btn.innerHTML='▶️'; btn.classList.remove('hidden');}
+toast('⏸️ Pausado - clica ▶️ PLAY pra continuar');
 }
-function playCard(card){
+function stopCard(card){
 const v=card.querySelector('video');
 const audio=card.querySelector('audio.musicaFundo');
+const narr=card.querySelector('audio.narrFundo');
 const btn=card.querySelector('.centerPlay');
-if(!v) return;
-// primeiro para todos os outros
-document.querySelectorAll('.feed.card').forEach(c=>{if(c!==card) stopCard(c);});
-v.muted=false; v.volume=1;
-if(v.currentTime>=v.duration-0.1) v.currentTime=0;
-v.play().then(()=>{
-if(audio){
-audio.volume=parseFloat(audio.dataset.vol||0.25);
-if(audio.currentTime>=audio.duration-0.1) audio.currentTime=0;
-audio.play().catch(()=>{});
-}
-if(btn){btn.innerHTML='⏸️'; setTimeout(()=>{btn.style.display='none';},800);}
-}).catch(()=>{});
-}
-
-function togglePlay(card){
-const v=card.querySelector('video');
-if(!v) return;
-if(v.paused){
-playCard(card);
-}else{
-pauseCard(card);
-toast('⏸️ Pausado - clica de novo pra continuar, STOP pra voltar pro início');
-}
+if(v){v.pause(); v.currentTime=0;}
+if(audio){audio.pause(); audio.currentTime=0;}
+if(narr){narr.pause(); narr.currentTime=0;}
+if(btn){btn.innerHTML='▶️'; btn.classList.remove('hidden');}
+toast('⏹️ STOP - voltou pro início, clica PLAY pra ver de novo');
 }
 
 async function render(){
@@ -317,31 +335,36 @@ const vids=await getVideos();
 const feed=document.getElementById('feed');
 const seguindo=getSeguindo();
 if(!vids.length){
-feed.innerHTML=`<div class="emptyCard"><div style="font-size:64px">🌊🍓⏹️</div><div style="font-size:22px;font-weight:900;margin-top:12px">Caiçara Play V72</div><div style="font-size:13px;opacity:.6;margin-top:6px;text-align:center">Agora sem repetição!<br>Vídeo acaba e PARA sozinho<br>Botão ⏹️ STOP volta pro início</div><button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900">+ Postar vídeo</button></div>`;return
+feed.innerHTML=`<div class="emptyCard"><div style="font-size:64px">🌊🍓⏯️🎙️</div><div style="font-size:22px;font-weight:900;margin-top:12px">V73 PERFEITO</div><div style="font-size:13px;opacity:.7;margin-top:8px;text-align:center">▶️ PLAY verde pra tocar de novo<br>⏹️ STOP vermelho volta pro início<br>Vídeo não repete sozinho<br>🎙️ Narração + 🎵 Música de volta</div><button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900">+ Postar vídeo</button></div>`;return
 }
 feed.innerHTML=vids.map(v=>{
 const url=v.blob?URL.createObjectURL(v.blob):v.fotoData;
 const isFoto=v.type==='foto'||v.fotoData;
 const media=isFoto?`<img src="${url}">`:`<video playsinline preload="metadata" src="${url}" onended="stopCard(this.closest('.card'))"></video>`;
-let musicaHtml=''; let musicaBadge='';
+let musicaHtml=''; let narrHtml=''; let badge='';
 if(v.musicaBlob){
 const mUrl=URL.createObjectURL(v.musicaBlob);
 musicaHtml=`<audio class="musicaFundo" src="${mUrl}" data-vol="${v.musicaVol||0.25}"></audio>`;
-musicaBadge=`<div class="musicaTag">🎵 ${v.musicaNome||'com música'} • ${Math.round((v.musicaVol||0.25)*100)}%</div>`;
+badge+=`<div class="musicaTag">🎵 ${Math.round((v.musicaVol||0.25)*100)}%</div>`;
+}
+if(v.narracaoBlob){
+const nUrl=URL.createObjectURL(v.narracaoBlob);
+narrHtml=`<audio class="narrFundo" src="${nUrl}"></audio>`;
+badge+=`<div class="musicaTag" style="top:${v.musicaBlob?42:14}px;background:#00c950">🎙️ Narração</div>`;
 }
 const user=v.user||'@taki';const jaSegue=seguindo.includes(user);
 return `<div class="card">
-${musicaBadge}${musicaHtml}
+${badge}${musicaHtml}${narrHtml}
 <button class="btnMore" onclick="event.stopPropagation();abrirMenuMais(${v.id})">⋯</button>
 ${media}
-<div class="centerPlay" onclick="event.stopPropagation();togglePlay(this.closest('.card'))">▶️</div>
+<div class="centerPlay" onclick="event.stopPropagation();playCard(this.closest('.card'))">▶️</div>
 <div class="side">
 <div class="followWrap"><button class="sideBtn" onclick="event.stopPropagation();toggleSeguir(this,'${user}')" style="background:#fff;color:#000;font-weight:900">${user.charAt(1)?user.charAt(1).toUpperCase():'T'}</button><div class="followPlus ${jaSegue?'following':''}">${jaSegue?'✓':'+'}</div><div class="sideLabel">${jaSegue?'Seguindo':'Seguir'}</div></div>
-<div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();togglePlay(this.closest('.card'))">⏸️</button><div class="sideLabel">PAUSE</div></div>
-<div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn sideBtnStop" onclick="event.stopPropagation();stopCard(this.closest('.card'));toast('⏹️ STOP - voltou pro início')">⏹️</button><div class="sideLabel" style="color:#ff2d55;font-weight:900">STOP</div></div>
+<div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn sideBtnPlay" onclick="event.stopPropagation();playCard(this.closest('.card'))">▶️</button><div class="sideLabel" style="color:#00c950;font-weight:900">PLAY</div></div>
+<div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn sideBtnStop" onclick="event.stopPropagation();stopCard(this.closest('.card'))">⏹️</button><div class="sideLabel" style="color:#ff2d55;font-weight:900">STOP</div></div>
 <div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();abrirMenuMais(${v.id})">🗑️</button><div class="sideLabel">Del</div></div>
 </div>
-<div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6">Toque ▶️ pra tocar • ⏸️ pausa • ⏹️ STOP para tudo</div></div>
+<div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6">▶️ PLAY pra ver de novo • ⏹️ STOP volta pro início • Sem repetição</div></div>
 </div>`
 }).join('');
 }
@@ -351,11 +374,12 @@ if(!tempBlob&&!tempFoto){alert('Grave ou escolha da galeria');return}
 stopAll();
 let u=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');
 const vol=parseFloat(document.getElementById('volMusica').value)||0.25;
-const videoData={desc,emoji:currentFiltro.emoji,user:u.usuario,musicaBlob:tempMusicaBlob,musicaNome:tempMusicaNome,musicaVol:vol};
+const videoData={desc,emoji:currentFiltro.emoji,user:u.usuario,musicaBlob:tempMusicaBlob,musicaNome:tempMusicaNome,musicaVol:vol,narracaoBlob:tempNarracaoBlob};
 if(tempFoto){videoData.fotoData=tempFoto;videoData.type='foto'}else{videoData.blob=tempBlob;videoData.type='video'}
 await addVideo(videoData);
-fecharEditor();tempBlob=null;tempFoto=null;tempMusicaBlob=null;tempMusicaNome='';document.getElementById('musicaBox').style.display='none';
-toast('🚀 Postado sem repetição!');
+fecharEditor();tempBlob=null;tempFoto=null;tempMusicaBlob=null;tempMusicaNome='';tempNarracaoBlob=null;
+document.getElementById('musicaBox').style.display='none';document.getElementById('narrBox').style.display='none';
+toast('🚀 Postado perfeito! Com PLAY + STOP + Narração');
 };
 openDB().then(()=>{
 let users=getUsers();
