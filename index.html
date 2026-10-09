@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Caiçara Play</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caiçara Play - Família</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-body{background:#000;color:#fff}
+body{background:#000;color:#fff;overflow:hidden}
 .top{position:fixed;top:0;left:0;right:0;z-index:20;padding:14px 16px;display:flex;justify-content:space-between;background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent)}
 .logo{font-weight:900;font-size:22px}.logo b{color:#fb923c}
 .chips{position:fixed;top:52px;left:0;right:0;z-index:20;display:flex;gap:8px;padding:8px 12px;overflow-x:auto}
@@ -17,87 +16,94 @@ body{background:#000;color:#fff}
 .card video{width:100%;height:100%;object-fit:cover}
 .tap-area{position:absolute;inset:0;z-index:2}
 .info{position:absolute;bottom:100px;left:12px;right:80px;z-index:5;pointer-events:none}
-.user{font-weight:800}.user span{background:#fb923c;color:#000;font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px}
-.desc{font-size:14px;margin-top:6px;text-shadow:0 1px 8px #000}
 .side{position:absolute;right:10px;bottom:110px;display:flex;flex-direction:column;gap:18px;align-items:center;z-index:10}
 .b{width:58px;height:58px;background:rgba(255,255,255,.22);backdrop-filter:blur(10px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:none;color:#fff}
-.side p{font-size:12px;font-weight:800;text-align:center;margin-top:4px}
 .vol{position:absolute;top:95px;right:12px;z-index:11;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px}
+.flag{position:absolute;top:95px;left:12px;z-index:11;background:rgba(0,0,0,.6);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px}
 .center-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.55);width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;z-index:6;opacity:0;transition:.2s;pointer-events:none}
 .center-icon.show{opacity:1}
 .bottom{position:fixed;bottom:0;left:0;right:0;height:74px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:20}
-.bottom button{background:none;border:none;color:#fff;font-size:26px;opacity:.6}
-.plus{width:54px;height:36px;background:#fff;color:#000;border-radius:10px;font-weight:900;font-size:28px;opacity:1!important}
+.bottom button{background:none;border:none;color:#fff;font-size:26px;opacity:.5;flex:1}
+.bottom button.active{opacity:1;color:#fb923c}
+.plus{width:54px;height:36px;background:#fff!important;color:#000!important;border-radius:10px;font-weight:900;font-size:28px;opacity:1!important}
 #file{display:none}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99;display:none;align-items:center;justify-content:center;padding:20px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:99;display:none;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
 .box{background:#18181b;width:100%;max-width:360px;border-radius:16px;padding:20px}
 .box input,.box textarea{width:100%;background:#27272a;border:1px solid #333;color:#fff;padding:12px;border-radius:10px;margin-top:10px}
 .box button{width:100%;background:#fb923c;color:#000;border:none;padding:14px;border-radius:10px;font-weight:900;margin-top:14px}
+.page{display:none;height:100vh;padding:80px 16px 90px;overflow-y:auto}
+.page.show{display:block}
+.badge{font-size:10px;padding:3px 8px;border-radius:10px;background:#fb923c;color:#000;font-weight:800;margin-left:6px}
 </style>
 </head>
 <body>
 <input type="file" id="file" accept="video/*">
-<div class="top"><div class="logo">CAIÇARA <b>PLAY</b></div></div>
+<div class="top"><div class="logo">CAIÇARA <b>PLAY</b> <span class="badge">FAMÍLIA</span></div><button style="background:none;border:none;color:#fff;font-size:20px" onclick="toggleSom()">🔊</button></div>
 <div class="chips" id="chips"></div>
 <div class="feed" id="feed"></div>
-<div class="bottom"><button>⌂</button><button>◎</button><button class="plus" onclick="document.getElementById('file').click()">+</button><button>✉</button><button>👤</button></div>
-<div class="modal" id="modal"><div class="box"><h3>Novo vídeo</h3><input id="mUser" value="@Taki"><input id="mLocal" value="Caraguá"><textarea id="mDesc">Segue aí galera</textarea><button id="btnPub">Publicar</button><button style="background:#333;color:#fff" onclick="document.getElementById('modal').classList.remove('show')">Cancelar</button></div></div>
+<div class="page" id="page-explore"><h2>Explorar 🔍</h2><p style="opacity:.7">Só conteúdo família caiçara</p><div id="explore-list" style="margin-top:20px;display:flex;flex-direction:column;gap:10px"></div></div>
+<div class="page" id="page-profile"><h2>@Taki - Admin</h2><p style="opacity:.7">Moderador do Caiçara Play 🌊</p><div style="margin-top:16px;background:#111;padding:16px;border-radius:12px"><p>📹 Vídeos: <span id="count-vid">0</span></p><p>🛡️ Filtro família: ATIVO</p></div><div style="margin-top:12px;background:#0f1a0f;border:1px solid #1a3a1a;padding:12px;border-radius:12px;font-size:12px;line-height:1.4"><b>✅ O que pode:</b> Música, praia, comércio, surf, comida, rolê, dança, comédia<br><br><b>⛔ O que é bloqueado auto:</b><br>• Arma, pistola, fuzil, tiro, revolver, faca<br>• Assalto, roubo, bandido, crime, tráfico, sangue, morte, briga<br>• Porn, xxx, onlyfans, sexo, nudez, pelada</div><button onclick="if(confirm('Apagar tudo?')){localStorage.clear();location.reload();}" style="margin-top:12px;background:#331111;color:#ff8888;border:1px solid #442222;padding:10px;border-radius:8px;width:100%">Limpar vídeos locais</button></div>
+<div class="bottom"><button id="btn-home" class="active" onclick="nav('home')">⌂</button><button id="btn-explore" onclick="nav('explore')">◎</button><button class="plus" onclick="document.getElementById('file').click()">+</button><button onclick="alert('DM em breve')">✉</button><button id="btn-profile" onclick="nav('profile')">👤</button></div>
+<div class="modal" id="modal"><div class="box"><h3>Novo vídeo 🌊</h3><input id="mUser" value="@Taki"><input id="mLocal" value="Caraguá"><textarea id="mDesc" placeholder="Legenda do seu rolê..."></textarea><p style="font-size:10px;opacity:.6;margin-top:8px">Caiçara Play é família: sem armas, violência ou +18. Será bloqueado auto.</p><button id="btnPub">Publicar</button><button style="background:#333;color:#fff" onclick="document.getElementById('modal').classList.remove('show')">Cancelar</button></div></div>
 <script>
-let somAtivo=true;
-let blobTemp=null;
-let videos=[]; try{const s=localStorage.getItem('caicara_v5'); if(s) videos=JSON.parse(s);}catch(e){} if(videos.length===0){videos=[{user:"@Taki",local:"Caraguá",desc:"Segue aí galera",src:""}];}
-let filtro="Todos";
-const cidades=["Todos","Caraguá","Ubatuba","São Seba","Ilhabela"];
+let somAtivo=true; let blobTemp=null;
+let videos=[]; try{const s=localStorage.getItem('caicara_v5'); if(s) videos=JSON.parse(s);}catch(e){}
+const PROIBIDAS=[
+"porn","xxx","onlyfans","xvideos","sexo","nude","pelada","putaria","anal","transando",
+"arma","pistola","fuzil","revolver","rifle","tiro","tiroteio","bala",
+"faca","facada","canivete",
+"assalto","roubo","roubar","bandido","ladrão","ladrao","crime","trafico","trafico","drogas pesadas","sangue","morte","matar","assassin","briga","porrada","espanc"
+];
+function temProibida(t){ if(!t) return false; t=t.toLowerCase(); return PROIBIDAS.some(p=>t.includes(p)); }
+
+function nav(p){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));
+ document.getElementById('feed').style.display=p==='home'?'block':'none';
+ document.getElementById('chips').style.display=p==='home'?'flex':'none';
+ document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));
+ if(p==='home'){document.getElementById('btn-home').classList.add('active');}
+ if(p==='explore'){document.getElementById('page-explore').classList.add('show'); document.getElementById('btn-explore').classList.add('active'); renderExplore();}
+ if(p==='profile'){document.getElementById('page-profile').classList.add('show'); document.getElementById('btn-profile').classList.add('active'); document.getElementById('count-vid').textContent=videos.length;}
+}
+function renderExplore(){const el=document.getElementById('explore-list'); el.innerHTML=videos.map(v=>`<div style="background:#111;padding:12px;border-radius:10px"><b>${v.user}</b> - ${v.local}<br><span style="font-size:12px;opacity:.7">${v.desc.slice(0,40)}</span></div>`).join('');}
+let filtro="Todos"; const cidades=["Todos","Caraguá","Ubatuba","São Seba","Ilhabela"];
 function renderChips(){document.getElementById('chips').innerHTML=cidades.map(c=>`<button class="chip ${c===filtro?'active':''}" onclick="filtro='${c}';renderChips();renderFeed()">${c}</button>`).join('');}
 function renderFeed(){
  const f=document.getElementById('feed');
  const lista=filtro==="Todos"?videos:videos.filter(v=>v.local.includes(filtro));
+ if(lista.length===0){f.innerHTML=`<div class="card" style="flex-direction:column"><p style="opacity:.6">Nenhum vídeo aqui ainda</p><p style="margin-top:10px;font-size:12px">Clica no + pra postar o primeiro de ${filtro}</p></div>`;return;}
  f.innerHTML=lista.map((v,i)=>`
  <div class="card">
  <video loop playsinline src="${v.src}" ${somAtivo?'':'muted'}></video>
  <div class="tap-area" onclick="togglePlay(this)"></div>
+ <button class="flag" onclick="denunciar(${i})">🚩</button>
  <button class="vol" onclick="toggleSom()">${somAtivo?'🔊':'🔇'}</button>
  <div class="center-icon">⏸️</div>
- <div class="info"><div class="user">${v.user} <span>${v.local}</span></div><div class="desc">${v.desc}</div></div>
- <div class="side">
- <div><button class="b" onclick="like(this)">❤️</button><p>1</p></div>
- <div><button class="b" onclick="comentar()">💬</button><p>0</p></div>
- <div><button class="b" onclick="zap()">🔗</button><p style="font-size:10px">Whats</p></div>
- </div>
+ <div class="info"><div style="font-weight:800">${v.user} <span style="background:#fb923c;color:#000;font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px">${v.local}</span></div><div style="font-size:14px;margin-top:6px">${v.desc}</div></div>
+ <div class="side"><div><button class="b" onclick="like(this)">❤️</button><p>12</p></div><div><button class="b" onclick="comentar()">💬</button></div><div><button class="b" onclick="zap()">🔗</button><p style="font-size:10px">Whats</p></div></div>
  </div>`).join('');
  const vs=document.querySelectorAll('video');
  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.muted=!somAtivo; e.target.play().catch(()=>{});}else e.target.pause();})},{threshold:0.6});
  vs.forEach(x=>{if(x.src) obs.observe(x);});
 }
-function togglePlay(tap){
- const card=tap.parentElement; const v=card.querySelector('video'); const ic=card.querySelector('.center-icon');
- if(v.paused){v.play(); ic.textContent='▶️';} else {v.pause(); ic.textContent='⏸️';}
- ic.classList.add('show'); setTimeout(()=>ic.classList.remove('show'),600);
-}
-function toggleSom(){
- somAtivo=!somAtivo;
- document.querySelectorAll('video').forEach(v=>{v.muted=!somAtivo; if(somAtivo && v.paused===false) v.play();});
- document.querySelectorAll('.vol').forEach(b=>b.textContent=somAtivo?'🔊':'🔇');
- const ic=document.querySelector('.card.center-icon');
- if(ic){ ic.textContent=somAtivo?'🔊':'🔇'; ic.classList.add('show'); setTimeout(()=>ic.classList.remove('show'),600); }
-}
+function togglePlay(tap){const card=tap.parentElement; const v=card.querySelector('video'); const ic=card.querySelector('.center-icon'); if(v.paused){v.play(); ic.textContent='▶️';} else {v.pause(); ic.textContent='⏸️';} ic.classList.add('show'); setTimeout(()=>ic.classList.remove('show'),600);}
+function toggleSom(){somAtivo=!somAtivo; document.querySelectorAll('video').forEach(v=>{v.muted=!somAtivo; if(somAtivo) v.play();}); document.querySelectorAll('.vol').forEach(b=>b.textContent=somAtivo?'🔊':'🔇');}
 function like(btn){btn.textContent=btn.textContent==='❤️'?'🤍':'❤️';}
-function comentar(){const c=prompt('Seu comentário:'); if(c) alert('Comentado: '+c);}
+function comentar(){const c=prompt('Comentário:'); if(c){ if(temProibida(c)) alert('⛔ Comentário bloqueado: violência ou +18 não permitido'); else alert('Comentado: '+c);} }
+function denunciar(i){const motivo=prompt('Denunciar por quê? Digite: arma, violência, sexo, spam'); if(motivo){ if(confirm('Remover este vídeo do feed?')){videos.splice(i,1); try{localStorage.setItem('caicara_v5',JSON.stringify(videos));}catch(e){} renderFeed(); alert('Removido! Obrigado por manter o Caiçara família 🌊'); } }}
 function zap(){const n=prompt('Whats com DDD:','12'); if(n) window.open('https://wa.me/55'+n.replace(/\D/g,''),'_blank');}
-
-document.getElementById('file').addEventListener('change',e=>{
- const file=e.target.files[0]; if(!file) return;
- blobTemp=URL.createObjectURL(file);
- document.getElementById('modal').classList.add('show');
-});
+document.getElementById('file').addEventListener('change',e=>{const file=e.target.files[0]; if(!file) return; blobTemp=URL.createObjectURL(file); document.getElementById('modal').classList.add('show');});
 document.getElementById('btnPub').onclick=()=>{
  const u=document.getElementById('mUser').value; const l=document.getElementById('mLocal').value; const d=document.getElementById('mDesc').value;
+ if(temProibida(d) || temProibida(u) || temProibida(l)){
+   alert('⛔ BLOQUEADO - Caiçara Play é entretenimento família.\n\nDetectamos palavra proibida: arma, violência, sangue ou +18.\n\nSeu vídeo não foi publicado. Tente outra legenda mais leve 🌊');
+   return;
+ }
  if(!blobTemp) return;
  videos.unshift({user:u,local:l,desc:d,src:blobTemp});
  try{localStorage.setItem('caicara_v5',JSON.stringify(videos));}catch(e){}
- document.getElementById('modal').classList.remove('show');
- somAtivo=true; renderFeed();
+ document.getElementById('modal').classList.remove('show'); somAtivo=true; renderFeed(); nav('home');
 };
 renderChips();renderFeed();
 </script>
