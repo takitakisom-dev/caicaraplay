@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Caiçara Play V69 Sync</title>
+<title>Caiçara Play V70 Trecho</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
@@ -44,14 +44,17 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 .sticker{font-size:52px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
 .emptyCard{height:100%;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:radial-gradient(circle at 50% 30%, #1a1a1a, #000)}
 .musicaTag{position:absolute;top:14px;left:14px;z-index:25;background:rgba(255,45,85,.9);padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900}
+.timeline{height:36px;background:#222;border-radius:8px;position:relative;margin-top:8px;overflow:hidden;display:flex;align-items:center}
+.timelineFill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#ff2d55,#ff6b6b);opacity:.9;border-radius:8px}
+.timelineHandle{position:absolute;top:0;bottom:0;width:4px;background:#fff;box-shadow:0 0 6px #000}
 </style>
 </head>
 <body>
 <div id="toast" class="toast"></div>
 <div id="loginScreen" class="loginBg">
-<div style="font-size:52px">🌊🍓🎵</div>
+<div style="font-size:52px">🌊🍓✂️</div>
 <h2>Caiçara Play</h2>
-<p style="opacity:.7;font-size:12px">V69 - Música acompanha tamanho do vídeo</p>
+<p style="opacity:.7;font-size:12px">V70 - Escolhe o trecho exato da música</p>
 <div class="box" id="boxEntrar">
 <label>@USUÁRIO</label><input id="loginUser" value="@taki">
 <label>SENHA</label><input id="loginSenha" type="password" value="Tete1212">
@@ -61,15 +64,10 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <button class="btn-guest" onclick="entrarComoVisitante()">👀 Sem conta</button>
 </div>
 <div class="box" id="boxCadastro" style="display:none">
-<label>NOME</label><input id="nome" placeholder="Seu nome">
-<label>USUÁRIO</label><input id="usuario" placeholder="@seuuser">
-<label>NASCIMENTO</label><input id="nasc" type="date" style="color-scheme:dark">
-<label>SENHA</label><input id="senha" type="password">
-<label>CONFIRMAR</label><input id="senha2" type="password">
+<label>NOME</label><input id="nome" placeholder="Seu nome"><label>USUÁRIO</label><input id="usuario" placeholder="@seuuser"><label>NASCIMENTO</label><input id="nasc" type="date" style="color-scheme:dark"><label>SENHA</label><input id="senha" type="password"><label>CONFIRMAR</label><input id="senha2" type="password">
 <div style="display:flex;gap:8px;margin-top:12px"><input type="checkbox" id="check" style="width:18px;height:18px"><label style="margin:0;font-size:12px">Tenho 18+</label></div>
 <div id="erro" style="color:#ff6b6b;display:none;background:#2a0a0a;padding:8px;border-radius:8px;margin-top:8px;font-size:12px"></div>
-<button class="btn" onclick="cadastrar()">Criar 🚀</button>
-<button class="link" onclick="mostrarLogin()">Voltar</button>
+<button class="btn" onclick="cadastrar()">Criar 🚀</button><button class="link" onclick="mostrarLogin()">Voltar</button>
 </div>
 </div>
 
@@ -88,9 +86,9 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 
 <div class="modal" id="escolha" style="background:rgba(0,0,0,.85);justify-content:flex-end;padding:16px">
 <div style="background:#1e1e1e;border-radius:16px;overflow:hidden">
-<button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO TELA CHEIA</button>
-<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO SEM MÚSICA (leve)</button>
-<button onclick="abrirGaleriaDireto()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">📁 GALERIA + FILTROS</button>
+<button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO</button>
+<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO (leve, sem música)</button>
+<button onclick="abrirGaleriaDireto()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">📁 GALERIA</button>
 <button onclick="document.getElementById('escolha').classList.remove('show')" style="width:100%;background:none;border:none;color:#999;padding:14px">Cancelar</button>
 </div></div>
 
@@ -106,43 +104,41 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <div id="recFoto" style="display:none"><button onclick="capturarFoto()" style="width:72px;height:72px;border-radius:50%;background:#fff;border:4px solid #ff2d55;font-size:28px">📷</button></div>
 </div></div>
 
-<div id="boxAudioEdit" style="display:none;background:#111;border-top:2px solid #ff2d55;padding:12px;max-height:42vh;overflow-y:auto">
-<div style="font-size:12px;font-weight:900">🎵 Edição de Música - acompanha o vídeo</div>
+<div id="boxAudioEdit" style="display:none;background:#111;border-top:2px solid #ff2d55;padding:12px;max-height:55vh;overflow-y:auto">
+<div style="font-size:12px;font-weight:900">🎵 Escolher trecho da música que combina com seu vídeo</div>
+<div id="infoVideo" style="background:#1a0a0a;border-radius:8px;padding:8px;margin-top:8px;font-size:11px;font-weight:700">📹 Seu vídeo tem: <span id="videoDur">--</span> segundos</div>
+
 <div style="display:flex;gap:8px;margin-top:10px">
-<button onclick="document.getElementById('fileMusica').click()" style="flex:1;background:#1a1a1a;border:1px dashed #ff2d55;color:#fff;padding:12px;border-radius:12px;font-weight:800">🎵 Escolher música</button>
+<button onclick="document.getElementById('fileMusica').click()" style="flex:1;background:#1a1a1a;border:1px dashed #ff2d55;color:#fff;padding:12px;border-radius:12px;font-weight:800">🎵 Escolher música (3min, etc)</button>
 <button onclick="removerMusica()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #ff2d55;padding:10px 12px;border-radius:10px;font-weight:800">🗑️</button>
 </div>
-<div id="musicaBox" style="display:none;background:#0a0a0a;border-radius:12px;padding:12px;margin-top:10px;border:1px solid #333">
-<div style="font-size:11px;font-weight:800;display:flex;justify-content:space-between"><span>🎵 <span id="nomeMusica">musica.mp3</span></span><span style="font-size:10px;opacity:.6" id="duracaoInfo"></span></div>
 
-<div style="background:#1a0a0a;border-radius:8px;padding:8px;margin-top:8px;display:flex;align-items:center;gap:8px">
-<input type="checkbox" id="checkSync" checked style="width:16px;height:16px">
-<label for="checkSync" style="font-size:11px;font-weight:700">✂️ Cortar música no tamanho do vídeo (recomendado)</label>
+<div id="musicaBox" style="display:none;background:#0a0a0a;border-radius:12px;padding:12px;margin-top:10px;border:1px solid #333">
+<div style="font-size:11px;font-weight:800">🎵 <span id="nomeMusica">musica.mp3</span> <span style="opacity:.6;font-weight:400" id="musicaDur">3:00</span></div>
+
+<div style="margin-top:10px">
+<div style="font-size:10px;font-weight:800;display:flex;justify-content:space-between"><span>De onde começar a música?</span><span id="inicioLabel" style="color:#ff2d55">0:00</span></div>
+<input type="range" id="inicioMusica" min="0" max="180" step="0.1" value="0" style="width:100%;accent-color:#ff2d55;margin-top:4px" oninput="atualizarTrecho()">
+<div class="timeline" id="timelineVisu"><div class="timelineFill" id="fillVisu" style="width:20%"></div><div class="timelineHandle" id="handleVisu" style="left:0%"></div></div>
+<div style="font-size:10px;opacity:.6;margin-top:4px;display:flex;justify-content:space-between"><span>0:00</span><span id="fimMusicaLabel">3:00</span></div>
+</div>
+
+<div style="background:#1a1a1a;border-radius:8px;padding:8px;margin-top:10px">
+<div style="font-size:11px;font-weight:900;color:#00ff88">✂️ TRECHO QUE VAI USAR: <span id="trechoLabel">0:00 até 0:05 (5s)</span></div>
+<div style="font-size:10px;opacity:.7;margin-top:2px">Seu vídeo de <span id="videoDur2">5s</span> vai usar exatamente esse pedaço da música em loop</div>
 </div>
 
 <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
 <span style="font-size:10px;width:75px">Vol. música</span>
 <input type="range" id="volMusica" min="0" max="1" step="0.05" value="0.25" style="flex:1;accent-color:#ff2d55" oninput="document.getElementById('volTxt').innerText=Math.round(this.value*100)+'%'; document.getElementById('audioPreview').volume=this.value">
 <span id="volTxt" style="font-size:11px;width:30px">25%</span>
-<button onclick="previewMusica()" id="btnPreview" style="background:#00c950;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-weight:900;font-size:12px">▶️ Preview</button>
+<button onclick="previewMusica()" id="btnPreview" style="background:#00c950;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-weight:900;font-size:12px">▶️ Preview trecho</button>
 <button onclick="stopPreviewMusica()" style="background:#333;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:12px">⏹️</button>
 </div>
-
-<div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-<span style="font-size:10px;width:75px">Início música</span>
-<input type="range" id="inicioMusica" min="0" max="100" step="1" value="0" style="flex:1;accent-color:#ff2d55" oninput="document.getElementById('inicioTxt').innerText=this.value+'%'; document.getElementById('audioPreview').currentTime=document.getElementById('audioPreview').duration*this.value/100">
-<span id="inicioTxt" style="font-size:11px;width:30px">0%</span>
-</div>
-
-<div style="font-size:10px;opacity:.6;margin-top:6px">Dica: Vídeo curto de 10s = música toca só 10s e reinicia junto. Pausa no vídeo = pausa na música.</div>
 </div>
 </div>
 
-<div class="tabs">
-<div class="tab active" id="tab-frutinha" onclick="setTab('frutinha')">🍓 Frutinhas</div>
-<div class="tab" id="tab-normal" onclick="setTab('normal')">✨ Filtros</div>
-<div class="tab" id="tab-desenho" onclick="setTab('desenho')">🎨 Desenho</div>
-</div>
+<div class="tabs"><div class="tab active" id="tab-frutinha" onclick="setTab('frutinha')">🍓 Frutinhas</div><div class="tab" id="tab-normal" onclick="setTab('normal')">✨ Filtros</div><div class="tab" id="tab-desenho" onclick="setTab('desenho')">🎨 Desenho</div></div>
 <div class="filters" id="filters"></div>
 <div style="padding:10px;background:#000;display:flex;gap:8px"><button onclick="apagarFotoVideo()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #ff2d55;padding:10px 12px;border-radius:10px;font-weight:800;font-size:11px">🗑️ Refazer</button><input id="leg" placeholder="Legenda..." class="inp" style="flex:1"></div>
 </div>
@@ -152,48 +148,22 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <audio id="audioPreview" style="display:none"></audio>
 
 <script>
-let db,idParaDeletar=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,tempBlob=null,tempFoto=null,currentTab='frutinha',currentFiltro=null,tempMusicaBlob=null,tempMusicaNome='',syncInterval=null;
-const DB_NAME='caicara_v69_sync';
+let db,idParaDeletar=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,tempBlob=null,tempFoto=null,currentTab='frutinha',currentFiltro=null,tempMusicaBlob=null,tempMusicaNome='',syncInterval=null,videoDuration=0,musicaDuration=0,startOffset=0;
+const DB_NAME='caicara_v70_trecho';
 const ADMIN_USER='@taki'; const ADMIN_PASS='Tete1212';
 const allFiltros={
-frutinha:[
-{id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},
-{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},
-{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},
-{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.25) hue-rotate(230deg) saturate(1.3)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},
-{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.5) hue-rotate(15deg) saturate(1.2)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},
-],
-normal:[
-{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3)',stickers:[],emoji:'☀️'},
-{id:'suave',nome:'Suave',icon:'✨',filter:'brightness(1.18) contrast(0.92) saturate(1.15)',stickers:[],emoji:'✨'},
-{id:'nitido',nome:'Nítido',icon:'💎',filter:'contrast(1.35) saturate(1.25)',stickers:[],emoji:'💎'},
-{id:'pb',nome:'P&B',icon:'⚫',filter:'grayscale(1)',stickers:[],emoji:'⚫'},
-{id:'vintage',nome:'Vintage',icon:'📼',filter:'sepia(0.75)',stickers:[],emoji:'📼'},
-],
-desenho:[
-{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.9) saturate(2)',stickers:[],emoji:'🎨'},
-{id:'hq',nome:'HQ',icon:'💥',filter:'contrast(2.8) saturate(2.5)',stickers:[],emoji:'💥'},
-{id:'lapis',nome:'Lápis',icon:'✏️',filter:'grayscale(1) contrast(2.5)',stickers:[],emoji:'✏️'},
-{id:'anime',nome:'Anime',icon:'🌸',filter:'contrast(1.7) saturate(2.2)',stickers:[],emoji:'🌸'},
-]
+frutinha:[{id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.25) hue-rotate(230deg) saturate(1.3)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.5) hue-rotate(15deg) saturate(1.2)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},],
+normal:[{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3)',stickers:[],emoji:'☀️'},{id:'suave',nome:'Suave',icon:'✨',filter:'brightness(1.18) contrast(0.92) saturate(1.15)',stickers:[],emoji:'✨'},{id:'nitido',nome:'Nítido',icon:'💎',filter:'contrast(1.35) saturate(1.25)',stickers:[],emoji:'💎'},{id:'pb',nome:'P&B',icon:'⚫',filter:'grayscale(1)',stickers:[],emoji:'⚫'},{id:'vintage',nome:'Vintage',icon:'📼',filter:'sepia(0.75)',stickers:[],emoji:'📼'},],
+desenho:[{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.9) saturate(2)',stickers:[],emoji:'🎨'},{id:'hq',nome:'HQ',icon:'💥',filter:'contrast(2.8) saturate(2.5)',stickers:[],emoji:'💥'},{id:'lapis',nome:'Lápis',icon:'✏️',filter:'grayscale(1) contrast(2.5)',stickers:[],emoji:'✏️'},{id:'anime',nome:'Anime',icon:'🌸',filter:'contrast(1.7) saturate(2.2)',stickers:[],emoji:'🌸'},]
 };
 currentFiltro=allFiltros.frutinha[0];
+function formatTime(s){const m=Math.floor(s/60);const sec=Math.floor(s%60);return m+':'+String(sec).padStart(2,'0')+' ('+s.toFixed(1)+'s)'}
+function formatShort(s){const m=Math.floor(s/60);const sec=Math.floor(s%60);return m+':'+String(sec).padStart(2,'0')}
 function openDB(){return new Promise(res=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>{e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true})};req.onsuccess=e=>{db=e.target.result;res()}})}
 function addVideo(v){return new Promise(r=>{db.transaction('videos','readwrite').objectStore('videos').add(v).onsuccess=r})}
 function getVideos(){return new Promise(r=>{try{db.transaction('videos','readonly').objectStore('videos').getAll().onsuccess=e=>r(e.target.result.reverse())}catch(e){r([])}})}
 function deleteVideo(id){return new Promise(r=>{db.transaction('videos','readwrite').objectStore('videos').delete(id).onsuccess=r})}
-function pararTUDO(s){
-try{
-document.querySelectorAll('video').forEach(v=>{v.pause();});
-document.querySelectorAll('audio').forEach(a=>{a.pause();});
-if(syncInterval){clearInterval(syncInterval);syncInterval=null}
-if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
-}catch(e){}
-if(s)toast('🔇 Tudo parado!');
-}
+function pararTUDO(s){try{document.querySelectorAll('video').forEach(v=>{v.pause()});document.querySelectorAll('audio').forEach(a=>{a.pause()});if(syncInterval){clearInterval(syncInterval);syncInterval=null}if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}catch(e){} if(s)toast('🔇 Tudo parado!')}
 function toast(m){const t=document.getElementById('toast');t.innerText=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 function getUsers(){try{return JSON.parse(localStorage.getItem('caicara_users')||'[]')}catch(e){return[]}}
 function saveUsers(u){localStorage.setItem('caicara_users',JSON.stringify(u))}
@@ -224,49 +194,64 @@ function applyFilter(){const v=document.getElementById('camVideo');const pv=docu
 async function startCamera(a){if(stream){stream.getTracks().forEach(t=>t.stop())}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:a});const v=document.getElementById('camVideo');v.srcObject=stream;v.style.display='block';v.muted=true;await v.play();applyFilter()}
 async function abrirCameraVideo(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('recVideo').style.display='flex';document.getElementById('recFoto').style.display='none';document.getElementById('boxAudioEdit').style.display='none';currentTab='frutinha';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-frutinha').classList.add('active');currentFiltro=allFiltros.frutinha[0];montarFiltros();await startCamera(false)}
 async function abrirCameraFoto(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('recFoto').style.display='block';document.getElementById('recVideo').style.display='none';document.getElementById('boxAudioEdit').style.display='none';currentTab='frutinha';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-frutinha').classList.add('active');currentFiltro=allFiltros.frutinha[0];montarFiltros();await startCamera(false)}
-function capturarFoto(){const video=document.getElementById('camVideo');const canvas=document.createElement('canvas');canvas.width=video.videoWidth||1280;canvas.height=video.videoHeight||720;const ctx=canvas.getContext('2d');ctx.filter=currentFiltro.filter||'none';ctx.drawImage(video,0,0,canvas.width,canvas.height);if(currentFiltro.stickers&&currentFiltro.stickers.length>0){ctx.font=(canvas.width*0.13)+'px serif';const y=canvas.height*0.18;const gap=canvas.width*0.25;currentFiltro.stickers.forEach((s,i)=>{ctx.fillText(s,gap*(i+0.5),y);});}tempFoto=canvas.toDataURL('image/jpeg',0.92);document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('boxAudioEdit').style.display='block';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}
-async function iniciarGravacao(){if(isRecording) return;await startCamera(true);chunks=[];recSec=0;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(tempBlob);pv.style.display='block';pv.muted=false;pv.play();pv.onloadedmetadata=()=>{document.getElementById('duracaoInfo').innerText='Vídeo: '+pv.duration.toFixed(1)+'s'};document.getElementById('camVideo').style.display='none';document.getElementById('recVideo').style.display='none';document.getElementById('boxAudioEdit').style.display='block';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};recorder.start();isRecording=true;document.getElementById('btnRec').innerText='Grav...';document.getElementById('btnStop').style.display='flex';recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText='00:'+String(recSec).padStart(2,'0')},1000)}
+function capturarFoto(){const video=document.getElementById('camVideo');const canvas=document.createElement('canvas');canvas.width=video.videoWidth||1280;canvas.height=video.videoHeight||720;const ctx=canvas.getContext('2d');ctx.filter=currentFiltro.filter||'none';ctx.drawImage(video,0,0,canvas.width,canvas.height);if(currentFiltro.stickers&&currentFiltro.stickers.length>0){ctx.font=(canvas.width*0.13)+'px serif';const y=canvas.height*0.18;const gap=canvas.width*0.25;currentFiltro.stickers.forEach((s,i)=>{ctx.fillText(s,gap*(i+0.5),y);});}tempFoto=canvas.toDataURL('image/jpeg',0.92);document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('boxAudioEdit').style.display='block';videoDuration=3;document.getElementById('videoDur').innerText='3s (foto)';document.getElementById('videoDur2').innerText='3s';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}
+async function iniciarGravacao(){if(isRecording) return;await startCamera(true);chunks=[];recSec=0;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(tempBlob);pv.style.display='block';pv.muted=false;pv.play();pv.onloadedmetadata=()=>{videoDuration=pv.duration||recSec;document.getElementById('videoDur').innerText=videoDuration.toFixed(1)+'s';document.getElementById('videoDur2').innerText=videoDuration.toFixed(1)+'s';atualizarTrecho();};document.getElementById('camVideo').style.display='none';document.getElementById('recVideo').style.display='none';document.getElementById('boxAudioEdit').style.display='block';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};recorder.start();isRecording=true;document.getElementById('btnRec').innerText='Grav...';document.getElementById('btnStop').style.display='flex';recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText='00:'+String(recSec).padStart(2,'0')},1000)}
 function pararGravacao(){if(!isRecording) return;isRecording=false;recorder.stop();document.getElementById('btnRec').innerText='● REC';document.getElementById('btnStop').style.display='none';clearInterval(recTimer)}
 function apagarFotoVideo(){pararTUDO();tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('boxAudioEdit').style.display='none';removerMusica();startCamera(false)}
 function fecharEditor(){pararTUDO();document.getElementById('editor').classList.remove('show');tempBlob=null;tempFoto=null;document.getElementById('boxAudioEdit').style.display='none';removerMusica();render()}
+
+function atualizarTrecho(){
+if(!musicaDuration) return;
+const slider=document.getElementById('inicioMusica');
+startOffset=parseFloat(slider.value);
+const maxStart=Math.max(0,musicaDuration - videoDuration);
+if(startOffset>maxStart) {startOffset=maxStart; slider.value=maxStart;}
+document.getElementById('inicioLabel').innerText=formatShort(startOffset);
+const fim=startOffset+videoDuration;
+document.getElementById('trechoLabel').innerText=formatShort(startOffset)+' até '+formatShort(fim)+' ('+videoDuration.toFixed(1)+'s)';
+// visual
+const percStart=(startOffset/musicaDuration)*100;
+const percWidth=(videoDuration/musicaDuration)*100;
+document.getElementById('fillVisu').style.left=percStart+'%';
+document.getElementById('fillVisu').style.width=percWidth+'%';
+document.getElementById('handleVisu').style.left=percStart+'%';
+const a=document.getElementById('audioPreview');
+if(a){a.currentTime=startOffset;}
+}
 
 function previewMusica(){
 const v=document.getElementById('prevVideo');
 const a=document.getElementById('audioPreview');
 if(!tempMusicaBlob){toast('🎵 Escolha uma música primeiro');return}
-const startPerc=parseFloat(document.getElementById('inicioMusica').value)/100;
 a.volume=parseFloat(document.getElementById('volMusica').value);
-a.currentTime=(a.duration||0)*startPerc;
+a.currentTime=startOffset;
 a.play();
-if(v && v.src){v.currentTime=0; v.play().catch(()=>{}); v.muted=false}
-document.getElementById('btnPreview').innerText='⏸️ Pausando...';
-toast('🎵 Tocando sincronizado - vídeo + música juntos');
-
-// sincroniza: quando vídeo reinicia, música reinicia
+if(v && v.src){v.currentTime=0; v.muted=false; v.play().catch(()=>{});}
+document.getElementById('btnPreview').innerText='⏸️ Tocando trecho';
+toast('🎵 Tocando: '+formatShort(startOffset)+' até '+formatShort(startOffset+videoDuration));
 if(syncInterval) clearInterval(syncInterval);
-const deveCortar=document.getElementById('checkSync').checked;
 syncInterval=setInterval(()=>{
-if(!v || v.paused){return}
-if(deveCortar && v.duration && a.duration){
-// se vídeo é menor que música, quando vídeo acabar, reinicia os dois
-if(v.currentTime >= v.duration - 0.2){
-v.currentTime=0;
-a.currentTime=(a.duration*startPerc);
+if(!v || v.paused) return;
+if(a.currentTime >= startOffset+videoDuration -0.1){
+a.currentTime=startOffset;
 a.play().catch(()=>{});
+v.currentTime=0;
 }
+if(v.currentTime >= videoDuration -0.15){
+v.currentTime=0;
+a.currentTime=startOffset;
 }
-},200);
+},100);
 }
 function stopPreviewMusica(){
 const v=document.getElementById('prevVideo');
 const a=document.getElementById('audioPreview');
-a.pause(); v.pause();
+a.pause(); if(v) v.pause();
 if(syncInterval){clearInterval(syncInterval);syncInterval=null}
-document.getElementById('btnPreview').innerText='▶️ Preview';
-toast('⏹️ Pausado - os dois pararam juntos');
+document.getElementById('btnPreview').innerText='▶️ Preview trecho';
 }
 function removerMusica(){
-tempMusicaBlob=null; tempMusicaNome='';
+tempMusicaBlob=null; tempMusicaNome=''; musicaDuration=0;
 document.getElementById('musicaBox').style.display='none';
 const a=document.getElementById('audioPreview'); a.pause(); a.src='';
 if(syncInterval){clearInterval(syncInterval);syncInterval=null}
@@ -282,12 +267,13 @@ document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFo
 document.getElementById('prevVideo').style.display='none';document.getElementById('editor').classList.add('show');
 document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('recVideo').style.display='none';
 document.getElementById('boxAudioEdit').style.display='block';
+videoDuration=3;document.getElementById('videoDur').innerText='3s (foto)';document.getElementById('videoDur2').innerText='3s';
 montarFiltros()
 };r.readAsDataURL(f)
 }else{
 tempBlob=f;tempFoto=null;
 const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(f);pv.style.display='block';pv.muted=false;pv.play();
-pv.onloadedmetadata=()=>{document.getElementById('duracaoInfo').innerText='Vídeo: '+pv.duration.toFixed(1)+'s'};
+pv.onloadedmetadata=()=>{videoDuration=pv.duration;document.getElementById('videoDur').innerText=videoDuration.toFixed(1)+'s';document.getElementById('videoDur2').innerText=videoDuration.toFixed(1)+'s';atualizarTrecho();};
 document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='none';
 document.getElementById('boxAudioEdit').style.display='block';
 montarFiltros()
@@ -296,19 +282,24 @@ montarFiltros()
 
 document.getElementById('fileMusica').addEventListener('change',e=>{
 const f=e.target.files[0];if(!f) return;
-tempMusicaBlob=f;
-tempMusicaNome=f.name;
+tempMusicaBlob=f; tempMusicaNome=f.name;
 const url=URL.createObjectURL(f);
 const a=document.getElementById('audioPreview');
 a.src=url;
 a.volume=parseFloat(document.getElementById('volMusica').value);
 a.onloadedmetadata=()=>{
-document.getElementById('duracaoInfo').innerText+=' | Música: '+a.duration.toFixed(1)+'s';
-document.getElementById('inicioMusica').max=100;
+musicaDuration=a.duration;
+document.getElementById('musicaDur').innerText=formatShort(musicaDuration);
+document.getElementById('fimMusicaLabel').innerText=formatShort(musicaDuration);
+const slider=document.getElementById('inicioMusica');
+slider.max=Math.max(0,musicaDuration - 0.1);
+slider.value=0;
+startOffset=0;
+atualizarTrecho();
 };
 document.getElementById('musicaBox').style.display='block';
 document.getElementById('nomeMusica').innerText=f.name;
-toast('🎵 Música carregada! Agora clica em Preview pra ver sincronizado');
+toast('🎵 Música '+formatShort(musicaDuration)+' carregada! Arraste pra escolher o trecho de '+videoDuration.toFixed(1)+'s');
 });
 
 function togglePlay(card){
@@ -324,24 +315,19 @@ if(audio){
 audio.volume=parseFloat(audio.dataset.vol||0.25);
 audio.currentTime=parseFloat(audio.dataset.start||0);
 audio.play().catch(()=>{});
-}
-v.play().then(()=>{
-// sincroniza loop
-if(audio){
-const deveCortar=audio.dataset.cortar==='1';
+const dur=parseFloat(audio.dataset.vdur||5);
 const start=parseFloat(audio.dataset.start||0);
 if(syncInterval) clearInterval(syncInterval);
 syncInterval=setInterval(()=>{
 if(v.paused){clearInterval(syncInterval);return}
-if(deveCortar && v.duration){
-if(v.currentTime >= v.duration - 0.15){
+if(v.currentTime >= dur -0.15 || audio.currentTime >= start+dur -0.15){
 v.currentTime=0;
 audio.currentTime=start;
 audio.play().catch(()=>{});
 }
+},100);
 }
-},150);
-}
+v.play().then(()=>{
 if(icon){icon.innerHTML='⏸️';icon.classList.add('show');setTimeout(()=>icon.classList.remove('show'),800)}
 }).catch(()=>{})
 },50)
@@ -357,21 +343,19 @@ async function render(){
 const vids=await getVideos();
 const feed=document.getElementById('feed');
 const seguindo=getSeguindo();
-if(!vids.length){feed.innerHTML=`<div class="emptyCard"><div style="font-size:64px">🌊🍓🎵✂️</div><div style="font-size:22px;font-weight:900;margin-top:12px">Caiçara Play V69</div><div style="font-size:13px;opacity:.7;margin-top:8px;text-align:center">Música acompanha tamanho do vídeo<br>Vídeo curto = música curta e reinicia junto</div><button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900">+ Postar</button></div>`;return}
+if(!vids.length){feed.innerHTML=`<div class="emptyCard"><div style="font-size:64px">🌊🍓✂️</div><div style="font-size:22px;font-weight:900;margin-top:12px">V70 - Trecho exato</div><div style="font-size:13px;opacity:.7;margin-top:8px;text-align:center">Grava vídeo de 5s<br>Escolhe qual pedaço de 5s da música usar<br>Ex: 1:23 até 1:28</div><button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900">+ Postar</button></div>`;return}
 feed.innerHTML=vids.map(v=>{
 const url=v.blob?URL.createObjectURL(v.blob):v.fotoData;
 const isFoto=v.type==='foto'||v.fotoData;
 const media=isFoto?`<img src="${url}">`:`<video loop playsinline src="${url}"></video>`;
-let musicaHtml='';
-let musicaBadge='';
+let musicaHtml=''; let musicaBadge='';
 if(v.musicaBlob){
 const mUrl=URL.createObjectURL(v.musicaBlob);
-const startTime=v.musicaStartPerc? (v.musicaStartPerc/100)*0 : 0; // salvo
-musicaHtml=`<audio class="musicaFundo" src="${mUrl}" data-vol="${v.musicaVol||0.25}" data-start="${v.musicaStartTime||0}" data-cortar="${v.musicaCortar?1:0}"></audio>`;
-musicaBadge=`<div class="musicaTag">🎵 ${v.musicaNome||'com música'} • ${Math.round((v.musicaVol||0.25)*100)}% ${v.musicaCortar?'• ✂️ cortada no vídeo':''}</div>`;
+musicaHtml=`<audio class="musicaFundo" src="${mUrl}" data-vol="${v.musicaVol||0.25}" data-start="${v.musicaStart||0}" data-vdur="${v.videoDur||5}"></audio>`;
+musicaBadge=`<div class="musicaTag">🎵 ${formatShort(v.musicaStart||0)}-${formatShort((v.musicaStart||0)+(v.videoDur||5))} • ${Math.round((v.musicaVol||0.25)*100)}%</div>`;
 }
 const user=v.user||'@taki';const jaSegue=seguindo.includes(user);
-return `<div class="card" onclick="togglePlay(this)">${musicaBadge}${musicaHtml}<button class="btnMore" onclick="event.stopPropagation();abrirMenuMais(${v.id})">⋯</button>${media}<div class="centerPlay">▶️</div><div class="side"><div class="followWrap"><button class="sideBtn" onclick="event.stopPropagation();toggleSeguir(this,'${user}')" style="background:#fff;color:#000;font-weight:900">${user.charAt(1)?user.charAt(1).toUpperCase():'T'}</button><div class="followPlus ${jaSegue?'following':''}">${jaSegue?'✓':'+'}</div><div class="sideLabel">${jaSegue?'Seguindo':'Seguir'}</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();toast('❤️')">❤️</button><div class="sideLabel">Curtir</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();pararTUDO(true)">⏹️</button><div class="sideLabel">STOP</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();abrirMenuMais(${v.id})">🗑️</button><div class="sideLabel">Del</div></div></div><div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6">Toque ⏸️/▶️ ${v.musicaBlob?'• 🎵 sincronizada com vídeo':''}</div></div></div>`
+return `<div class="card" onclick="togglePlay(this)">${musicaBadge}${musicaHtml}<button class="btnMore" onclick="event.stopPropagation();abrirMenuMais(${v.id})">⋯</button>${media}<div class="centerPlay">▶️</div><div class="side"><div class="followWrap"><button class="sideBtn" onclick="event.stopPropagation();toggleSeguir(this,'${user}')" style="background:#fff;color:#000;font-weight:900">${user.charAt(1)?user.charAt(1).toUpperCase():'T'}</button><div class="followPlus ${jaSegue?'following':''}">${jaSegue?'✓':'+'}</div><div class="sideLabel">${jaSegue?'Seguindo':'Seguir'}</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();toast('❤️')">❤️</button><div class="sideLabel">Curtir</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();pararTUDO(true)">⏹️</button><div class="sideLabel">STOP</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();abrirMenuMais(${v.id})">🗑️</button><div class="sideLabel">Del</div></div></div><div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6">Toque ⏸️/▶️ ${v.musicaBlob?'• trecho '+formatShort(v.musicaStart||0):''}</div></div></div>`
 }).join('');
 }
 document.getElementById('btnPost').onclick=async()=>{
@@ -380,24 +364,12 @@ if(!tempBlob&&!tempFoto){alert('Grave ou escolha da galeria');return}
 pararTUDO();
 let u=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');
 const vol=parseFloat(document.getElementById('volMusica').value)||0.25;
-const startPerc=parseFloat(document.getElementById('inicioMusica').value)||0;
-const cortar=document.getElementById('checkSync').checked;
-let startTime=0;
-const a=document.getElementById('audioPreview');
-if(a && a.duration){startTime=a.duration*startPerc/100}
-
-const videoData={
-desc, emoji:currentFiltro.emoji, user:u.usuario,
-musicaBlob: tempMusicaBlob, musicaNome: tempMusicaNome, musicaVol: vol,
-musicaStartTime: startTime, musicaStartPerc: startPerc, musicaCortar: cortar
-};
-if(tempFoto){videoData.fotoData=tempFoto; videoData.type='foto'}
-else{videoData.blob=tempBlob; videoData.type='video'}
+const videoData={desc,emoji:currentFiltro.emoji,user:u.usuario,musicaBlob:tempMusicaBlob,musicaNome:tempMusicaNome,musicaVol:vol,musicaStart:startOffset,videoDur:videoDuration};
+if(tempFoto){videoData.fotoData=tempFoto;videoData.type='foto'}else{videoData.blob=tempBlob;videoData.type='video'}
 await addVideo(videoData);
-fecharEditor();
-tempBlob=null;tempFoto=null;tempMusicaBlob=null;tempMusicaNome='';
+fecharEditor();tempBlob=null;tempFoto=null;tempMusicaBlob=null;tempMusicaNome='';
 document.getElementById('musicaBox').style.display='none';
-toast('🚀 Postado! Música sincronizada ✂️🎵');
+toast('🚀 Postado! Trecho '+formatShort(startOffset)+' até '+formatShort(startOffset+videoDuration));
 };
 openDB().then(()=>{
 let users=getUsers();
