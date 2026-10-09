@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Caiçara Play V40 Live Admin</title>
+<title>Caiçara Play V41 Tudo Fix</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#000;color:#fff;height:100dvh;overflow:hidden}
@@ -41,13 +41,14 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .guestBadge{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#ff2d55;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;z-index:50;display:none}
 .liveBadge{position:fixed;top:60px;left:14px;background:#ff2d55;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;z-index:50;display:flex;gap:6px;align-items:center;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.btnTrash{background:#2a0a0a!important;color:#ff6b6b!important;border:1px solid #ff2d55!important;padding:12px 18px!important;border-radius:12px!important;font-weight:800!important;font-size:14px!important}
 </style>
 </head>
 <body>
 <div id="loginScreen" class="loginBg">
 <div style="font-size:52px">🌊🍓</div>
-<h2>Caiçara Play V40</h2>
-<p style="opacity:.7;font-size:11px">LIVE ADMIN 👑 + Filtros + Desenho</p>
+<h2>Caiçara Play V41</h2>
+<p style="opacity:.7;font-size:11px">Lixeira FIX + Desenho FIX + LIVE ADMIN 👑</p>
 <div class="box" id="boxCadastro">
 <label>NOME</label><input id="nome" placeholder="André Taki">
 <label>USUÁRIO</label><input id="usuario" placeholder="@taki">
@@ -74,7 +75,7 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 <div class="liveBadge" id="liveBadge" style="display:none"><span style="width:8px;height:8px;background:#fff;border-radius:50%"></span> AO VIVO</div>
 <div class="top">
 <button id="btnTopLive" onclick="iniciarLive()" style="background:#ff2d55;color:#fff;padding:6px 14px;border-radius:20px;border:none;font-weight:900;font-size:12px;display:flex;align-items:center;gap:4px">🔴 LIVE</button>
-<b id="topTitle">Caiçara V40</b>
+<b id="topTitle">Caiçara V41</b>
 <span id="eu" style="margin-left:auto;font-size:11px;font-weight:700"></span>
 <button id="btnSairVisitante" onclick="sairVisitante()" style="display:none;background:#ff2d55;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;margin-left:8px">Criar conta</button>
 </div>
@@ -98,7 +99,6 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 </div>
 </div>
 
-<!-- MODAL LIVE -->
 <div class="modal" id="liveModal">
 <div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center;background:#000">
 <button onclick="fecharLive()" style="background:none;border:none;color:#fff;font-size:22px">✕</button>
@@ -110,15 +110,9 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 <div style="position:absolute;left:14px;top:14px;background:rgba(0,0,0,.6);padding:8px 12px;border-radius:12px;font-size:12px">
 <div>👑 <b id="liveUser">@taki</b> (ADMIN)</div>
 <div>👁️ <span id="liveViewers">1</span> espectadores</div>
-<div>💬 Comunicado oficial</div>
-</div>
-<div style="position:absolute;right:14px;bottom:100px;display:flex;flex-direction:column;gap:10px">
-<button style="width:48px;height:48px;border-radius:50%;border:none;background:rgba(255,255,255,.2);font-size:20px">❤️</button>
-<button style="width:48px;height:48px;border-radius:50%;border:none;background:rgba(255,255,255,.2);font-size:20px">💬</button>
-<button style="width:48px;height:48px;border-radius:50%;border:none;background:rgba(255,255,255,.2);font-size:20px">↗️</button>
 </div>
 <div style="position:absolute;left:14px;right:14px;bottom:14px;display:flex;gap:8px">
-<input id="liveChat" placeholder="Diga algo na live do admin..." style="flex:1;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:12px;border-radius:20px">
+<input id="liveChat" placeholder="Diga algo na live..." style="flex:1;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:12px;border-radius:20px">
 <button onclick="enviarChatLive()" style="background:#ff2d55;border:none;color:#fff;padding:12px 18px;border-radius:20px;font-weight:800">Enviar</button>
 </div>
 </div>
@@ -140,7 +134,11 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 <img id="prevFoto" style="display:none;width:100%;height:100%;object-fit:contain">
 <video id="camVideo" autoplay muted playsinline style="display:none"></video>
 <div id="stickerLayer"></div>
-<div style="position:absolute;bottom:14px;display:flex;gap:10px;align-items:center;z-index:20"><button id="btnRec" onclick="toggleRec()" style="width:70px;height:70px;border-radius:50%;background:#ff2d55;border:4px solid #fff;display:none"></button><button id="btnFoto" onclick="capturarFoto()" style="width:70px;height:70px;border-radius:50%;background:#fff;border:4px solid #ff2d55;display:none;font-size:28px">📷</button><span id="timer" style="background:#000;padding:6px 10px;border-radius:20px;font-size:11px">00:00</span></div>
+<div style="position:absolute;bottom:14px;display:flex;gap:10px;align-items:center;z-index:20">
+<button id="btnRec" onclick="toggleRec()" style="width:70px;height:70px;border-radius:50%;background:#ff2d55;border:4px solid #fff;display:none"></button>
+<button id="btnFoto" onclick="capturarFoto()" style="width:70px;height:70px;border-radius:50%;background:#fff;border:4px solid #ff2d55;display:none;font-size:28px">📷</button>
+<span id="timer" style="background:#000;padding:6px 10px;border-radius:20px;font-size:11px">00:00</span>
+</div>
 </div>
 <div class="tabs">
 <div class="tab active" id="tab-frutinha" onclick="setTab('frutinha')">🍓 Frutinhas</div>
@@ -148,10 +146,13 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 <div class="tab" id="tab-desenho" onclick="setTab('desenho')">🎨 Desenho</div>
 </div>
 <div class="filters" id="filters"></div>
-<div style="padding:10px;background:#000;display:flex;gap:8px"><button onclick="apagarVideo()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #4a1a1a;padding:12px 14px;border-radius:10px;font-weight:700">🗑️ Apagar</button><input id="leg" placeholder="Legenda..." style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:12px;border-radius:10px"></div>
+<div style="padding:10px;background:#000;display:flex;gap:8px">
+<button onclick="apagarFotoVideo()" class="btnTrash">🗑️ Apagar</button>
+<input id="leg" placeholder="Legenda..." style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:12px;border-radius:10px">
+</div>
 </div>
 <script>
-let db;const DB_NAME='caicara_v40';let isGuest=false;
+let db;const DB_NAME='caicara_v41';let isGuest=false;
 const ADMINS=['@taki','@andretac','@andre','@admin','taki','andretac'];
 function isAdmin(user){if(!user) return false;let u=user.toLowerCase();return ADMINS.some(a=>u.includes(a.replace('@','')))||u==='@taki';}
 function openDB(){return new Promise(res=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('videos')) e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true});};req.onsuccess=e=>{db=e.target.result;res();};});}
@@ -170,16 +171,50 @@ function mostrarLogin(){document.getElementById('boxCadastro').style.display='no
 function cadastrar(){const nome=document.getElementById('nome').value.trim();let usuario=document.getElementById('usuario').value.trim().toLowerCase();const nasc=document.getElementById('nasc').value;const senha=document.getElementById('senha').value;const senha2=document.getElementById('senha2').value;const check=document.getElementById('check').checked;const erro=document.getElementById('erro');erro.style.display='none';if(nome.length<3||usuario.length<3){erro.innerText='Preencha nome e usuário';erro.style.display='block';return;}if(!usuario.startsWith('@'))usuario='@'+usuario;if(!nasc||idadeCalc(nasc)<18){erro.innerText='Precisa 18+';erro.style.display='block';return;}if(senha.length<6||senha!==senha2){erro.innerText='Senha inválida';erro.style.display='block';return;}if(!check){erro.innerText='Marque 18+';erro.style.display='block';return;}let users=getUsers();if(users.find(u=>u.usuario===usuario)){erro.innerText='Já existe';erro.style.display='block';return;}const novo={nome,usuario,nasc,senha};users.push(novo);saveUsers(users);localStorage.setItem('caicara_user',JSON.stringify(novo));localStorage.removeItem('caicara_guest');checarLogin();render();}
 function fazerLogin(){let u=document.getElementById('loginUser').value.toLowerCase();if(!u.startsWith('@'))u='@'+u;let users=getUsers();if(users.length==0){users=[{usuario:'@taki',senha:'123456'},{usuario:'@andretac',senha:'123456'}];saveUsers(users);}let ach=users.find(x=>x.usuario==u);if(!ach){document.getElementById('erro2').innerText='Não existe';document.getElementById('erro2').style.display='block';return;}localStorage.setItem('caicara_user',JSON.stringify(ach));localStorage.removeItem('caicara_guest');checarLogin();render();}
 function sair(){localStorage.removeItem('caicara_user');localStorage.removeItem('caicara_guest');location.reload();}
-function apagarVideo(){tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('leg').value='';}
 
-// LIVE ADMIN
+// ===== FIX LIXEIRINHA - AGORA FUNCIONA 100% =====
+function apagarFotoVideo(){
+console.log('Apagando...', {tempBlob, tempFoto, modo});
+tempBlob=null;
+tempFoto=null;
+chunks=[];
+recSec=0;
+document.getElementById('timer').innerText='00:00';
+document.getElementById('leg').value='';
+const pv=document.getElementById('prevVideo');
+const pf=document.getElementById('prevFoto');
+const cv=document.getElementById('camVideo');
+pv.pause();
+pv.removeAttribute('src');
+pv.style.display='none';
+pf.removeAttribute('src');
+pf.style.display='none';
+cv.style.display='block';
+document.getElementById('stickerLayer').style.display='flex';
+if(modo==='video'){
+document.getElementById('btnRec').style.display='block';
+document.getElementById('btnFoto').style.display='none';
+document.getElementById('btnRec').style.background='#ff2d55';
+isRecording=false;
+if(recorder && recorder.state!=='inactive'){try{recorder.stop();}catch(e){}}
+clearInterval(recTimer);
+}else{
+document.getElementById('btnRec').style.display='none';
+document.getElementById('btnFoto').style.display='block';
+}
+// Se a câmera parou, reinicia
+if(!stream || stream.getTracks().every(t=>t.readyState==='ended')){
+startCamera();
+}
+applyFilter();
+}
+
 let liveStream=null, liveViewerInterval=null;
 async function iniciarLive(){
 if(isGuest){bloqueioVisitante('fazer live');return;}
 const raw=localStorage.getItem('caicara_user');let userObj=null;try{userObj=JSON.parse(raw);}catch(e){}
 const username=userObj?userObj.usuario:'@visitante';
 if(!isAdmin(username)){
-// Verifica requisito para usuário normal
 document.getElementById('titGuest').innerText='LIVE bloqueada 🔒';
 document.getElementById('msgGuest').innerText='Você precisa de 100 seguidores para fazer LIVE. Mas ADMIN @taki tem LIVE liberada sempre! 👑';
 document.getElementById('modalGuest').classList.add('show');
@@ -197,8 +232,8 @@ liveViewerInterval=setInterval(()=>{viewers+=Math.floor(Math.random()*3);documen
 }catch(err){alert('Precisa liberar câmera e microfone para LIVE');fecharLive();}
 }
 function fecharLive(){document.getElementById('liveModal').classList.remove('show');document.getElementById('liveBadge').style.display='none';if(liveStream){liveStream.getTracks().forEach(t=>t.stop());liveStream=null;}clearInterval(liveViewerInterval);}
-function encerrarLive(){if(confirm('Encerrar LIVE?')){fecharLive();alert('LIVE encerrada! 👑 Comunicado enviado para todos!');}}
-function enviarChatLive(){const input=document.getElementById('liveChat');if(input.value.trim()){alert('Mensagem enviada na LIVE: '+input.value);input.value='';}}
+function encerrarLive(){if(confirm('Encerrar LIVE?')){fecharLive();alert('LIVE encerrada! 👑');}}
+function enviarChatLive(){const input=document.getElementById('liveChat');if(input.value.trim()){alert('Mensagem enviada: '+input.value);input.value='';}}
 
 let currentTab='frutinha';
 const allFiltros={
@@ -249,7 +284,7 @@ function togglePlay(card){const v=card.querySelector('video');if(!v)return;if(v.
 function showFeed(){document.getElementById('feed').style.display='block';document.getElementById('grid').style.display='none';render();}
 function showGrid(){document.getElementById('feed').style.display='none';document.getElementById('grid').style.display='grid';render();}
 function curtir(btn,id){if(bloqueioVisitante('curtir'))return;const tx=db.transaction('videos','readwrite');const s=tx.objectStore('videos');s.get(id).onsuccess=e=>{const v=e.target.result;if(!v)return;v.liked=!v.liked;v.likes=(v.likes||0)+(v.liked?1:-1);if(v.likes<0)v.likes=0;s.put(v);btn.innerText=v.liked?'❤️':'🤍';btn.nextElementSibling.innerText=v.likes;};}
-async function render(){const vids=await getVideos();const feed=document.getElementById('feed');const grid=document.getElementById('grid');if(!vids.length){feed.innerHTML=`<div class="card" style="flex-direction:column"><p style="font-size:56px">🌊🍓🎨</p><p style="font-weight:900;margin-top:10px">Caiçara Play V40</p><p style="opacity:.6;font-size:11px">👑 ADMIN LIVE liberada!</p><p style="font-size:10px;opacity:.5;margin-top:6px">${isGuest?'Modo visitante':'Logado: '+document.getElementById('eu').innerText}</p><button onclick="abrirEscolha()" style="margin-top:18px;background:#ff2d55;color:#fff;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Postar / 🔴 LIVE</button></div>`;grid.innerHTML='';return;}feed.innerHTML=vids.map(v=>{const media=v.type==='foto'?`<img src="${v.fotoData}">`:`<video loop playsinline src="${URL.createObjectURL(v.blob)}" muted></video>`;return `<div class="card" onclick="togglePlay(this)">${media}<div class="side"><div style="display:flex;flex-direction:column;align-items:center"><button onclick="event.stopPropagation();curtir(this,${v.id})">${v.liked?'❤️':'🤍'}</button><span>${v.likes||0}</span></div><button onclick="event.stopPropagation();${isGuest?'bloqueioVisitante(\'comentar\')':'alert(\'Em breve\')'}">💬</button></div><div class="info"><b>${v.user}</b><div>${v.emoji||''} ${v.desc}</div></div></div>`;}).join('');grid.innerHTML=vids.map(v=>v.type==='foto'?`<img src="${v.fotoData}" style="width:100%;aspect-ratio:9/16;object-fit:cover">`:`<video src="${URL.createObjectURL(v.blob)}" muted loop style="width:100%;aspect-ratio:9/16;object-fit:cover"></video>`).join('');}
+async function render(){const vids=await getVideos();const feed=document.getElementById('feed');const grid=document.getElementById('grid');if(!vids.length){feed.innerHTML=`<div class="card" style="flex-direction:column"><p style="font-size:56px">🌊🍓🎨</p><p style="font-weight:900;margin-top:10px">V41 Pronto pra divulgar!</p><p style="opacity:.6;font-size:11px">Lixeira FIX + Desenho FIX + LIVE ADMIN 👑</p><button onclick="abrirEscolha()" style="margin-top:18px;background:#ff2d55;color:#fff;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Postar / 🔴 LIVE</button></div>`;grid.innerHTML='';return;}feed.innerHTML=vids.map(v=>{const media=v.type==='foto'?`<img src="${v.fotoData}">`:`<video loop playsinline src="${URL.createObjectURL(v.blob)}" muted></video>`;return `<div class="card" onclick="togglePlay(this)">${media}<div class="side"><div style="display:flex;flex-direction:column;align-items:center"><button onclick="event.stopPropagation();curtir(this,${v.id})">${v.liked?'❤️':'🤍'}</button><span>${v.likes||0}</span></div><button onclick="event.stopPropagation();${isGuest?'bloqueioVisitante(\'comentar\')':'alert(\'Em breve\')'}">💬</button></div><div class="info"><b>${v.user}</b><div>${v.emoji||''} ${v.desc}</div></div></div>`;}).join('');grid.innerHTML=vids.map(v=>v.type==='foto'?`<img src="${v.fotoData}" style="width:100%;aspect-ratio:9/16;object-fit:cover">`:`<video src="${URL.createObjectURL(v.blob)}" muted loop style="width:100%;aspect-ratio:9/16;object-fit:cover"></video>`).join('');}
 document.getElementById('btnPost').onclick=async()=>{if(isGuest){bloqueioVisitante('postar');return;}const me=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');const desc=document.getElementById('leg').value||'Filtro '+currentFiltro.nome+' '+currentFiltro.emoji;if(!tempBlob&&!tempFoto){alert('Tira foto ou vídeo!');return;}document.getElementById('btnPost').innerText='Salvando...';if(tempFoto){await addVideo({user:me.usuario,desc,type:'foto',fotoData:tempFoto,emoji:currentFiltro.emoji,likes:0});}else{await addVideo({user:me.usuario,desc,type:'video',blob:tempBlob,emoji:currentFiltro.emoji,likes:0});}fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('btnPost').innerText='Postar';showFeed();};
 openDB().then(()=>{const users=getUsers();if(users.length==0){saveUsers([{usuario:'@taki',senha:'123456'},{usuario:'@andretac',senha:'123456'}]);}checarLogin();render();});
 </script>
