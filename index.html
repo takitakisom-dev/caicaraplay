@@ -3,29 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Caiçara Play V58 Seguir</title>
+<title>Caiçara Play</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
-html,body{height:100%;height:100dvh;background:#000;color:#fff;overflow:hidden}
-.top{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;padding:0 14px;display:flex;gap:8px;background:linear-gradient(to bottom,rgba(0,0,0,1),rgba(0,0,0,0.5));align-items:center}
-.feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;padding-top:58px;padding-bottom:90px}
-.card{height:calc(100dvh - 58px - 90px);min-height:520px;width:100vw;scroll-snap-align:start;position:relative;background:#0a0a0a;overflow:hidden;display:flex;align-items:center;justify-content:center}
+html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
+.top{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;padding:0 14px;display:flex;align-items:center;gap:10px;background:#000;border-bottom:1px solid #1a1a1a}
+.feed{position:fixed;top:56px;bottom:88px;left:0;right:0;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;background:#000}
+.card{height:100%;min-height:100%;width:100%;scroll-snap-align:start;position:relative;background:#0a0a0a;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .card video,.card img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .side{position:absolute;right:10px;bottom:100px;z-index:30;display:flex;flex-direction:column;gap:18px;align-items:center}
-.sideBtn{width:58px;height:58px;border-radius:50%;border:none;background:rgba(255,255,255,.22);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);position:relative}
+.sideBtn{width:56px;height:56px;border-radius:50%;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center}
 .sideLabel{font-size:10px;font-weight:800;margin-top:4px;text-shadow:0 1px 3px #000;text-align:center}
 .followWrap{display:flex;flex-direction:column;align-items:center;position:relative}
 .followPlus{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:22px;height:22px;background:#ff2d55;border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
 .followPlus.following{background:#00c950}
-.info{position:absolute;left:14px;right:90px;bottom:18px;z-index:15;text-shadow:0 1px 6px #000;line-height:1.3}
-.bottom{position:fixed;bottom:0;left:0;right:0;height:90px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:200;padding-bottom:14px}
-.bottom button{background:none;border:none;color:#fff;font-size:11px;flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.plus{width:58px;height:38px;background:#fff;color:#000;border-radius:14px;font-size:28px;font-weight:900;display:flex;align-items:center;justify-content:center}
-.modal{position:fixed;inset:0;background:#000;z-index:300;display:none;flex-direction:column}.modal.show{display:flex}
-.modalGuest{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}.modalGuest.show{display:flex}
+.info{position:absolute;left:14px;right:90px;bottom:18px;z-index:15;text-shadow:0 1px 6px #000}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:88px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:300;padding-bottom:10px}
+.bottom button{background:none;border:none;color:#fff;font-size:11px;flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bottom button:active{opacity:.6}
+.plus{width:62px;height:42px;background:#fff;color:#000;border-radius:14px;font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.modal{position:fixed;inset:0;background:#000;z-index:400;display:none;flex-direction:column}.modal.show{display:flex}
+.modalGuest{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:none;align-items:center;justify-content:center;padding:16px}.modalGuest.show{display:flex}
 .toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.92);border:2px solid #ff2d55;color:#fff;padding:14px 22px;border-radius:14px;font-weight:800;z-index:600;display:none;text-align:center}.toast.show{display:flex}
-.btnMore{position:absolute;top:70px;right:12px;z-index:30;width:44px;height:44px;background:rgba(0,0,0,.6)!important;border:1px solid rgba(255,255,255,.3)!important;border-radius:50%!important;color:#fff!important;font-size:22px!important}
-.btnKillAudio{background:#ff2d55;color:#fff;border:2px solid #fff;padding:7px 14px;border-radius:20px;font-weight:900;font-size:11px}
+.btnMore{position:absolute;top:14px;right:12px;z-index:30;width:44px;height:44px;background:rgba(0,0,0,.6)!important;border:1px solid rgba(255,255,255,.3)!important;border-radius:50%!important;color:#fff!important;font-size:22px!important}
+.btnKillAudio{background:#ff2d55;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:900;font-size:11px}
 .btnLink{width:100%;padding:11px 16px;border-radius:14px;font-weight:900;font-size:13px;display:flex;justify-content:center;align-items:center;gap:8px;text-decoration:none;color:#fff;border:none;margin-bottom:6px}
 .linksBox{position:absolute;bottom:18px;left:14px;right:92px;z-index:25;display:flex;flex-direction:column;gap:6px}
 .tabs{display:flex;background:#0a0a0a;border-top:1px solid #222}
@@ -38,32 +39,34 @@ html,body{height:100%;height:100dvh;background:#000;color:#fff;overflow:hidden}
 .typeBtn.active{background:#0080c0;border-color:#0080c0}
 #stickerLayer{position:absolute;top:0;left:0;right:0;height:30%;z-index:10;pointer-events:none;display:flex;justify-content:center;align-items:flex-start;padding-top:16px;gap:10px}
 .sticker{font-size:52px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
-.emptyCard{height:calc(100dvh - 148px);width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:radial-gradient(circle at 50% 30%, #1a1a1a, #000)}
+.emptyCard{height:100%;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:radial-gradient(circle at 50% 30%, #1a1a1a, #000)}
 </style>
 </head>
 <body>
 <div id="toast" class="toast"></div>
 <div class="top">
-<b>Caiçara V58</b>
+<b style="font-size:16px">Caiçara Play</b>
 <button onclick="pararTUDO(true)" class="btnKillAudio">🔇 PARAR</button>
 <span style="margin-left:auto;font-size:12px;font-weight:800">@taki 👑</span>
 </div>
+
 <div class="feed" id="feed"></div>
-<div class="bottom">
-<button onclick="showFeed()"><span style="font-size:22px">⌂</span><span>Início</span></button>
-<button onclick="toast('👥 Seguindo: '+(JSON.parse(localStorage.getItem('caicara_seguindo')||'[]').length)+' pessoas')"><span style="font-size:20px">👥</span><span>Seguindo</span></button>
-<button onclick="abrirEscolha()"><div class="plus">+</div></button>
-<button onclick="document.getElementById('fileGaleria').click()"><span style="font-size:20px">🖼️</span><span>Galeria</span></button>
-<button onclick="toast('👤 @taki 👑 - ADMIN')"><span style="font-size:20px">👤</span><span>Perfil</span></button>
+
+<div class="bottom" id="bottomNav">
+<button onclick="acaoInicio()"><span style="font-size:22px">⌂</span><span>Início</span></button>
+<button onclick="acaoSeguindo()"><span style="font-size:20px">👥</span><span>Seguindo</span></button>
+<button onclick="acaoMais()"><div class="plus">+</div></button>
+<button onclick="acaoGaleria()"><span style="font-size:20px">🖼️</span><span>Galeria</span></button>
+<button onclick="acaoPerfil()"><span style="font-size:20px">👤</span><span>Perfil</span></button>
 </div>
 
 <div class="modalGuest" id="modalDel" onclick="if(event.target===this)this.classList.remove('show')">
 <div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px;text-align:center">
-<div style="font-size:48px">🗑️</div><h3>Deletar esse vídeo?</h3>
+<div style="font-size:48px">🗑️</div><h3>Deletar?</h3>
 <div style="display:flex;gap:10px;margin-top:16px">
 <button onclick="document.getElementById('modalDel').classList.remove('show')" style="flex:1;background:#333;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Cancelar</button>
 <button onclick="confirmarDeletar()" style="flex:1;background:#ff2d55;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Deletar</button>
-</div></div>
+</div></div></div>
 
 <div class="modalGuest" id="modalMsg" onclick="if(event.target===this)this.classList.remove('show')">
 <div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px">
@@ -74,22 +77,35 @@ html,body{height:100%;height:100dvh;background:#000;color:#fff;overflow:hidden}
 <button onclick="enviarMsg()" style="flex:1;background:#0080c0;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Enviar</button>
 </div></div></div>
 
+<div class="modalGuest" id="modalPerfil" onclick="if(event.target===this)this.classList.remove('show')">
+<div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px;text-align:center">
+<div style="width:80px;height:80px;background:#fff;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;margin:0 auto">T</div>
+<h2 style="margin-top:12px">@taki 👑</h2>
+<p style="opacity:.6;font-size:13px">Caiçara Play • ADMIN</p>
+<div style="display:flex;gap:10px;margin-top:16px">
+<div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px" id="countVideos">0</div><div style="font-size:11px;opacity:.6">Vídeos</div></div>
+<div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px" id="countSeguindo">0</div><div style="font-size:11px;opacity:.6">Seguindo</div></div>
+<div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px">∞</div><div style="font-size:11px;opacity:.6">Curtidas</div></div>
+</div>
+<button onclick="document.getElementById('modalPerfil').classList.remove('show')" style="width:100%;margin-top:16px;background:#333;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Fechar</button>
+</div></div>
+
 <div class="modal" id="escolha" style="background:rgba(0,0,0,.85);justify-content:flex-end;padding:16px">
 <div style="background:#1e1e1e;border-radius:16px;overflow:hidden">
-<button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO</button>
-<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO</button>
+<button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO TELA CHEIA</button>
+<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO TELA CHEIA</button>
 <button onclick="abrirGaleria()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">📁 GALERIA + FILTROS</button>
 <button onclick="document.getElementById('escolha').classList.remove('show')" style="width:100%;background:none;border:none;color:#999;padding:14px">Cancelar</button>
 </div></div>
 
 <div class="modal" id="editor">
-<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">🍓 Frutinhas</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
+<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Caiçara Play</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
 <div style="flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden">
 <video id="prevVideo" loop playsinline style="width:100%;height:100%;object-fit:cover;display:none"></video>
 <img id="prevFoto" style="display:none;width:100%;height:100%;object-fit:cover">
 <video id="camVideo" autoplay muted playsinline style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
 <div id="stickerLayer"></div>
-<button id="btnMutePreview" onclick="toggleMute()" style="position:absolute;top:70px;left:14px;z-index:25;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.3);color:#fff;width:44px;height:44px;border-radius:50%;display:none">🔊</button>
+<button id="btnMutePreview" onclick="toggleMute()" style="position:absolute;top:14px;left:14px;z-index:25;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.3);color:#fff;width:44px;height:44px;border-radius:50%;display:none">🔊</button>
 <div style="position:absolute;bottom:14px;display:flex;gap:12px;z-index:20">
 <div id="recVideo" style="display:none;gap:12px;align-items:center">
 <button id="btnRec" onclick="iniciarGravacao()" style="width:72px;height:72px;border-radius:50%;background:#ff2d55;border:4px solid #fff;color:#fff;font-weight:900">● REC</button>
@@ -135,7 +151,7 @@ html,body{height:100%;height:100dvh;background:#000;color:#fff;overflow:hidden}
 
 <script>
 let db,idParaDeletar=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,tempBlob=null,tempFoto=null,modo='foto',type1='site',type2='pago',currentTab='frutinha',currentFiltro=null;
-const DB_NAME='caicara_v58';
+const DB_NAME='caicara_play_v59';
 const allFiltros={
 frutinha:[
 {id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
@@ -163,7 +179,7 @@ function addVideo(v){return new Promise(r=>{db.transaction('videos','readwrite')
 function getVideos(){return new Promise(r=>{try{db.transaction('videos','readonly').objectStore('videos').getAll().onsuccess=e=>r(e.target.result.reverse())}catch(e){r([])}})}
 function deleteVideo(id){return new Promise(r=>{db.transaction('videos','readwrite').objectStore('videos').delete(id).onsuccess=r})}
 function pararTUDO(s){try{document.querySelectorAll('video').forEach(v=>{v.pause();v.muted=true});document.getElementById('audioPlayer').pause();if(window._s){window._s.getTracks().forEach(t=>t.stop())}if(stream){stream.getTracks().forEach(t=>t.stop())}}catch(e){} if(s){toast('🔇 Parado!')}}
-function toast(m){const t=document.getElementById('toast');t.innerText=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+function toast(m){const t=document.getElementById('toast');t.innerText=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 function setT(n,t){if(n===1){type1=t;document.querySelectorAll('[id^=t1_]').forEach(b=>b.classList.remove('active'));document.getElementById('t1_'+t).classList.add('active')}else{type2=t;document.querySelectorAll('[id^=t2_]').forEach(b=>b.classList.remove('active'));document.getElementById('t2_'+t).classList.add('active')}}
 function toggleLinks(){const p=document.getElementById('painelLinks');p.style.display=p.style.display==='none'?'block':'none'}
 function getSeguindo(){try{return JSON.parse(localStorage.getItem('caicara_seguindo')||'[]')}catch(e){return[]}}
@@ -176,9 +192,24 @@ else{lista.push(user);toast('✅ Seguindo '+user+'!');btn.querySelector('.follow
 saveSeguindo(lista);
 }
 function abrirMsg(user){document.getElementById('msgPara').innerText=user;document.getElementById('modalMsg').classList.add('show')}
-function enviarMsg(){let txt=document.getElementById('msgTexto').value.trim();if(!txt){toast('Digite!');return}document.getElementById('modalMsg').classList.remove('show');document.getElementById('msgTexto').value='';toast('💬 Enviada!')}
+function enviarMsg(){let txt=document.getElementById('msgTexto').value.trim();if(!txt){toast('Digite!');return}document.getElementById('modalMsg').classList.remove('show');document.getElementById('msgTexto').value='';toast('💬 Enviada para '+document.getElementById('msgPara').innerText)}
 function abrirMenuMais(id){idParaDeletar=id;document.getElementById('modalDel').classList.add('show')}
 async function confirmarDeletar(){if(idParaDeletar!==null){pararTUDO();await deleteVideo(idParaDeletar);document.getElementById('modalDel').classList.remove('show');toast('🗑️ Deletado!');idParaDeletar=null;render()}}
+
+// BOTÕES DE BAIXO - AGORA FUNCIONANDO
+function acaoInicio(){pararTUDO();render();toast('⌂ Início - Caiçara Play');document.getElementById('feed').scrollTop=0}
+function acaoSeguindo(){
+let lista=getSeguindo();
+if(lista.length===0){toast('👥 Você ainda não segue ninguém. Clique em + Seguir nos vídeos!')}
+else{toast('👥 Seguindo '+lista.length+': '+lista.join(', '))}
+}
+function acaoMais(){pararTUDO();document.getElementById('escolha').classList.add('show')}
+function acaoGaleria(){pararTUDO();document.getElementById('fileGaleria').click();toast('📁 Escolha foto ou vídeo da galeria')}
+function acaoPerfil(){
+getVideos().then(vs=>{document.getElementById('countVideos').innerText=vs.length});
+document.getElementById('countSeguindo').innerText=getSeguindo().length;
+document.getElementById('modalPerfil').classList.add('show');
+}
 function abrirEscolha(){pararTUDO();document.getElementById('escolha').classList.add('show')}
 function abrirGaleria(){document.getElementById('escolha').classList.remove('show');document.getElementById('fileGaleria').click()}
 function tirarFotoAgora(){pararTUDO();document.getElementById('escolha').classList.remove('show');modo='foto';abrirCameraFoto()}
@@ -186,7 +217,7 @@ function gravarVideoAgora(){pararTUDO();document.getElementById('escolha').class
 function showFeed(){pararTUDO();render()}
 function setTab(tab){currentTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));let el=document.getElementById('tab-'+tab);if(el) el.classList.add('active');if(tab==='musica'){document.getElementById('fileMusica').click();return}currentFiltro=allFiltros[tab][0];montarFiltros()}
 function montarFiltros(){const lista=allFiltros[currentTab]||allFiltros.frutinha;document.getElementById('filters').innerHTML=lista.map(f=>`<div class="f ${currentFiltro.id===f.id?'active':''}" onclick="setFiltro('${f.id}')"><div><span style="font-size:26px">${f.icon}</span><span>${f.nome}</span></div></div>`).join('');applyFilter()}
-function setFiltro(id){const lista=allFiltros[currentTab];currentFiltro=lista.find(x=>x.id===id);document.querySelectorAll('.f').forEach((el,i)=>el.classList.toggle('active',lista[i].id===id));document.getElementById('editorTit').innerText=(currentFiltro.emoji||currentFiltro.icon)+' '+currentFiltro.nome;applyFilter()}
+function setFiltro(id){const lista=allFiltros[currentTab];currentFiltro=lista.find(x=>x.id===id);document.querySelectorAll('.f').forEach((el,i)=>el.classList.toggle('active',lista[i].id===id));document.getElementById('editorTit').innerText='Caiçara Play - '+(currentFiltro.emoji||currentFiltro.icon)+' '+currentFiltro.nome;applyFilter()}
 function applyFilter(){const v=document.getElementById('camVideo');const pv=document.getElementById('prevVideo');const pf=document.getElementById('prevFoto');const f=currentFiltro.filter||'none';if(v) v.style.filter=f;if(pv) pv.style.filter=f;if(pf) pf.style.filter=f;const layer=document.getElementById('stickerLayer');if(currentFiltro.stickers&&currentFiltro.stickers.length>0){layer.innerHTML=currentFiltro.stickers.map(s=>`<div class="sticker">${s}</div>`).join('');layer.style.display='flex'}else{layer.innerHTML='';layer.style.display='none'}}
 async function startCamera(a){if(stream){stream.getTracks().forEach(t=>t.stop())}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:a});window._s=stream;const v=document.getElementById('camVideo');v.srcObject=stream;v.style.display='block';v.muted=true;await v.play();applyFilter()}
 async function abrirCameraVideo(){pararTUDO();document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('recVideo').style.display='flex';document.getElementById('recFoto').style.display='none';document.getElementById('btnMutePreview').style.display='none';currentTab='frutinha';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-frutinha').classList.add('active');currentFiltro=allFiltros.frutinha[0];montarFiltros();await startCamera(false)}
@@ -208,9 +239,15 @@ const seguindo=getSeguindo();
 if(!vids.length){
 feed.innerHTML=`<div class="emptyCard">
 <div style="font-size:64px">🌊🍓🎨🎵</div>
-<div style="font-size:22px;font-weight:900;margin-top:12px">V58 - Seguir de volta</div>
-<div style="font-size:13px;opacity:.6;margin-top:6px">Botão de seguir na lateral 👉</div>
-<button onclick="abrirEscolha()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900;font-size:15px">+ Postar primeiro vídeo</button>
+<div style="font-size:22px;font-weight:900;margin-top:12px">Caiçara Play</div>
+<div style="font-size:13px;opacity:.6;margin-top:6px">Botões de baixo funcionando 👇</div>
+<button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900;font-size:15px">+ Postar primeiro vídeo</button>
+<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+<button onclick="acaoInicio()" style="background:#222;color:#fff;border:1px solid #333;padding:8px 14px;border-radius:20px;font-size:12px">⌂ Início</button>
+<button onclick="acaoSeguindo()" style="background:#222;color:#fff;border:1px solid #333;padding:8px 14px;border-radius:20px;font-size:12px">👥 Seguindo</button>
+<button onclick="acaoGaleria()" style="background:#222;color:#fff;border:1px solid #333;padding:8px 14px;border-radius:20px;font-size:12px">🖼️ Galeria</button>
+<button onclick="acaoPerfil()" style="background:#222;color:#fff;border:1px solid #333;padding:8px 14px;border-radius:20px;font-size:12px">👤 Perfil</button>
+</div>
 </div>`;return}
 feed.innerHTML=vids.map(v=>{
 const url=v.blob?URL.createObjectURL(v.blob):v.fotoData;
@@ -242,7 +279,7 @@ ${media}
 </div>
 <div style="display:flex;flex-direction:column;align-items:center">
 <button class="sideBtn" onclick="event.stopPropagation();abrirMsg('${user}')">💬</button>
-<div class="sideLabel">Mensagem</div>
+<div class="sideLabel">Msg</div>
 </div>
 <div style="display:flex;flex-direction:column;align-items:center">
 <button class="sideBtn" onclick="event.stopPropagation();pararTUDO(true)">🔇</button>
@@ -254,7 +291,7 @@ ${media}
 </div>
 </div>
 ${btns}
-<div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6;margin-top:4px">👉 Seguir na lateral + Toque p/ som</div></div>
+<div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div></div>
 </div>`
 }).join('');
 }
@@ -268,7 +305,7 @@ if(!tempBlob &&!tempFoto){alert('Grave ou escolha da galeria');return}
 pararTUDO();
 if(tempFoto){await addVideo({desc, fotoData:tempFoto, type:'foto', emoji:currentFiltro.emoji, link1, txt1, type1, link2, txt2, type2, user:'@taki'})}
 else{await addVideo({desc, blob:tempBlob, type:'video', emoji:currentFiltro.emoji, link1, txt1, type1, link2, txt2, type2, user:'@taki'})}
-fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('link1').value='';document.getElementById('txt1').value='';document.getElementById('link2').value='';document.getElementById('txt2').value='';toast('🚀 Postado!');
+fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('link1').value='';document.getElementById('txt1').value='';document.getElementById('link2').value='';document.getElementById('txt2').value='';toast('🚀 Postado no Caiçara Play!');
 };
 openDB().then(()=>{montarFiltros();render()});
 </script>
