@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Caiçara Play V73 Play+Stop+Narr</title>
+<title>Caiçara Play V74 Volumes</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
@@ -46,15 +46,16 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 .sticker{font-size:52px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
 .emptyCard{height:100%;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:radial-gradient(circle at 50% 30%, #1a1a1a, #000)}
 .musicaTag{position:absolute;top:14px;left:14px;z-index:25;background:rgba(255,45,85,.9);padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900}
+.volRow{display:flex;align-items:center;gap:8px;background:#1a1a1a;border-radius:10px;padding:8px;margin-top:8px}
 </style>
 </head>
 <body>
 <div id="toast" class="toast"></div>
 
 <div id="loginScreen" class="loginBg">
-<div style="font-size:52px">🌊🍓⏯️</div>
+<div style="font-size:52px">🌊🔊🎚️</div>
 <h2>Caiçara Play</h2>
-<p style="opacity:.7;font-size:12px">V73 PERFEITO - Play + Stop + Narração</p>
+<p style="opacity:.7;font-size:12px">V74 - Volume do vídeo + música + narração</p>
 <div class="box" id="boxEntrar">
 <label>@USUÁRIO</label><input id="loginUser" value="@taki">
 <label>SENHA</label><input id="loginSenha" type="password" value="Tete1212">
@@ -76,7 +77,7 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 </div>
 </div>
 
-<div class="top"><b>Caiçara Play</b><button onclick="stopAll(true)" class="btnKillAudio">⏹️ STOP GERAL</button><span id="eu" style="margin-left:auto;font-size:12px;font-weight:800"></span></div>
+<div class="top"><b>Caiçara Play</b><button onclick="stopAll(true)" class="btnKillAudio">⏹️ STOP</button><span id="eu" style="margin-left:auto;font-size:12px;font-weight:800"></span></div>
 <div class="feed" id="feed"></div>
 
 <div class="bottom">
@@ -99,7 +100,7 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 </div></div>
 
 <div class="modal" id="editor">
-<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Editar</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
+<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Editar Volumes</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
 <div style="flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden">
 <video id="prevVideo" playsinline style="width:100%;height:100%;object-fit:cover;display:none"></video>
 <img id="prevFoto" style="display:none;width:100%;height:100%;object-fit:cover">
@@ -115,39 +116,57 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 </div>
 </div>
 
-<div id="boxAudioEdit" style="display:none;background:#111;border-top:2px solid #ff2d55;padding:12px;max-height:58vh;overflow-y:auto">
-<div style="font-size:12px;font-weight:900">🎵 Música + 🎙️ Narração - completo</div>
-<div style="display:flex;gap:8px;margin-top:8px">
+<div id="boxAudioEdit" style="display:none;background:#0a0a0a;border-top:2px solid #ff2d55;padding:12px;max-height:68vh;overflow-y:auto">
+<div style="font-size:13px;font-weight:900">🎚️ Controle de volume - ideia PERFEITA sua!</div>
+<div style="font-size:11px;opacity:.7;margin-top:4px">Abaixa o vídeo original quando for narrar por cima</div>
+
+<!-- VOLUME VIDEO ORIGINAL - NOVO! -->
+<div class="volRow">
+<span style="font-size:12px;width:80px">🔊 Vídeo</span>
+<input type="range" id="volVideo" min="0" max="1" step="0.05" value="1" style="flex:1;accent-color:#00c950" oninput="document.getElementById('volVideoTxt').innerText=Math.round(this.value*100)+'%'; document.getElementById('prevVideo').volume=this.value">
+<span id="volVideoTxt" style="font-size:11px;width:36px;font-weight:900">100%</span>
+<button onclick="setVolVideo(1)" style="background:#1a1a1a;border:1px solid #333;color:#fff;padding:4px 8px;border-radius:6px;font-size:10px">100%</button>
+<button onclick="setVolVideo(0.2)" style="background:#1a1a1a;border:1px solid #333;color:#fff;padding:4px 8px;border-radius:6px;font-size:10px">20%</button>
+<button onclick="setVolVideo(0)" style="background:#2a0a0a;border:1px solid #ff2d55;color:#ff6b6b;padding:4px 8px;border-radius:6px;font-size:10px">Mudo</button>
+</div>
+<div style="font-size:10px;opacity:.6;margin-left:88px">Quando gravar narração, deixa em 10-20% ou Mudo</div>
+
+<!-- VOLUME MUSICA -->
+<div style="display:flex;gap:8px;margin-top:12px">
 <button onclick="document.getElementById('fileMusica').click()" style="flex:1;background:#1a1a1a;border:1px dashed #ff2d55;color:#fff;padding:10px;border-radius:10px;font-weight:800;font-size:12px">🎵 Música fundo</button>
 <button onclick="removerMusica()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #ff2d55;padding:10px;border-radius:10px">🗑️</button>
 </div>
-<div id="musicaBox" style="display:none;background:#0a0a0a;border-radius:10px;padding:10px;margin-top:8px">
+<div id="musicaBox" style="display:none;background:#111;border-radius:10px;padding:10px;margin-top:8px;border:1px solid #222">
 <div style="font-size:11px">🎵 <span id="nomeMusica">musica.mp3</span></div>
-<div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-<span style="font-size:10px">Vol</span>
-<input type="range" id="volMusica" min="0" max="1" step="0.05" value="0.25" style="flex:1;accent-color:#ff2d55" oninput="document.getElementById('volTxt').innerText=Math.round(this.value*100)+'%'; document.getElementById('audioPreview').volume=this.value">
-<span id="volTxt" style="font-size:11px;width:30px">25%</span>
-<button onclick="previewMusica()" id="btnPreview" style="background:#00c950;color:#fff;border:none;padding:6px 10px;border-radius:8px">▶️</button>
-<button onclick="stopPreviewMusica()" style="background:#333;color:#fff;border:none;padding:6px 10px;border-radius:8px">⏹️</button>
+<div class="volRow" style="margin-top:8px;background:#0a0a0a">
+<span style="font-size:12px;width:80px">🎵 Música</span>
+<input type="range" id="volMusica" min="0" max="1" step="0.05" value="0.25" style="flex:1;accent-color:#ff2d55" oninput="document.getElementById('volMusicaTxt').innerText=Math.round(this.value*100)+'%'; document.getElementById('audioPreview').volume=this.value">
+<span id="volMusicaTxt" style="font-size:11px;width:36px;font-weight:900">25%</span>
 </div>
 </div>
 
+<!-- NARRACAO -->
 <div style="margin-top:12px;background:#0a1a0a;border:1px solid #00c950;border-radius:12px;padding:10px">
-<div style="font-size:12px;font-weight:900">🎙️ Narração por cima (VOLTOU!)</div>
-<div style="font-size:10px;opacity:.7;margin-top:2px">Grava sua voz explicando por cima do vídeo</div>
+<div style="font-size:12px;font-weight:900">🎙️ Narração por cima</div>
 <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
 <button id="btnNarracao" onclick="toggleNarracao()" style="flex:1;background:#00c950;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900">🎙️ Gravar narração</button>
 <button onclick="removerNarracao()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #ff2d55;padding:8px 10px;border-radius:8px">🗑️</button>
 </div>
 <div id="narrBox" style="display:none;background:#111;border-radius:8px;padding:8px;margin-top:8px">
-<div style="font-size:11px">🎙️ <span id="narrNome">narração gravada</span> • <span id="narrDur">--</span> <span id="narrStatus" style="color:#00ff88;font-weight:800"></span></div>
+<div style="font-size:11px">🎙️ <span id="narrNome">narração gravada</span> • <span id="narrDur">--</span></div>
+<div class="volRow" style="margin-top:8px;background:#0a0a0a">
+<span style="font-size:12px;width:80px">🎙️ Narração</span>
+<input type="range" id="volNarr" min="0" max="1" step="0.05" value="1" style="flex:1;accent-color:#00c950" oninput="document.getElementById('volNarrTxt').innerText=Math.round(this.value*100)+'%'; document.getElementById('audioNarrPreview').volume=this.value">
+<span id="volNarrTxt" style="font-size:11px;width:36px;font-weight:900">100%</span>
+</div>
 </div>
 </div>
 
-<div style="display:flex;gap:8px;margin-top:10px">
-<button onclick="previewCompleto()" style="flex:1;background:#ff2d55;color:#fff;border:none;padding:10px;border-radius:10px;font-weight:900">▶️ Preview TUDO (voz+musica+narr)</button>
-<button onclick="stopPreviewMusica()" style="background:#333;color:#fff;border:none;padding:10px;border-radius:10px">⏹️ STOP</button>
+<div style="display:flex;gap:8px;margin-top:12px">
+<button onclick="previewCompleto()" style="flex:1;background:#ff2d55;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900;font-size:12px">▶️ Preview TUDO com volumes</button>
+<button onclick="stopPreviewMusica()" style="background:#333;color:#fff;border:none;padding:12px;border-radius:10px">⏹️</button>
 </div>
+<div style="font-size:10px;opacity:.6;margin-top:6px;text-align:center">Preview respeita os volumes: Vídeo 20% + Música 25% + Narração 100%</div>
 </div>
 
 <div class="tabs"><div class="tab active" id="tab-frutinha" onclick="setTab('frutinha')">🍓 Frutinhas</div><div class="tab" id="tab-normal" onclick="setTab('normal')">✨ Filtros</div><div class="tab" id="tab-desenho" onclick="setTab('desenho')">🎨 Desenho</div></div>
@@ -162,7 +181,7 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 
 <script>
 let db,idParaDeletar=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,tempBlob=null,tempFoto=null,currentTab='frutinha',currentFiltro=null,tempMusicaBlob=null,tempMusicaNome='',tempNarracaoBlob=null,isNarrRecording=false,narrRecorder=null,narrChunks=[];
-const DB_NAME='caicara_v73_play_stop_narr';
+const DB_NAME='caicara_v74_volumes_video';
 const ADMIN_USER='@taki'; const ADMIN_PASS='Tete1212';
 const allFiltros={
 frutinha:[{id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.25) hue-rotate(230deg) saturate(1.3)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.5) hue-rotate(15deg) saturate(1.2)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},],
@@ -170,22 +189,12 @@ normal:[{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:
 desenho:[{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.9) saturate(2)',stickers:[],emoji:'🎨'},{id:'hq',nome:'HQ',icon:'💥',filter:'contrast(2.8) saturate(2.5)',stickers:[],emoji:'💥'},{id:'lapis',nome:'Lápis',icon:'✏️',filter:'grayscale(1) contrast(2.5)',stickers:[],emoji:'✏️'},{id:'anime',nome:'Anime',icon:'🌸',filter:'contrast(1.7) saturate(2.2)',stickers:[],emoji:'🌸'},]
 };
 currentFiltro=allFiltros.frutinha[0];
+function setVolVideo(v){document.getElementById('volVideo').value=v; document.getElementById('volVideoTxt').innerText=Math.round(v*100)+'%'; document.getElementById('prevVideo').volume=v; toast(v==0?'🔇 Vídeo mutado pra narração':v<0.3?'🔊 Vídeo baixo ('+Math.round(v*100)+'%) pra narração sobressair':'🔊 Vídeo '+Math.round(v*100)+'%');}
 function openDB(){return new Promise(res=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>{e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true})};req.onsuccess=e=>{db=e.target.result;res()}})}
 function addVideo(v){return new Promise(r=>{db.transaction('videos','readwrite').objectStore('videos').add(v).onsuccess=r})}
 function getVideos(){return new Promise(r=>{try{db.transaction('videos','readonly').objectStore('videos').getAll().onsuccess=e=>r(e.target.result.reverse())}catch(e){r([])}})}
 function deleteVideo(id){return new Promise(r=>{db.transaction('videos','readwrite').objectStore('videos').delete(id).onsuccess=r})}
-
-function stopAll(showToast){
-try{
-document.querySelectorAll('.feed video').forEach(v=>{v.pause(); v.currentTime=0;});
-document.querySelectorAll('.feed audio').forEach(a=>{a.pause(); a.currentTime=0;});
-document.getElementById('audioPreview').pause();
-document.getElementById('audioNarrPreview').pause();
-document.querySelectorAll('.centerPlay').forEach(b=>{b.innerHTML='▶️'; b.classList.remove('hidden');});
-if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
-}catch(e){}
-if(showToast) toast('⏹️ STOP - tudo parado');
-}
+function stopAll(s){try{document.querySelectorAll('.feed video').forEach(v=>{v.pause(); v.currentTime=0;});document.querySelectorAll('.feed audio').forEach(a=>{a.pause(); a.currentTime=0;});document.getElementById('audioPreview').pause();document.getElementById('audioNarrPreview').pause();document.querySelectorAll('.centerPlay').forEach(b=>{b.innerHTML='▶️'; b.classList.remove('hidden');});if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}catch(e){} if(s) toast('⏹️ STOP');}
 function toast(m){const t=document.getElementById('toast');t.innerText=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
 function getUsers(){try{return JSON.parse(localStorage.getItem('caicara_users')||'[]')}catch(e){return[]}}
 function saveUsers(u){localStorage.setItem('caicara_users',JSON.stringify(u))}
@@ -217,13 +226,12 @@ async function startCamera(a){if(stream){stream.getTracks().forEach(t=>t.stop())
 async function abrirCameraVideo(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('recVideo').style.display='flex';document.getElementById('recFoto').style.display='none';document.getElementById('boxAudioEdit').style.display='none';currentTab='frutinha';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-frutinha').classList.add('active');currentFiltro=allFiltros.frutinha[0];montarFiltros();await startCamera(false)}
 async function abrirCameraFoto(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('recFoto').style.display='block';document.getElementById('recVideo').style.display='none';document.getElementById('boxAudioEdit').style.display='none';currentTab='frutinha';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-frutinha').classList.add('active');currentFiltro=allFiltros.frutinha[0];montarFiltros();await startCamera(false)}
 function capturarFoto(){const video=document.getElementById('camVideo');const canvas=document.createElement('canvas');canvas.width=video.videoWidth||1280;canvas.height=video.videoHeight||720;const ctx=canvas.getContext('2d');ctx.filter=currentFiltro.filter||'none';ctx.drawImage(video,0,0,canvas.width,canvas.height);if(currentFiltro.stickers&&currentFiltro.stickers.length>0){ctx.font=(canvas.width*0.13)+'px serif';const y=canvas.height*0.18;const gap=canvas.width*0.25;currentFiltro.stickers.forEach((s,i)=>{ctx.fillText(s,gap*(i+0.5),y);});}tempFoto=canvas.toDataURL('image/jpeg',0.92);document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('boxAudioEdit').style.display='block';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}
-async function iniciarGravacao(){if(isRecording) return;await startCamera(true);chunks=[];recSec=0;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(tempBlob);pv.style.display='block';pv.muted=false;pv.play();document.getElementById('camVideo').style.display='none';document.getElementById('recVideo').style.display='none';document.getElementById('boxAudioEdit').style.display='block';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};recorder.start();isRecording=true;document.getElementById('btnRec').innerText='Grav...';document.getElementById('btnStop').style.display='flex';recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText='00:'+String(recSec).padStart(2,'0')},1000)}
-function pararGravacao(){if(!isRecording) return;isRecording=false;recorder.stop();document.getElementById('btnRec').innerText='● REC';document.getElementById('btnStop').style.display='none';clearInterval(recTimer); toast('⏹️ Gravação parada - agora edite com música/narração');}
+async function iniciarGravacao(){if(isRecording) return;await startCamera(true);chunks=[];recSec=0;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(tempBlob);pv.style.display='block';pv.muted=false;pv.volume=parseFloat(document.getElementById('volVideo').value)||1;pv.play();document.getElementById('camVideo').style.display='none';document.getElementById('recVideo').style.display='none';document.getElementById('boxAudioEdit').style.display='block';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};recorder.start();isRecording=true;document.getElementById('btnRec').innerText='Grav...';document.getElementById('btnStop').style.display='flex';recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText='00:'+String(recSec).padStart(2,'0')},1000)}
+function pararGravacao(){if(!isRecording) return;isRecording=false;recorder.stop();document.getElementById('btnRec').innerText='● REC';document.getElementById('btnStop').style.display='none';clearInterval(recTimer);}
 function apagarFotoVideo(){stopAll();tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('boxAudioEdit').style.display='none';removerMusica();removerNarracao();startCamera(false)}
 function fecharEditor(){stopAll();document.getElementById('editor').classList.remove('show');tempBlob=null;tempFoto=null;document.getElementById('boxAudioEdit').style.display='none';removerMusica();removerNarracao();render()}
-
-function previewMusica(){const a=document.getElementById('audioPreview');a.volume=parseFloat(document.getElementById('volMusica').value);a.play();toast('🎵 Música 25%')}
-function stopPreviewMusica(){document.getElementById('audioPreview').pause();document.getElementById('audioPreview').currentTime=0;document.getElementById('audioNarrPreview').pause();document.getElementById('audioNarrPreview').currentTime=0;const v=document.getElementById('prevVideo');if(v){v.pause();}toast('⏹️ STOP preview')}
+function previewMusica(){const a=document.getElementById('audioPreview');a.volume=parseFloat(document.getElementById('volMusica').value);a.play();toast('🎵 Música '+Math.round(a.volume*100)+'%');}
+function stopPreviewMusica(){document.getElementById('audioPreview').pause();document.getElementById('audioPreview').currentTime=0;document.getElementById('audioNarrPreview').pause();document.getElementById('audioNarrPreview').currentTime=0;const v=document.getElementById('prevVideo');if(v){v.pause();}toast('⏹️ STOP');}
 function removerMusica(){tempMusicaBlob=null;document.getElementById('musicaBox').style.display='none';document.getElementById('audioPreview').pause();document.getElementById('audioPreview').src='';}
 async function toggleNarracao(){
 if(isNarrRecording){narrRecorder.stop();return;}
@@ -238,28 +246,29 @@ document.getElementById('audioNarrPreview').src=url;
 document.getElementById('narrBox').style.display='block';
 document.getElementById('narrNome').innerText='gravada '+(tempNarracaoBlob.size/1000).toFixed(0)+'KB';
 document.getElementById('audioNarrPreview').onloadedmetadata=()=>{document.getElementById('narrDur').innerText=document.getElementById('audioNarrPreview').duration.toFixed(1)+'s';};
-document.getElementById('btnNarracao').innerText='🎙️ Regravar narração';
+document.getElementById('btnNarracao').innerText='🎙️ Regravar';
 document.getElementById('btnNarracao').style.background='#333';
-document.getElementById('narrStatus').innerText='✅ Gravada!';
 s.getTracks().forEach(t=>t.stop());isNarrRecording=false;
-toast('🎙️ Narração gravada!');
+toast('🎙️ Narração gravada! Agora abaixa o vídeo pra 15%');
 };
 narrRecorder.start();isNarrRecording=true;
 document.getElementById('btnNarracao').innerText='⏹️ Parar narração (gravando...)';
 document.getElementById('btnNarracao').style.background='#ff2d55';
-document.getElementById('narrStatus').innerText='🔴 Gravando...';
 const v=document.getElementById('prevVideo');if(v&&v.src){v.currentTime=0; v.play().catch(()=>{});}
 }catch(e){toast('❌ Mic negado');}
 }
-function removerNarracao(){tempNarracaoBlob=null;document.getElementById('narrBox').style.display='none';document.getElementById('btnNarracao').innerText='🎙️ Gravar narração';document.getElementById('btnNarracao').style.background='#00c950';document.getElementById('narrStatus').innerText='';const a=document.getElementById('audioNarrPreview');a.pause();a.src='';}
+function removerNarracao(){tempNarracaoBlob=null;document.getElementById('narrBox').style.display='none';document.getElementById('btnNarracao').innerText='🎙️ Gravar narração';document.getElementById('btnNarracao').style.background='#00c950';const a=document.getElementById('audioNarrPreview');a.pause();a.src='';}
 function previewCompleto(){
 const v=document.getElementById('prevVideo');
 const a=document.getElementById('audioPreview');
 const n=document.getElementById('audioNarrPreview');
-if(v&&v.src){v.currentTime=0; v.muted=false; v.play().catch(()=>{});}
-if(a&&a.src){a.volume=parseFloat(document.getElementById('volMusica').value); a.currentTime=0; a.play().catch(()=>{});}
-if(n&&n.src){n.volume=1; n.currentTime=0; n.play().catch(()=>{});}
-toast('▶️ Tocando TUDO: vídeo + música 25% + narração 100%');
+const volV=parseFloat(document.getElementById('volVideo').value)||1;
+const volM=parseFloat(document.getElementById('volMusica').value)||0.25;
+const volN=parseFloat(document.getElementById('volNarr')?.value||1);
+if(v&&v.src){v.volume=volV; v.currentTime=0; v.muted=false; v.play().catch(()=>{});}
+if(a&&a.src){a.volume=volM; a.currentTime=0; a.play().catch(()=>{});}
+if(n&&n.src){n.volume=volN; n.currentTime=0; n.play().catch(()=>{});}
+toast('▶️ Vídeo '+Math.round(volV*100)+'% + Música '+Math.round(volM*100)+'% + Narração '+Math.round(volN*100)+'%');
 }
 
 document.getElementById('fileGaleria').addEventListener('change',e=>{
@@ -275,7 +284,7 @@ montarFiltros()
 };r.readAsDataURL(f)
 }else{
 tempBlob=f;tempFoto=null;
-const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(f);pv.style.display='block';pv.muted=false;pv.play();
+const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(f);pv.style.display='block';pv.muted=false;pv.volume=parseFloat(document.getElementById('volVideo').value)||1;pv.play();
 document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='none';
 document.getElementById('boxAudioEdit').style.display='block';
 montarFiltros()
@@ -289,7 +298,7 @@ document.getElementById('audioPreview').src=url;
 document.getElementById('audioPreview').volume=parseFloat(document.getElementById('volMusica').value);
 document.getElementById('musicaBox').style.display='block';
 document.getElementById('nomeMusica').innerText=f.name;
-toast('🎵 Música carregada!');
+toast('🎵 Música carregada! Ajuste os volumes');
 });
 
 function playCard(card){
@@ -299,24 +308,14 @@ const narr=card.querySelector('audio.narrFundo');
 const btn=card.querySelector('.centerPlay');
 if(!v) return;
 document.querySelectorAll('.feed.card').forEach(c=>{if(c!==card){const vv=c.querySelector('video'); const aa=c.querySelector('audio.musicaFundo'); const nn=c.querySelector('audio.narrFundo'); const bb=c.querySelector('.centerPlay'); if(vv){vv.pause(); vv.currentTime=0;} if(aa){aa.pause(); aa.currentTime=0;} if(nn){nn.pause(); nn.currentTime=0;} if(bb){bb.innerHTML='▶️'; bb.classList.remove('hidden');}}});
-v.muted=false; v.volume=1;
+v.volume=parseFloat(card.dataset.volVideo||1);
+v.muted=false;
 if(v.currentTime>=v.duration-0.05) v.currentTime=0;
 v.play().then(()=>{
-if(audio){audio.volume=parseFloat(audio.dataset.vol||0.25); if(audio.currentTime>=audio.duration-0.05) audio.currentTime=0; audio.play().catch(()=>{});}
-if(narr){if(narr.currentTime>=narr.duration-0.05) narr.currentTime=0; narr.play().catch(()=>{});}
+if(audio){audio.volume=parseFloat(card.dataset.volMusica||0.25); if(audio.currentTime>=audio.duration-0.05) audio.currentTime=0; audio.play().catch(()=>{});}
+if(narr){narr.volume=parseFloat(card.dataset.volNarr||1); if(narr.currentTime>=narr.duration-0.05) narr.currentTime=0; narr.play().catch(()=>{});}
 if(btn){btn.innerHTML='⏸️'; setTimeout(()=>btn.classList.add('hidden'),800);}
 }).catch(()=>{});
-}
-function pauseCard(card){
-const v=card.querySelector('video');
-const audio=card.querySelector('audio.musicaFundo');
-const narr=card.querySelector('audio.narrFundo');
-const btn=card.querySelector('.centerPlay');
-if(v) v.pause();
-if(audio) audio.pause();
-if(narr) narr.pause();
-if(btn){btn.innerHTML='▶️'; btn.classList.remove('hidden');}
-toast('⏸️ Pausado - clica ▶️ PLAY pra continuar');
 }
 function stopCard(card){
 const v=card.querySelector('video');
@@ -327,7 +326,6 @@ if(v){v.pause(); v.currentTime=0;}
 if(audio){audio.pause(); audio.currentTime=0;}
 if(narr){narr.pause(); narr.currentTime=0;}
 if(btn){btn.innerHTML='▶️'; btn.classList.remove('hidden');}
-toast('⏹️ STOP - voltou pro início, clica PLAY pra ver de novo');
 }
 
 async function render(){
@@ -335,7 +333,7 @@ const vids=await getVideos();
 const feed=document.getElementById('feed');
 const seguindo=getSeguindo();
 if(!vids.length){
-feed.innerHTML=`<div class="emptyCard"><div style="font-size:64px">🌊🍓⏯️🎙️</div><div style="font-size:22px;font-weight:900;margin-top:12px">V73 PERFEITO</div><div style="font-size:13px;opacity:.7;margin-top:8px;text-align:center">▶️ PLAY verde pra tocar de novo<br>⏹️ STOP vermelho volta pro início<br>Vídeo não repete sozinho<br>🎙️ Narração + 🎵 Música de volta</div><button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900">+ Postar vídeo</button></div>`;return
+feed.innerHTML=`<div class="emptyCard"><div style="font-size:64px">🌊🔊🎚️</div><div style="font-size:22px;font-weight:900;margin-top:12px">V74 - Volumes</div><div style="font-size:13px;opacity:.7;margin-top:8px;text-align:center">Sua ideia PERFEITA!<br>🔊 Vídeo: controla volume original<br>🎵 Música: 25% fundo<br>🎙️ Narração: 100% por cima<br><br>Quando narrar, deixa vídeo em 10%</div><button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900">+ Postar vídeo</button></div>`;return
 }
 feed.innerHTML=vids.map(v=>{
 const url=v.blob?URL.createObjectURL(v.blob):v.fotoData;
@@ -344,16 +342,18 @@ const media=isFoto?`<img src="${url}">`:`<video playsinline preload="metadata" s
 let musicaHtml=''; let narrHtml=''; let badge='';
 if(v.musicaBlob){
 const mUrl=URL.createObjectURL(v.musicaBlob);
-musicaHtml=`<audio class="musicaFundo" src="${mUrl}" data-vol="${v.musicaVol||0.25}"></audio>`;
-badge+=`<div class="musicaTag">🎵 ${Math.round((v.musicaVol||0.25)*100)}%</div>`;
+musicaHtml=`<audio class="musicaFundo" src="${mUrl}"></audio>`;
 }
 if(v.narracaoBlob){
 const nUrl=URL.createObjectURL(v.narracaoBlob);
 narrHtml=`<audio class="narrFundo" src="${nUrl}"></audio>`;
-badge+=`<div class="musicaTag" style="top:${v.musicaBlob?42:14}px;background:#00c950">🎙️ Narração</div>`;
 }
+const volV=v.volVideo!=null?v.volVideo:1;
+const volM=v.volMusica!=null?v.volMusica:0.25;
+const volN=v.volNarr!=null?v.volNarr:1;
+badge=`<div class="musicaTag">🔊${Math.round(volV*100)}% ${v.musicaBlob?'🎵'+Math.round(volM*100)+'%':''} ${v.narracaoBlob?'🎙️'+Math.round(volN*100)+'%':''}</div>`;
 const user=v.user||'@taki';const jaSegue=seguindo.includes(user);
-return `<div class="card">
+return `<div class="card" data-vol-video="${volV}" data-vol-musica="${volM}" data-vol-narr="${volN}">
 ${badge}${musicaHtml}${narrHtml}
 <button class="btnMore" onclick="event.stopPropagation();abrirMenuMais(${v.id})">⋯</button>
 ${media}
@@ -364,7 +364,7 @@ ${media}
 <div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn sideBtnStop" onclick="event.stopPropagation();stopCard(this.closest('.card'))">⏹️</button><div class="sideLabel" style="color:#ff2d55;font-weight:900">STOP</div></div>
 <div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();abrirMenuMais(${v.id})">🗑️</button><div class="sideLabel">Del</div></div>
 </div>
-<div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6">▶️ PLAY pra ver de novo • ⏹️ STOP volta pro início • Sem repetição</div></div>
+<div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6">🔊 Vídeo ${Math.round(volV*100)}% • Toque PLAY</div></div>
 </div>`
 }).join('');
 }
@@ -373,13 +373,15 @@ const desc=document.getElementById('leg').value||'Vídeo '+(currentFiltro?curren
 if(!tempBlob&&!tempFoto){alert('Grave ou escolha da galeria');return}
 stopAll();
 let u=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');
-const vol=parseFloat(document.getElementById('volMusica').value)||0.25;
-const videoData={desc,emoji:currentFiltro.emoji,user:u.usuario,musicaBlob:tempMusicaBlob,musicaNome:tempMusicaNome,musicaVol:vol,narracaoBlob:tempNarracaoBlob};
+const volVideo=parseFloat(document.getElementById('volVideo').value)||1;
+const volMusica=parseFloat(document.getElementById('volMusica').value)||0.25;
+const volNarr=parseFloat(document.getElementById('volNarr')?.value||1);
+const videoData={desc,emoji:currentFiltro.emoji,user:u.usuario,musicaBlob:tempMusicaBlob,musicaNome:tempMusicaNome,volVideo,volMusica,volNarr,narracaoBlob:tempNarracaoBlob};
 if(tempFoto){videoData.fotoData=tempFoto;videoData.type='foto'}else{videoData.blob=tempBlob;videoData.type='video'}
 await addVideo(videoData);
 fecharEditor();tempBlob=null;tempFoto=null;tempMusicaBlob=null;tempMusicaNome='';tempNarracaoBlob=null;
 document.getElementById('musicaBox').style.display='none';document.getElementById('narrBox').style.display='none';
-toast('🚀 Postado perfeito! Com PLAY + STOP + Narração');
+toast('🚀 Postado! Vídeo '+Math.round(volVideo*100)+'% + Música '+Math.round(volMusica*100)+'%');
 };
 openDB().then(()=>{
 let users=getUsers();
