@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Caiçara Play</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#0a0a0a;color:#fff;padding:16px}
+.box{background:#151515;border:1px solid #222;border-radius:12px;padding:14px;margin-top:12px}
+input{width:100%;padding:12px;background:#111;border:1px solid #333;color:#fff;border-radius:8px;margin-top:10px}
+button{padding:10px 16px;border:none;border-radius:8px;font-weight:800}
+.card{background:#111;border:1px solid #222;border-radius:12px;overflow:hidden;margin-top:12px}
+.card video{width:100%;height:200px;object-fit:cover;background:#000}
+.log{font-size:11px;opacity:.7;background:#000;padding:8px;border-radius:6px;margin-top:6px}
+</style>
+</head>
+<body>
+<div id="login">
+<h1>🛡️ Admin Caiçara</h1>
+<p style="opacity:.6;font-size:13px">Painel do Taki</p>
+<div class="box">
+<input id="pass" type="password" placeholder="Senha">
+<button onclick="logar()" style="background:#fb923c;color:#000;width:100%;margin-top:10px">Entrar</button>
+<p style="font-size:11px;opacity:.5;margin-top:8px">Senha: Taki2026</p>
+</div>
+</div>
+<div id="painel" style="display:none">
+<h1>🛡️ Painel Admin</h1>
+<div class="box" style="display:flex;gap:8px;flex-wrap:wrap">
+<button onclick="carregar()" style="background:#222;color:#fff">🔄 Atualizar</button>
+<button onclick="exportar()" style="background:#fb923c;color:#000">📄 Exportar CSV</button>
+<button onclick="location.href='index.html'" style="background:#111;color:#fff;border:1px solid #333">← App</button>
+</div>
+<div id="grid"></div>
+</div>
+<script>
+const SENHA='Taki2026';
+function logar(){if(document.getElementById('pass').value===SENHA){document.getElementById('login').style.display='none';document.getElementById('painel').style.display='block';openDB().then(carregar);}else alert('Errada');}
+const DB_NAME='caicara_v12';let db;
+function openDB(){return new Promise(r=>{const o=indexedDB.open(DB_NAME,1);o.onupgradeneeded=e=>{e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true});e.target.result.createObjectStore('logs',{keyPath:'id',autoIncrement:true});};o.onsuccess=e=>{db=e.target.result;r();}});}
+function getAll(){return new Promise(res=>{const tx=db.transaction('videos','readonly');tx.objectStore('videos').getAll().onsuccess=e=>res(e.target.result);});}
+function del(id){return new Promise(res=>{const tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(id).onsuccess=res;});}
+async function carregar(){
+ const vids=await getAll();
+ document.getElementById('grid').innerHTML=vids.map(v=>`
+ <div class="card">
+ <video src="${URL.createObjectURL(v.blob)}" controls muted></video>
+ <div style="padding:10px;font-size:12px">
+ <b>${v.user}</b> ${v.local}<br>${v.desc}<br>
+ <div class="log">IP:${v.ip} | ${new Date(v.created).toLocaleString()} | ID:${v.id}</div>
+ <button onclick="del(${v.id}).then(carregar)" style="background:#ff2d55;color:#fff;width:100%;margin-top:8px">🗑️ APAGAR VÍDEO</button>
+ </div></div>`).join('') || '<p style="opacity:.5;margin-top:20px">Nenhum vídeo ainda</p>';
+}
+function exportar(){
+ getAll().then(vids=>{
+  let csv='id,usuario,local,desc,ip,data\n';
+  vids.forEach(v=>{csv+=`${v.id},${v.user},${v.local},"${v.desc}",${v.ip},${new Date(v.created).toISOString()}\n`;});
+  const b=new Blob([csv],{type:'text/csv'}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download='logs.csv'; a.click();
+ });
+}
+</script>
+</body>
+</html>
