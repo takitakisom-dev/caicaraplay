@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Caiçara Play - A rede do Litoral</title>
+<meta name="theme-color" content="#000000">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{background:#000;color:#fff;overflow:hidden}
+.top{position:fixed;top:0;left:0;right:0;z-index:10;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent)}
+.logo{font-weight:900;font-size:22px;letter-spacing:-1px} .logo b{color:#fb923c}
+.chips{position:fixed;top:50px;left:0;right:0;z-index:10;display:flex;gap:8px;padding:8px 12px;overflow-x:auto}
+.chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.1);padding:7px 14px;border-radius:20px;font-size:13px;font-weight:700}
+.chip.active{background:#fff;color:#000}
+.feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
+.feed::-webkit-scrollbar{display:none}
+.card{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#111;display:flex;align-items:center;justify-content:center}
+.card video{width:100%;height:100%;object-fit:cover}
+.info{position:absolute;bottom:95px;left:12px;right:75px;z-index:2}
+.user{font-weight:800;font-size:16px;margin-bottom:6px;text-shadow:0 1px 5px #000}
+.user span{background:#fb923c;color:#000;font-size:11px;padding:2px 7px;border-radius:10px;margin-left:6px}
+.desc{font-size:14px;line-height:1.3;text-shadow:0 1px 5px #000}
+.side{position:absolute;right:10px;bottom:105px;display:flex;flex-direction:column;gap:20px;align-items:center;z-index:2}
+.b{width:50px;height:50px;background:rgba(255,255,255,.18);backdrop-filter:blur(12px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
+.side p{font-size:11px;font-weight:800;margin-top:5px;text-align:center}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:72px;background:#000;border-top:1px solid #1f1f1f;display:flex;justify-content:space-around;align-items:center;z-index:10}
+.bottom button{background:none;border:none;color:#fff;font-size:24px;opacity:.6}
+.bottom button.active{opacity:1}
+.plus{width:52px;height:34px;background:#fff;color:#000;border-radius:8px;font-weight:900;font-size:28px;line-height:34px;opacity:1!important}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo">CAIÇARA <b>PLAY</b></div><div>🔍</div></div>
+<div class="chips"><div class="chip active">Todos</div><div class="chip">Caraguá</div><div class="chip">Ubatuba</div><div class="chip">São Seba</div><div class="chip">Ilhabela</div><div class="chip">Músicos 🎤</div></div>
+<div class="feed">
+<div class="card"><video loop playsinline autoplay muted src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"></video><div class="info"><div class="user">@moraes_vozao<span>Caraguá</span></div><div class="desc">Sambinha na Martim de Sá hoje! Quem colou? 🎤🌊 #caiçara #caragua</div></div><div class="side"><div><div class="b">❤️</div><p>1.2k</p></div><div><div class="b">💬</div><p>89</p></div><div><div class="b">🔗</div><p>Pede Aí</p></div></div></div>
+<div class="card"><video loop playsinline muted src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"></video><div class="info"><div class="user">@acai_top_caragua<span>Caraguá</span></div><div class="desc">COPÃO QUE O LITORAL AMA! Comenta EU QUERO 😱</div></div><div class="side"><div><div class="b">❤️</div><p>3.4k</p></div><div><div class="b">💬</div><p>212</p></div><div><div class="b">🔗</div><p>Whats</p></div></div></div>
+<div class="card"><video loop playsinline muted src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"></video><div class="info"><div class="user">@surf_ubata<span>Ubatuba</span></div><div class="desc">Hoje na Praia Brava 1,5m liso! Quem bora? 🏄‍♂️ #CaiçaraPlay</div></div><div class="side"><div><div class="b">❤️</div><p>892</p></div><div><div class="b">💬</div><p>34</p></div><div><div class="b">🔗</div><p>PIX</p></div></div></div>
+</div>
+<div class="bottom"><button class="active">⌂</button><button>◎</button><button class="plus">+</button><button>✉</button><button>👤</button></div>
+<script>
+const v=document.querySelectorAll('video');
+const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.play().catch(()=>{});else e.target.pause();})},{threshold:0.7});
+v.forEach(x=>o.observe(x));
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(z=>z.classList.remove('active'));c.classList.add('active');}));
+</script>
+</body>
+</html>
