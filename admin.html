@@ -1,63 +1,181 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Caiçara Play</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Caiçara Play</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-body{background:#0a0a0a;color:#fff;padding:16px}
-.box{background:#151515;border:1px solid #222;border-radius:12px;padding:14px;margin-top:12px}
-input{width:100%;padding:12px;background:#111;border:1px solid #333;color:#fff;border-radius:8px;margin-top:10px}
-button{padding:10px 16px;border:none;border-radius:8px;font-weight:800}
-.card{background:#111;border:1px solid #222;border-radius:12px;overflow:hidden;margin-top:12px}
-.card video{width:100%;height:200px;object-fit:cover;background:#000}
-.log{font-size:11px;opacity:.7;background:#000;padding:8px;border-radius:6px;margin-top:6px}
+body{background:#000;color:#fff;height:100dvh;overflow:hidden}
+.top{position:fixed;top:0;left:0;right:0;z-index:20;padding:12px;display:flex;gap:14px;background:linear-gradient(to bottom,rgba(0,0,0,.95),transparent)}
+.top button{border:none;background:none;color:#aaa;font-weight:700}
+.top button.active{color:#fff;border-bottom:2px solid #fff}
+.feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory}
+.card{height:100dvh;width:100vw;scroll-snap-align:start;position:relative;background:#000}
+.card video{width:100%;height:100%;object-fit:cover}
+.tap{position:absolute;inset:0;z-index:2}
+.side{position:absolute;right:6px;bottom:90px;z-index:10;display:flex;flex-direction:column;gap:14px;align-items:center}
+.icon{width:50px;height:50px;border-radius:50%;border:none;background:rgba(255,255,255,.18);color:#fff;font-size:24px}
+.info{position:absolute;left:12px;right:76px;bottom:84px;z-index:5}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:78px;background:#000;border-top:1px solid #151515;display:flex;justify-content:space-around;align-items:center;z-index:30}
+.bottom button{background:none;border:none;color:#fff;display:flex;flex-direction:column;align-items:center;font-size:10px;opacity:.6;flex:1}
+.bottom button.active{opacity:1}
+.plus{width:46px;height:30px;background:#fff;color:#000;border-radius:8px;font-size:26px;font-weight:900;opacity:1!important}
+#fileGaleria{display:none}
+.modal{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column}
+.modal.show{display:flex}
+.editTop{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#000;border-bottom:1px solid #222}
+.preview{flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.preview video{width:100%;height:100%;object-fit:cover}
+.filters{display:flex;gap:10px;padding:10px;overflow-x:auto;background:#0a0a0a;border-top:1px solid #222}
+.f{flex:0 0 68px;text-align:center}
+.f div{width:68px;height:68px;border-radius:12px;background:#222;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid transparent}
+.f.active div{border-color:#fb923c}
+.musics{max-height:130px;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:6px}
+.music{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#121212;border-radius:10px;border:1px solid #222}
+.music.active{border-color:#fb923c;background:#1c1200}
+.camBox{position:absolute;inset:0;background:#000;z-index:5;display:none;flex-direction:column}
+.camBox.show{display:flex}
+.recBar{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:12px;z-index:10;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);padding:14px}
+.btnRec{width:76px;height:76px;border-radius:50%;background:#ff2d55;border:4px solid #fff}
+.timer{font-weight:900;font-size:18px;background:rgba(0,0,0,.6);padding:4px 10px;border-radius:20px}
 </style>
 </head>
 <body>
-<div id="login">
-<h1>🛡️ Admin Caiçara</h1>
-<p style="opacity:.6;font-size:13px">Painel do Taki</p>
-<div class="box">
-<input id="pass" type="password" placeholder="Senha">
-<button onclick="logar()" style="background:#fb923c;color:#000;width:100%;margin-top:10px">Entrar</button>
-<p style="font-size:11px;opacity:.5;margin-top:8px">Senha: Taki2026</p>
+<input type="file" id="fileGaleria" accept="video/*">
+<div class="top"><button style="background:#ff2d55;color:#fff;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:900">LIVE</button><button class="active">Para você</button><button>Seguindo</button></div>
+<div class="feed" id="feed"></div>
+<div class="bottom">
+<button class="active" onclick="location.reload()"><span style="font-size:22px">⌂</span>Início</button>
+<button onclick="alert('Em breve')"><span style="font-size:20px">👥</span>Amigos</button>
+<button onclick="abrirEscolha()" style="opacity:1"><div class="plus">+</div></button>
+<button onclick="alert('99+ msgs - vai pro Whats')"><span style="font-size:20px">💬</span>Mensagens</button>
+<button onclick="location.href='admin.html'"><span style="font-size:20px">🛡️</span>Admin</button>
+</div>
+
+<div class="modal" id="escolha" style="background:rgba(0,0,0,.85);justify-content:flex-end;padding:16px">
+<div style="background:#1c1c1e;border-radius:20px;padding:6px">
+<button onclick="abrirGaleria()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:700;border-bottom:1px solid #333">📁 Escolher da Galeria (até 10 min)</button>
+<button onclick="abrirCamera()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:700;border-bottom:1px solid #333">📷 Gravar Agora (até 10 min)</button>
+<button onclick="document.getElementById('escolha').classList.remove('show')" style="width:100%;background:none;border:none;color:#aaa;padding:16px">Cancelar</button>
 </div>
 </div>
-<div id="painel" style="display:none">
-<h1>🛡️ Painel Admin</h1>
-<div class="box" style="display:flex;gap:8px;flex-wrap:wrap">
-<button onclick="carregar()" style="background:#222;color:#fff">🔄 Atualizar</button>
-<button onclick="exportar()" style="background:#fb923c;color:#000">📄 Exportar CSV</button>
-<button onclick="location.href='index.html'" style="background:#111;color:#fff;border:1px solid #333">← App</button>
+
+<div class="modal" id="editor">
+<div class="editTop"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b>Editar - pode gravar até 10 min</b><button id="btnPost" style="background:#fb923c;border:none;color:#000;padding:8px 18px;border-radius:20px;font-weight:900">Postar</button></div>
+
+<div class="preview">
+<video id="prevVideo" loop playsinline></video>
+<div class="camBox" id="camBox"><video id="camVideo" autoplay muted playsinline style="flex:1;object-fit:cover"></video></div>
+<div class="recBar">
+<button id="btnCam" onclick="abrirCamera()" style="background:#222;color:#fff;border:1px solid #444;padding:8px 12px;border-radius:20px">📷 Câmera</button>
+<button id="btnRec" class="btnRec"></button>
+<div class="timer" id="timer">00:00 / 10:00</div>
+<button onclick="document.getElementById('fileGaleria').click()" style="background:#222;color:#fff;border:1px solid #444;padding:8px 12px;border-radius:20px">📁 Galeria</button>
 </div>
-<div id="grid"></div>
 </div>
+
+<div class="filters" id="filters"></div>
+<div style="padding:8px 12px;background:#000"><b style="font-size:12px">🎵 Música (toca junto, sem limite)</b></div>
+<div class="musics" id="musics"></div>
+<div style="padding:10px;background:#000;display:flex;gap:8px">
+<input id="leg" placeholder="Legenda família..." style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:12px;border-radius:10px">
+<select id="city" style="background:#111;color:#fff;border:1px solid #333;border-radius:10px;padding:8px"><option>Caraguá</option><option>Ubatuba</option><option>São Seba</option><option>Ilhabela</option></select>
+</div>
+</div>
+
 <script>
-const SENHA='Taki2026';
-function logar(){if(document.getElementById('pass').value===SENHA){document.getElementById('login').style.display='none';document.getElementById('painel').style.display='block';openDB().then(carregar);}else alert('Errada');}
-const DB_NAME='caicara_v12';let db;
-function openDB(){return new Promise(r=>{const o=indexedDB.open(DB_NAME,1);o.onupgradeneeded=e=>{e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true});e.target.result.createObjectStore('logs',{keyPath:'id',autoIncrement:true});};o.onsuccess=e=>{db=e.target.result;r();}});}
-function getAll(){return new Promise(res=>{const tx=db.transaction('videos','readonly');tx.objectStore('videos').getAll().onsuccess=e=>res(e.target.result);});}
-function del(id){return new Promise(res=>{const tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(id).onsuccess=res;});}
-async function carregar(){
- const vids=await getAll();
- document.getElementById('grid').innerHTML=vids.map(v=>`
+const DB_NAME='caicara_v12';let db;let userIP='?';
+fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>userIP=d.ip).catch(()=>{});
+function openDB(){return new Promise(res=>{const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=e=>{e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true});e.target.result.createObjectStore('logs',{keyPath:'id',autoIncrement:true});};r.onsuccess=e=>{db=e.target.result;res();}});}
+function addVideo(v){return new Promise(r=>{const tx=db.transaction('videos','readwrite');tx.objectStore('videos').add(v).onsuccess=r;});}
+function getVideos(){return new Promise(res=>{const tx=db.transaction('videos','readonly');tx.objectStore('videos').getAll().onsuccess=e=>res(e.target.result.reverse());});}
+
+let tempBlob=null, filterCSS='none', musica=null, musicAudio=new Audio(), stream=null, recorder=null, chunks=[], recTimer=null, recSec=0;
+
+const filtros=[{id:'none',nome:'Normal',css:'none'},{id:'bw',nome:'P&B',css:'grayscale(1)'},{id:'sepia',nome:'Retrô',css:'sepia(1)'},{id:'vivid',nome:'Vivid',css:'saturate(2) contrast(1.2)'},{id:'praia',nome:'Praia',css:'saturate(1.4) brightness(1.1)'},{id:'sunset',nome:'Sunset',css:'sepia(.3) saturate(1.6)'}];
+const musicas=[{id:'none',nome:'Sem música',autor:'Original',url:''},{id:'m1',nome:'Funk Caiçara',autor:'DJ Litoral',url:'https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a650f6.mp3'},{id:'m2',nome:'Pagode Praia',autor:'Caraguá',url:'https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3'}];
+
+function abrirEscolha(){document.getElementById('escolha').classList.add('show');}
+function abrirGaleria(){document.getElementById('escolha').classList.remove('show');document.getElementById('fileGaleria').click();}
+async function abrirCamera(){
+ document.getElementById('escolha').classList.remove('show');
+ document.getElementById('editor').classList.add('show');
+ document.getElementById('camBox').classList.add('show');
+ try{
+  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:true});
+  document.getElementById('camVideo').srcObject=stream;
+  recorder=new MediaRecorder(stream,{mimeType:'video/webm'});chunks=[];
+  recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+  recorder.onstop=()=>{
+   tempBlob=new Blob(chunks,{type:'video/webm'});
+   document.getElementById('prevVideo').src=URL.createObjectURL(tempBlob);
+   document.getElementById('prevVideo').muted=false;
+   document.getElementById('prevVideo').play();
+   document.getElementById('camBox').classList.remove('show');
+   if(stream)stream.getTracks().forEach(t=>t.stop());
+   clearInterval(recTimer);
+   montar();
+  };
+ }catch(err){alert('Câmera bloqueada: '+err.message);}
+}
+
+document.getElementById('btnRec').onclick=()=>{
+ if(!recorder || recorder.state==='inactive'){
+   if(!stream){abrirCamera();return;}
+   chunks=[];recSec=0;recorder.start(100);
+   document.getElementById('btnRec').style.background='#fff';
+   document.getElementById('btnRec').innerHTML='⏹️';
+   recTimer=setInterval(()=>{
+     recSec++;
+     const m=String(Math.floor(recSec/60)).padStart(2,'0');
+     const s=String(recSec%60).padStart(2,'0');
+     document.getElementById('timer').innerText=m+':'+s+' / 10:00';
+     if(recSec>=600){recorder.stop();}
+   },1000);
+ }else{
+   recorder.stop();
+   document.getElementById('btnRec').style.background='#ff2d55';
+   document.getElementById('btnRec').innerHTML='';
+ }
+};
+
+document.getElementById('fileGaleria').addEventListener('change',e=>{
+ const f=e.target.files[0];if(!f)return;
+ tempBlob=f;
+ document.getElementById('prevVideo').src=URL.createObjectURL(f);
+ document.getElementById('prevVideo').muted=false;
+ document.getElementById('prevVideo').play();
+ document.getElementById('editor').classList.add('show');
+ montar();
+});
+
+function montar(){
+ document.getElementById('filters').innerHTML=filtros.map(f=>`<div class="f ${f.css===filterCSS?'active':''}" onclick="setF('${f.id}')"><div style="filter:${f.css}">${f.nome}</div><div style="font-size:10px;margin-top:4px">${f.nome}</div></div>`).join('');
+ document.getElementById('musics').innerHTML=musicas.map(m=>`<div class="music ${musica?.id===m.id?'active':''}" onclick="setM('${m.id}')"><div><b style="font-size:13px">${m.nome}</b><div style="font-size:11px;opacity:.6">${m.autor}</div></div><div>${m.id==='none'?'':'▶️'}</div></div>`).join('');
+}
+function setF(id){const f=filtros.find(x=>x.id===id);filterCSS=f.css;document.getElementById('prevVideo').style.filter=f.css;document.querySelectorAll('.f').forEach((el,i)=>el.classList.toggle('active',filtros[i].id===id));}
+function setM(id){const m=musicas.find(x=>x.id===id);musica=m.id==='none'?null:m;document.querySelectorAll('.music').forEach(el=>el.classList.remove('active'));event.currentTarget.classList.add('active');if(musica&&musica.url){musicAudio.src=musica.url;musicAudio.loop=true;musicAudio.volume=0.5;musicAudio.play().catch(()=>{});}else musicAudio.pause();}
+function fecharEditor(){document.getElementById('editor').classList.remove('show');document.getElementById('camBox').classList.remove('show');musicAudio.pause();if(stream)stream.getTracks().forEach(t=>t.stop());clearInterval(recTimer);}
+
+async function render(){
+ const vids=await getVideos();
+ const f=document.getElementById('feed');
+ if(!vids.length){f.innerHTML=`<div class="card" style="display:flex;align-items:center;justify-content:center;flex-direction:column"><p>🌊 Caiçara Play</p><p style="opacity:.5;font-size:12px;margin-top:8px">Clica no + pra gravar até 10 min</p></div>`;return;}
+ f.innerHTML=vids.map(v=>`
  <div class="card">
- <video src="${URL.createObjectURL(v.blob)}" controls muted></video>
- <div style="padding:10px;font-size:12px">
- <b>${v.user}</b> ${v.local}<br>${v.desc}<br>
- <div class="log">IP:${v.ip} | ${new Date(v.created).toLocaleString()} | ID:${v.id}</div>
- <button onclick="del(${v.id}).then(carregar)" style="background:#ff2d55;color:#fff;width:100%;margin-top:8px">🗑️ APAGAR VÍDEO</button>
- </div></div>`).join('') || '<p style="opacity:.5;margin-top:20px">Nenhum vídeo ainda</p>';
+ <video loop playsinline src="${URL.createObjectURL(v.blob)}" style="filter:${v.filter||'none'}" muted></video>
+ <div style="position:absolute;inset:0" onclick="const vd=this.parentElement.querySelector('video');vd.muted=false;vd.paused?vd.play():vd.pause()"></div>
+ <div style="position:absolute;left:12px;right:76px;bottom:84px"><b>${v.user}</b> <span style="background:#fb923c;color:#000;font-size:10px;padding:2px 6px;border-radius:8px">${v.local}</span><div style="font-size:13px;margin-top:4px">${v.desc}</div></div>
+ </div>`).join('');
 }
-function exportar(){
- getAll().then(vids=>{
-  let csv='id,usuario,local,desc,ip,data\n';
-  vids.forEach(v=>{csv+=`${v.id},${v.user},${v.local},"${v.desc}",${v.ip},${new Date(v.created).toISOString()}\n`;});
-  const b=new Blob([csv],{type:'text/csv'}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download='logs.csv'; a.click();
- });
-}
+document.getElementById('btnPost').onclick=async()=>{
+ const desc=document.getElementById('leg').value||'Segue aí 🌊';const city=document.getElementById('city').value;
+ if(!tempBlob){alert('Grava ou escolhe um vídeo primeiro');return;}
+ document.getElementById('btnPost').innerText='Salvando...';
+ await addVideo({user:'@Taki',local:city,desc:desc,blob:tempBlob,filter:filterCSS,musicaNome:musica?.nome||null,ip:userIP,created:Date.now()});
+ fecharEditor();tempBlob=null;document.getElementById('leg').value='';document.getElementById('btnPost').innerText='Postar';render();
+};
+openDB().then(render);
 </script>
 </body>
 </html>
