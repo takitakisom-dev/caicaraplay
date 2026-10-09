@@ -3,16 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Caiçara Play V37 Visitante</title>
+<title>Caiçara Play V38 Completo</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .loginBg{position:fixed;inset:0;z-index:99999;background:linear-gradient(180deg,#0d4a7a,#000);display:flex;flex-direction:column;align-items:center;padding:20px 14px 0 14px;overflow-y:auto}
 .box{background:#121212;border:1px solid #2a2a2a;border-radius:18px;padding:16px;width:100%;max-width:380px;margin:12px 0 20px 0}
-.box input,.box select{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#000;color:#fff;margin-top:6px}
+.box input{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#000;color:#fff;margin-top:6px}
 .btn{width:100%;background:#0080c0;color:#fff;border:none;padding:16px;border-radius:12px;font-weight:900;margin-top:18px}
 .btn-guest{width:100%;background:transparent;border:2px solid #fff;color:#fff;padding:14px;border-radius:12px;font-weight:800;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-guest2{position:fixed;bottom:20px;left:14px;right:14px;background:#1a1a1a;border:1px solid #333;color:#fff;padding:14px;border-radius:12px;font-weight:800;z-index:100000;display:flex;align-items:center;justify-content:center;gap:8px;max-width:380px;margin:0 auto}
 .link{color:#4da3ff;font-size:13px;text-align:center;margin-top:14px;display:block;background:none;border:none;width:100%}
 .top{position:fixed;top:0;left:0;right:0;z-index:40;padding:12px 14px;display:flex;gap:12px;background:linear-gradient(to bottom,rgba(0,0,0,.85),transparent);align-items:center}
 .feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory}
@@ -26,48 +25,49 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .plus{width:54px;height:34px;background:#fff;color:#000;border-radius:12px;font-size:26px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .modal{position:fixed;inset:0;background:#000;z-index:200;display:none;flex-direction:column}.modal.show{display:flex}
 .modalGuest{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;display:none;align-items:flex-end;justify-content:center;padding:16px}.modalGuest.show{display:flex}
-.filters{display:flex;gap:10px;padding:12px 10px;overflow-x:auto;background:#0a0a0a;border-top:1px solid #222}
-.f{flex:0 0 76px;text-align:center;cursor:pointer}.f div{width:76px;height:76px;border-radius:16px;background:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;border:3px solid transparent;gap:3px;font-weight:800}.f.active div{border-color:#ff2d55;background:#2a0a15;transform:scale(1.05)}
+.tabs{display:flex;background:#0a0a0a;border-top:1px solid #222}
+.tab{flex:1;padding:12px;text-align:center;font-size:12px;font-weight:800;border-bottom:3px solid transparent;cursor:pointer;opacity:.6}
+.tab.active{opacity:1;border-bottom-color:#ff2d55;background:#1a0a0f}
+.filters{display:flex;gap:10px;padding:12px 10px;overflow-x:auto;background:#111}
+.f{flex:0 0 72px;text-align:center;cursor:pointer}.f div{width:72px;height:72px;border-radius:16px;background:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;border:3px solid transparent;gap:2px;font-weight:800}.f.active div{border-color:#ff2d55;background:#2a0a15;transform:scale(1.05)}
 .grid{padding:70px 2px 80px 2px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;overflow-y:auto;height:100dvh}
 #fileGaleria,#fileFoto{display:none}
 #camVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
-#stickerLayer{position:absolute;top:0;left:0;right:0;height:30%;z-index:10;pointer-events:none;display:flex;justify-content:center;align-items:flex-start;padding-top:18px;gap:12px}
-.sticker{font-size:58px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6));animation:float 2s ease-in-out infinite}
+#stickerLayer{position:absolute;top:0;left:0;right:0;height:28%;z-index:10;pointer-events:none;display:flex;justify-content:center;align-items:flex-start;padding-top:16px;gap:10px}
+.sticker{font-size:54px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6));animation:float 2s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+#canvasCartoon{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:5;display:none}
 .guestBadge{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#ff2d55;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;z-index:50;display:none}
 </style>
 </head>
 <body>
 <div id="loginScreen" class="loginBg">
 <div style="font-size:52px">🌊🍓</div>
-<h2>Caiçara Play</h2>
-<p style="opacity:.7;font-size:12px">Filtros + Frutinhas • Sem zoom</p>
+<h2>Caiçara Play V38</h2>
+<p style="opacity:.7;font-size:11px">Frutinhas + Filtros + Desenho 🎨</p>
 <div class="box" id="boxCadastro">
 <label>NOME</label><input id="nome" placeholder="João Silva">
 <label>USUÁRIO</label><input id="usuario" placeholder="@joao">
 <label>NASCIMENTO</label><input id="nasc" type="date" style="color-scheme:dark">
-<label>SENHA</label><input id="senha" type="password" placeholder="Mínimo 6 dígitos">
+<label>SENHA</label><input id="senha" type="password">
 <label>CONFIRMAR</label><input id="senha2" type="password">
-<div style="display:flex;gap:8px;margin-top:14px"><input type="checkbox" id="check" style="width:18px;height:18px"><label style="margin:0;font-size:12px">Tenho 18+ anos</label></div>
+<div style="display:flex;gap:8px;margin-top:14px"><input type="checkbox" id="check" style="width:18px;height:18px"><label style="margin:0;font-size:12px">Tenho 18+</label></div>
 <div id="erro" style="color:#ff6b6b;display:none;background:#2a0a0a;padding:8px;border-radius:8px;margin-top:8px"></div>
 <button class="btn" onclick="cadastrar()">Criar conta 🚀</button>
 <button class="link" onclick="mostrarLogin()">Já tenho conta? Entrar</button>
-<button class="btn-guest" onclick="entrarComoVisitante()">👀 Espiar sem conta - só visualizar</button>
-<p style="font-size:10px;opacity:.5;text-align:center;margin-top:8px">Pode ver tudo, mas pra curtir e comentar precisa criar conta</p>
+<button class="btn-guest" onclick="entrarComoVisitante()">👀 Espiar sem conta</button>
 </div>
 <div class="box" id="boxEntrar" style="display:none">
-<label>@USUÁRIO</label><input id="loginUser" value="@taki">
-<label>SENHA</label><input id="loginSenha" type="password" value="123456">
-<div id="erro2" style="color:#ff6b6b;display:none;background:#2a0a0a;padding:8px;border-radius:8px;margin-top:8px"></div>
+<label>@USUÁRIO</label><input id="loginUser" value="@taki"><label>SENHA</label><input id="loginSenha" type="password" value="123456">
+<div id="erro2" style="color:#ff6b6b;display:none"></div>
 <button class="btn" onclick="fazerLogin()">Entrar 🔓</button>
-<button class="link" onclick="mostrarCadastro()">Criar conta nova</button>
+<button class="link" onclick="mostrarCadastro()">Criar conta</button>
 <button class="btn-guest" onclick="entrarComoVisitante()">👀 Continuar como visitante</button>
 </div>
 </div>
-
 <input type="file" id="fileGaleria" accept="video/*"><input type="file" id="fileFoto" accept="image/*">
-<div class="guestBadge" id="guestBadge">👀 Modo visitante - só visualização</div>
-<div class="top"><b id="topTitle">Caiçara Play 🍓</b><span id="eu" style="margin-left:auto;font-size:11px;font-weight:700"></span><button id="btnSairVisitante" onclick="sairVisitante()" style="display:none;background:#ff2d55;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;margin-left:8px">Criar conta</button></div>
+<div class="guestBadge" id="guestBadge">👀 Modo visitante</div>
+<div class="top"><b id="topTitle">Caiçara V38 🎨</b><span id="eu" style="margin-left:auto;font-size:11px;font-weight:700"></span><button id="btnSairVisitante" onclick="sairVisitante()" style="display:none;background:#ff2d55;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;margin-left:8px">Criar conta</button></div>
 <div class="feed" id="feed"></div>
 <div class="grid" id="grid" style="display:none"></div>
 <div class="bottom">
@@ -77,110 +77,144 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 <button onclick="showGrid()"><span style="font-size:18px">💬</span><span>Galeria</span></button>
 <button id="btnPerfil" onclick="handlePerfil()"><span style="font-size:18px">👤</span><span id="txtPerfil">Perfil</span></button>
 </div>
-
-<!-- MODAL BLOQUEIO VISITANTE -->
 <div class="modalGuest" id="modalGuest" onclick="if(event.target===this)this.classList.remove('show')">
 <div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:380px;padding:20px;text-align:center">
 <div style="font-size:48px">🔒🍓</div>
 <h3 style="margin-top:12px">Precisa criar conta!</h3>
-<p id="msgGuest" style="opacity:.7;font-size:13px;margin-top:8px">Para curtir, comentar e postar você precisa se cadastrar. É rapidinho!</p>
+<p id="msgGuest" style="opacity:.7;font-size:13px;margin-top:8px">Para interagir precisa se cadastrar!</p>
 <button class="btn" onclick="sairVisitante()">Criar conta agora 🚀</button>
 <button class="link" onclick="document.getElementById('modalGuest').classList.remove('show')">Continuar espiando 👀</button>
 </div>
 </div>
-
 <div class="modal" id="escolha" style="background:rgba(0,0,0,.85);justify-content:flex-end;padding:16px">
 <div style="background:#1e1e1e;border-radius:16px;overflow:hidden">
-<button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO com filtro + frutinhas</button>
-<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO com filtro + frutinhas</button>
-<button onclick="abrirGaleria()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">📁 Vídeo da Galeria</button>
-<button onclick="abrirFoto()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">🖼️ Foto da Galeria</button>
+<button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO com filtros + desenho</button>
+<button onclick="gravarVideoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📹 VÍDEO com filtros + desenho</button>
+<button onclick="abrirGaleria()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">📁 Galeria</button>
 <button onclick="document.getElementById('escolha').classList.remove('show')" style="width:100%;background:none;border:none;color:#999;padding:14px">Cancelar</button>
 </div>
 </div>
 <div class="modal" id="editor">
-<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Filtro + Frutinha</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
+<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Filtros</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
 <div style="flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden">
 <video id="prevVideo" loop playsinline style="width:100%;height:100%;object-fit:contain;display:none"></video>
 <img id="prevFoto" style="display:none;width:100%;height:100%;object-fit:contain">
 <video id="camVideo" autoplay muted playsinline style="display:none"></video>
+<canvas id="canvasCartoon"></canvas>
 <div id="stickerLayer"></div>
 <div style="position:absolute;bottom:14px;display:flex;gap:10px;align-items:center;z-index:20"><button id="btnRec" onclick="toggleRec()" style="width:70px;height:70px;border-radius:50%;background:#ff2d55;border:4px solid #fff;display:none"></button><button id="btnFoto" onclick="capturarFoto()" style="width:70px;height:70px;border-radius:50%;background:#fff;border:4px solid #ff2d55;display:none;font-size:28px">📷</button><span id="timer" style="background:#000;padding:6px 10px;border-radius:20px;font-size:11px">00:00</span></div>
+</div>
+<div class="tabs">
+<div class="tab active" onclick="setTab('frutinha')">🍓 Frutinhas</div>
+<div class="tab" onclick="setTab('normal')">✨ Filtros</div>
+<div class="tab" onclick="setTab('desenho')">🎨 Desenho</div>
 </div>
 <div class="filters" id="filters"></div>
 <div style="padding:10px;background:#000;display:flex;gap:8px"><button onclick="apagarVideo()" style="background:#2a0a0a;color:#ff6b6b;border:1px solid #4a1a1a;padding:12px 14px;border-radius:10px;font-weight:700">🗑️ Apagar</button><input id="leg" placeholder="Legenda..." style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:12px;border-radius:10px"></div>
 </div>
 <script>
-let db;const DB_NAME='caicara_v37';
-let isGuest=false;
+let db;const DB_NAME='caicara_v38';let isGuest=false;
 function openDB(){return new Promise(res=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('videos')) e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true});};req.onsuccess=e=>{db=e.target.result;res();};});}
 function addVideo(v){return new Promise(r=>{const tx=db.transaction('videos','readwrite');tx.objectStore('videos').add(v).onsuccess=r;});}
 function getVideos(){return new Promise(r=>{try{const tx=db.transaction('videos','readonly');tx.objectStore('videos').getAll().onsuccess=e=>r(e.target.result.reverse());}catch(e){r([]);}});}
 function getUsers(){try{return JSON.parse(localStorage.getItem('caicara_users')||'[]');}catch(e){return [];}}
 function saveUsers(u){localStorage.setItem('caicara_users',JSON.stringify(u));}
 function idadeCalc(d){const h=new Date(),n=new Date(d);let i=h.getFullYear()-n.getFullYear(),m=h.getMonth()-n.getMonth();if(m<0||(m===0&&h.getDate()<n.getDate()))i--;return i;}
-function checarLogin(){
-const guest=localStorage.getItem('caicara_guest');
-if(guest==='true'){isGuest=true;document.getElementById('loginScreen').style.display='none';document.getElementById('eu').innerText='👀 Visitante';document.getElementById('guestBadge').style.display='block';document.getElementById('btnSairVisitante').style.display='block';document.getElementById('txtPerfil').innerText='Entrar';return true;}
-const raw=localStorage.getItem('caicara_user');
-if(!raw){mostrarLogin();return false;}
-try{document.getElementById('eu').innerText=JSON.parse(raw).usuario;document.getElementById('loginScreen').style.display='none';document.getElementById('guestBadge').style.display='none';document.getElementById('btnSairVisitante').style.display='none';document.getElementById('txtPerfil').innerText='Perfil';isGuest=false;return true;}catch(e){mostrarLogin();return false;}
-}
-function entrarComoVisitante(){
-localStorage.setItem('caicara_guest','true');
-localStorage.removeItem('caicara_user');
-checarLogin();render();
-}
-function sairVisitante(){
-localStorage.removeItem('caicara_guest');
-localStorage.removeItem('caicara_user');
-location.reload();
-}
-function bloqueioVisitante(acao){
-if(!isGuest) return false;
-let msg='Para '+acao+' você precisa criar uma conta!';
-if(acao==='curtir') msg='Para curtir ❤️ você precisa criar uma conta! É rapidinho.';
-if(acao==='comentar') msg='Para comentar 💬 você precisa criar uma conta!';
-if(acao==='seguir') msg='Para seguir alguém 👥 você precisa criar uma conta!';
-if(acao==='postar') msg='Para postar vídeos e fotos 📹 você precisa criar uma conta!';
-if(acao==='perfil') msg='Crie sua conta para ter seu perfil! 🚀';
-document.getElementById('msgGuest').innerText=msg;
-document.getElementById('modalGuest').classList.add('show');
-return true;
-}
-function handlePerfil(){
-if(isGuest){bloqueioVisitante('perfil');}else{sair();}
-}
+function checarLogin(){const guest=localStorage.getItem('caicara_guest');if(guest==='true'){isGuest=true;document.getElementById('loginScreen').style.display='none';document.getElementById('eu').innerText='👀 Visitante';document.getElementById('guestBadge').style.display='block';document.getElementById('btnSairVisitante').style.display='block';document.getElementById('txtPerfil').innerText='Entrar';return true;}const raw=localStorage.getItem('caicara_user');if(!raw){mostrarLogin();return false;}try{document.getElementById('eu').innerText=JSON.parse(raw).usuario;document.getElementById('loginScreen').style.display='none';document.getElementById('guestBadge').style.display='none';document.getElementById('btnSairVisitante').style.display='none';document.getElementById('txtPerfil').innerText='Perfil';isGuest=false;return true;}catch(e){mostrarLogin();return false;}}
+function entrarComoVisitante(){localStorage.setItem('caicara_guest','true');localStorage.removeItem('caicara_user');checarLogin();render();}
+function sairVisitante(){localStorage.removeItem('caicara_guest');localStorage.removeItem('caicara_user');location.reload();}
+function bloqueioVisitante(acao){if(!isGuest) return false;let msg='Para '+acao+' precisa criar conta!';if(acao==='curtir') msg='Para curtir ❤️ precisa criar conta!';if(acao==='seguir') msg='Para seguir 👥 precisa criar conta!';if(acao==='postar') msg='Para postar 📹 precisa criar conta!';document.getElementById('msgGuest').innerText=msg;document.getElementById('modalGuest').classList.add('show');return true;}
+function handlePerfil(){if(isGuest){bloqueioVisitante('perfil');}else{sair();}}
 function mostrarCadastro(){document.getElementById('boxEntrar').style.display='none';document.getElementById('boxCadastro').style.display='block';}
 function mostrarLogin(){document.getElementById('boxCadastro').style.display='none';document.getElementById('boxEntrar').style.display='block';document.getElementById('loginScreen').style.display='flex';}
 function cadastrar(){const nome=document.getElementById('nome').value.trim();let usuario=document.getElementById('usuario').value.trim().toLowerCase();const nasc=document.getElementById('nasc').value;const senha=document.getElementById('senha').value;const senha2=document.getElementById('senha2').value;const check=document.getElementById('check').checked;const erro=document.getElementById('erro');erro.style.display='none';if(nome.length<3||usuario.length<3){erro.innerText='Preencha nome e usuário';erro.style.display='block';return;}if(!usuario.startsWith('@'))usuario='@'+usuario;if(!nasc||idadeCalc(nasc)<18){erro.innerText='Precisa 18+';erro.style.display='block';return;}if(senha.length<6||senha!==senha2){erro.innerText='Senha inválida';erro.style.display='block';return;}if(!check){erro.innerText='Marque 18+';erro.style.display='block';return;}let users=getUsers();if(users.find(u=>u.usuario===usuario)){erro.innerText='Já existe';erro.style.display='block';return;}const novo={nome,usuario,nasc,senha};users.push(novo);saveUsers(users);localStorage.setItem('caicara_user',JSON.stringify(novo));localStorage.removeItem('caicara_guest');checarLogin();render();}
 function fazerLogin(){let u=document.getElementById('loginUser').value.toLowerCase();if(!u.startsWith('@'))u='@'+u;let users=getUsers();if(users.length==0){users=[{usuario:'@taki',senha:'123456'}];saveUsers(users);}let ach=users.find(x=>x.usuario==u);if(!ach){document.getElementById('erro2').innerText='Não existe';document.getElementById('erro2').style.display='block';return;}localStorage.setItem('caicara_user',JSON.stringify(ach));localStorage.removeItem('caicara_guest');checarLogin();render();}
 function sair(){localStorage.removeItem('caicara_user');localStorage.removeItem('caicara_guest');location.reload();}
-function apagarVideo(){tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('leg').value='';}
-const filtros=[
+function apagarVideo(){tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('canvasCartoon').style.display='none';document.getElementById('leg').value='';}
+
+let currentTab='frutinha';
+const allFiltros={
+frutinha:[
 {id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.3) hue-rotate(-10deg) saturate(1.8) brightness(1.1)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},
-{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.4) hue-rotate(-15deg) saturate(1.6) brightness(1.05)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},
-{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.2) hue-rotate(20deg) saturate(1.5) brightness(1.1)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},
-{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.3) hue-rotate(220deg) saturate(1.4)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},
-{id:'caqui',nome:'Caqui',icon:'🍑',filter:'sepia(0.5) hue-rotate(-20deg) saturate(1.5)',stickers:['🍑','🍑','🍑'],emoji:'🍑'},
-{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.6) hue-rotate(15deg) saturate(1.3) brightness(1.1)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},
-{id:'coco',nome:'Coco',icon:'🥥',filter:'sepia(0.2) brightness(1.15) contrast(0.9)',stickers:['🥥','🥥','🥥'],emoji:'🥥'},
-{id:'pitanga',nome:'Pitanga',icon:'🍒',filter:'sepia(0.4) hue-rotate(-25deg) saturate(2) brightness(1.05)',stickers:['🍒','🍒','🍒'],emoji:'🍒'},
-{id:'condessa',nome:'F.Conde',icon:'🌿',filter:'sepia(0.2) hue-rotate(50deg) saturate(1.3)',stickers:['🍈','🌿','🍈'],emoji:'🌿'},
-];
-let currentFiltro=filtros[0],tempBlob=null,tempFoto=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,modo='foto';
-function montarFiltros(){document.getElementById('filters').innerHTML=filtros.map(f=>`<div class="f ${currentFiltro.id===f.id?'active':''}" onclick="setFiltro('${f.id}')"><div><span style="font-size:26px">${f.icon}</span><span>${f.nome}</span></div></div>`).join('');applyFilter();}
-function setFiltro(id){currentFiltro=filtros.find(x=>x.id===id);document.querySelectorAll('.f').forEach((el,i)=>el.classList.toggle('active',filtros[i].id===id));document.getElementById('editorTit').innerText=currentFiltro.id==='none'?'Normal':currentFiltro.emoji+' '+currentFiltro.nome;applyFilter();}
+{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7) brightness(1.08)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},
+{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},
+{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4) brightness(1.08)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},
+{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.25) hue-rotate(230deg) saturate(1.3)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},
+{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.5) hue-rotate(15deg) saturate(1.2) brightness(1.08)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},
+{id:'pitanga',nome:'Pitanga',icon:'🍒',filter:'sepia(0.35) hue-rotate(-30deg) saturate(1.8)',stickers:['🍒','🍒','🍒'],emoji:'🍒'},
+{id:'coco',nome:'Coco',icon:'🥥',filter:'sepia(0.15) brightness(1.12)',stickers:['🥥','🥥','🥥'],emoji:'🥥'},
+],
+normal:[
+{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
+{id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3) brightness(1.05) contrast(1.05)',stickers:[],emoji:'☀️'},
+{id:'suave',nome:'Suave',icon:'✨',filter:'brightness(1.15) contrast(0.95) saturate(1.1) blur(0.3px)',stickers:[],emoji:'✨'},
+{id:'nitido',nome:'Nítido',icon:'💎',filter:'contrast(1.25) saturate(1.2) brightness(1.05)',stickers:[],emoji:'💎'},
+{id:'pb',nome:'P&B',icon:'⚫',filter:'grayscale(1) contrast(1.1) brightness(1.05)',stickers:[],emoji:'⚫'},
+{id:'vintage',nome:'Vintage',icon:'📼',filter:'sepia(0.7) contrast(1.1) brightness(0.95) saturate(0.8)',stickers:[],emoji:'📼'},
+{id:'frio',nome:'Frio',icon:'❄️',filter:'hue-rotate(180deg) saturate(0.8) brightness(1.05)',stickers:[],emoji:'❄️'},
+{id:'quente',nome:'Quente',icon:'🔥',filter:'sepia(0.5) hue-rotate(-15deg) saturate(1.4) brightness(1.05)',stickers:[],emoji:'🔥'},
+],
+desenho:[
+{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:'',cartoon:false},
+{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.8) saturate(1.8) brightness(1.1)',stickers:[],emoji:'🎨',cartoon:true,type:'cartoon'},
+{id:'quadrinhos',nome:'HQ',icon:'💥',filter:'contrast(2.2) saturate(2) brightness(1.15) grayscale(0.2)',stickers:[],emoji:'💥',cartoon:true,type:'hq'},
+{id:'lapis',nome:'Lápis',icon:'✏️',filter:'grayscale(1) contrast(1.8) brightness(1.2)',stickers:[],emoji:'✏️',cartoon:true,type:'pencil'},
+{id:'oleo',nome:'Óleo',icon:'🖌️',filter:'contrast(1.4) saturate(1.6) brightness(1.05) blur(0.5px)',stickers:[],emoji:'🖌️',cartoon:true,type:'oil'},
+{id:'anime',nome:'Anime',icon:'🌸',filter:'contrast(1.5) saturate(1.7) brightness(1.12) hue-rotate(-5deg)',stickers:[],emoji:'🌸',cartoon:true,type:'anime'},
+]
+};
+
+let currentFiltro=allFiltros.frutinha[0],tempBlob=null,tempFoto=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,modo='foto',cartoonInterval=null;
+
+function setTab(tab){
+currentTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');
+currentFiltro=allFiltros[tab][0];
+montarFiltros();
+}
+function montarFiltros(){
+const lista=allFiltros[currentTab];
+document.getElementById('filters').innerHTML=lista.map(f=>`<div class="f ${currentFiltro.id===f.id?'active':''}" onclick="setFiltro('${f.id}')"><div><span style="font-size:26px">${f.icon}</span><span>${f.nome}</span></div></div>`).join('');
+applyFilter();
+}
+function setFiltro(id){
+const lista=allFiltros[currentTab];
+currentFiltro=lista.find(x=>x.id===id);
+document.querySelectorAll('.f').forEach((el,i)=>el.classList.toggle('active',lista[i].id===id));
+document.getElementById('editorTit').innerText=currentFiltro.emoji+' '+currentFiltro.nome;
+applyFilter();
+}
 function applyFilter(){
 const v=document.getElementById('camVideo');const pv=document.getElementById('prevVideo');const pf=document.getElementById('prevFoto');
+const cartoonCanvas=document.getElementById('canvasCartoon');
+if(currentFiltro.cartoon && modo==='foto'){
+// Foto: aplica filtro direto na imagem
+v.style.filter='none';cartoonCanvas.style.display='none';v.style.display='block';
+}else if(currentFiltro.cartoon && modo==='video'){
+// Vídeo desenho: usa canvas com efeito cartoon
+if(cartoonInterval) clearInterval(cartoonInterval);
+cartoonCanvas.style.display='block';cartoonCanvas.width=v.videoWidth||640;cartoonCanvas.height=v.videoHeight||480;
+const ctx=cartoonCanvas.getContext('2d');
+cartoonInterval=setInterval(()=>{
+if(v.readyState>=2){
+ctx.filter=currentFiltro.filter;
+ctx.drawImage(v,0,0,cartoonCanvas.width,cartoonCanvas.height);
+// efeito extra de contorno para cartoon
+if(currentFiltro.type==='cartoon' || currentFiltro.type==='hq'){
+ctx.globalCompositeOperation='multiply';ctx.filter='none';ctx.drawImage(v,0,0,cartoonCanvas.width,cartoonCanvas.height);ctx.globalCompositeOperation='source-over';
+}
+}
+},50);
+v.style.display='none';
+}else{
+if(cartoonInterval){clearInterval(cartoonInterval);cartoonInterval=null;}
+cartoonCanvas.style.display='none';v.style.display='block';
 v.style.filter=currentFiltro.filter;pv.style.filter=currentFiltro.filter;pf.style.filter=currentFiltro.filter;
+}
 const layer=document.getElementById('stickerLayer');
-if(currentFiltro.id==='none'){layer.innerHTML='';}else{layer.innerHTML=currentFiltro.stickers.map((s,i)=>`<div class="sticker" style="animation-delay:${i*0.3}s">${s}</div>`).join('');}
+if(currentFiltro.stickers && currentFiltro.stickers.length>0){layer.innerHTML=currentFiltro.stickers.map((s,i)=>`<div class="sticker" style="animation-delay:${i*0.3}s">${s}</div>`).join('');layer.style.display='flex';}else{layer.innerHTML='';layer.style.display='none';}
 }
 function abrirEscolha(){if(bloqueioVisitante('postar'))return;document.getElementById('escolha').classList.add('show');}
 function abrirGaleria(){document.getElementById('escolha').classList.remove('show');modo='video';document.getElementById('fileGaleria').click();}
-function abrirFoto(){document.getElementById('escolha').classList.remove('show');modo='foto';document.getElementById('fileFoto').click();}
 function tirarFotoAgora(){document.getElementById('escolha').classList.remove('show');modo='foto';abrirCameraFoto();}
 function gravarVideoAgora(){document.getElementById('escolha').classList.remove('show');modo='video';abrirCameraVideo();}
 async function startCamera(){
@@ -188,14 +222,24 @@ if(stream)stream.getTracks().forEach(t=>t.stop());
 stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480}},audio:modo==='video'});
 const v=document.getElementById('camVideo');v.srcObject=stream;await v.play();applyFilter();
 }
-async function abrirCameraVideo(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('btnRec').style.display='block';document.getElementById('btnFoto').style.display='none';document.getElementById('stickerLayer').style.display='flex';montarFiltros();await startCamera();recorder=new MediaRecorder(stream,{mimeType:'video/webm'});chunks=[];recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});document.getElementById('prevVideo').src=URL.createObjectURL(tempBlob);document.getElementById('prevVideo').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('prevVideo').play();};}
+async function abrirCameraVideo(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('btnRec').style.display='block';document.getElementById('btnFoto').style.display='none';document.getElementById('stickerLayer').style.display='flex';montarFiltros();await startCamera();recorder=new MediaRecorder(stream,{mimeType:'video/webm'});chunks=[];recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});document.getElementById('prevVideo').src=URL.createObjectURL(tempBlob);document.getElementById('prevVideo').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('canvasCartoon').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('prevVideo').play();if(cartoonInterval){clearInterval(cartoonInterval);cartoonInterval=null;}};}
 async function abrirCameraFoto(){document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('btnRec').style.display='none';document.getElementById('btnFoto').style.display='block';document.getElementById('stickerLayer').style.display='flex';montarFiltros();await startCamera();}
 function capturarFoto(){
 const video=document.getElementById('camVideo');
-const canvas=document.createElement('canvas');canvas.width=video.videoWidth;canvas.height=video.videoHeight;
-const ctx=canvas.getContext('2d');ctx.filter=currentFiltro.filter;ctx.drawImage(video,0,0);
-if(currentFiltro.id!=='none'){
-ctx.filter='none';ctx.font=(canvas.width*0.14)+'px serif';
+const cartoonCanvas=document.getElementById('canvasCartoon');
+let sourceCanvas;
+if(currentFiltro.cartoon && cartoonCanvas.style.display!=='none'){
+sourceCanvas=cartoonCanvas;
+}else{
+sourceCanvas=document.createElement('canvas');sourceCanvas.width=video.videoWidth;sourceCanvas.height=video.videoHeight;
+const sctx=sourceCanvas.getContext('2d');sctx.filter=currentFiltro.filter||'none';sctx.drawImage(video,0,0);
+}
+const canvas=document.createElement('canvas');canvas.width=sourceCanvas.width;canvas.height=sourceCanvas.height;
+const ctx=canvas.getContext('2d');
+ctx.drawImage(sourceCanvas,0,0);
+// frutinhas no topo
+if(currentFiltro.stickers && currentFiltro.stickers.length>0){
+ctx.filter='none';ctx.font=(canvas.width*0.13)+'px serif';
 const y=canvas.height*0.18;const gap=canvas.width*0.25;
 currentFiltro.stickers.forEach((s,i)=>{ctx.fillText(s, gap*(i+0.5), y);});
 }
@@ -203,18 +247,20 @@ tempFoto=canvas.toDataURL('image/jpeg',0.92);
 document.getElementById('prevFoto').src=tempFoto;
 document.getElementById('prevFoto').style.display='block';
 document.getElementById('camVideo').style.display='none';
+document.getElementById('canvasCartoon').style.display='none';
 document.getElementById('stickerLayer').style.display='none';
+if(cartoonInterval){clearInterval(cartoonInterval);cartoonInterval=null;}
 }
 function toggleRec(){if(!recorder){abrirCameraVideo();return;}if(!isRecording){chunks=[];recSec=0;isRecording=true;recorder.start(100);document.getElementById('btnRec').style.background='#fff';recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText=String(Math.floor(recSec/60)).padStart(2,'0')+':'+String(recSec%60).padStart(2,'0');},1000);}else{isRecording=false;recorder.stop();document.getElementById('btnRec').style.background='#ff2d55';clearInterval(recTimer);}}
 document.getElementById('fileGaleria').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;tempBlob=f;tempFoto=null;document.getElementById('prevVideo').src=URL.createObjectURL(f);document.getElementById('prevVideo').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('prevVideo').play();document.getElementById('editor').classList.add('show');montarFiltros();});
 document.getElementById('fileFoto').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{tempFoto=ev.target.result;document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('editor').classList.add('show');montarFiltros();};r.readAsDataURL(f);});
-function fecharEditor(){document.getElementById('editor').classList.remove('show');document.getElementById('camVideo').style.display='none';document.getElementById('stickerLayer').style.display='none';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}if(recorder&&recorder.state!=='inactive')recorder.stop();clearInterval(recTimer);isRecording=false;}
+function fecharEditor(){document.getElementById('editor').classList.remove('show');document.getElementById('camVideo').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('canvasCartoon').style.display='none';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}if(recorder&&recorder.state!=='inactive')recorder.stop();clearInterval(recTimer);isRecording=false;if(cartoonInterval){clearInterval(cartoonInterval);cartoonInterval=null;}}
 function togglePlay(card){const v=card.querySelector('video');if(!v)return;if(v.paused){v.play();}else{v.pause();}}
 function showFeed(){document.getElementById('feed').style.display='block';document.getElementById('grid').style.display='none';render();}
 function showGrid(){document.getElementById('feed').style.display='none';document.getElementById('grid').style.display='grid';render();}
 function curtir(btn,id){if(bloqueioVisitante('curtir'))return;const tx=db.transaction('videos','readwrite');const s=tx.objectStore('videos');s.get(id).onsuccess=e=>{const v=e.target.result;if(!v)return;v.liked=!v.liked;v.likes=(v.likes||0)+(v.liked?1:-1);if(v.likes<0)v.likes=0;s.put(v);btn.innerText=v.liked?'❤️':'🤍';btn.nextElementSibling.innerText=v.likes;};}
-async function render(){const vids=await getVideos();const feed=document.getElementById('feed');const grid=document.getElementById('grid');if(!vids.length){feed.innerHTML=`<div class="card" style="flex-direction:column"><p style="font-size:56px">🌊🍓</p><p style="font-weight:900;margin-top:10px">Caiçara Play V37</p><p style="opacity:.6;font-size:12px">Filtros + Frutinhas no topo!</p><p style="opacity:.6;font-size:11px;margin-top:4px">${isGuest?'👀 Você está como visitante':'Logado como '+document.getElementById('eu').innerText}</p><button onclick="abrirEscolha()" style="margin-top:18px;background:#ff2d55;color:#fff;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Postar</button></div>`;grid.innerHTML='';return;}feed.innerHTML=vids.map(v=>{const media=v.type==='foto'?`<img src="${v.fotoData}">`:`<video loop playsinline src="${URL.createObjectURL(v.blob)}" muted></video>`;return `<div class="card" onclick="togglePlay(this)">${media}<div class="side"><div style="display:flex;flex-direction:column;align-items:center"><button onclick="event.stopPropagation();curtir(this,${v.id})">${v.liked?'❤️':'🤍'}</button><span>${v.likes||0}</span></div><button onclick="event.stopPropagation();${isGuest?'bloqueioVisitante(\'comentar\')':'alert(\'Comentários em breve\')'}">💬</button><button onclick="event.stopPropagation();navigator.share?navigator.share({title:'Caiçara',text:'${v.desc}'}):alert('Link copiado')">↗️</button></div><div class="info"><b>${v.user}</b><div>${v.emoji||''} ${v.desc}</div></div></div>`;}).join('');grid.innerHTML=vids.map(v=>v.type==='foto'?`<img src="${v.fotoData}" style="width:100%;aspect-ratio:9/16;object-fit:cover">`:`<video src="${URL.createObjectURL(v.blob)}" muted loop style="width:100%;aspect-ratio:9/16;object-fit:cover"></video>`).join('');}
-document.getElementById('btnPost').onclick=async()=>{if(isGuest){bloqueioVisitante('postar');return;}const me=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');const desc=document.getElementById('leg').value||'Frutinha '+currentFiltro.emoji;if(!tempBlob&&!tempFoto){alert('Tira foto ou vídeo!');return;}document.getElementById('btnPost').innerText='Salvando...';if(tempFoto){await addVideo({user:me.usuario,desc,type:'foto',fotoData:tempFoto,emoji:currentFiltro.emoji,likes:0});}else{await addVideo({user:me.usuario,desc,type:'video',blob:tempBlob,emoji:currentFiltro.emoji,likes:0});}fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('btnPost').innerText='Postar';showFeed();};
+async function render(){const vids=await getVideos();const feed=document.getElementById('feed');const grid=document.getElementById('grid');if(!vids.length){feed.innerHTML=`<div class="card" style="flex-direction:column"><p style="font-size:56px">🌊🍓🎨</p><p style="font-weight:900;margin-top:10px">Caiçara Play V38 Completo</p><p style="opacity:.6;font-size:11px">🍓 Frutinhas • ✨ Filtros • 🎨 Desenho</p><button onclick="abrirEscolha()" style="margin-top:18px;background:#ff2d55;color:#fff;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Postar agora</button></div>`;grid.innerHTML='';return;}feed.innerHTML=vids.map(v=>{const media=v.type==='foto'?`<img src="${v.fotoData}">`:`<video loop playsinline src="${URL.createObjectURL(v.blob)}" muted></video>`;return `<div class="card" onclick="togglePlay(this)">${media}<div class="side"><div style="display:flex;flex-direction:column;align-items:center"><button onclick="event.stopPropagation();curtir(this,${v.id})">${v.liked?'❤️':'🤍'}</button><span>${v.likes||0}</span></div><button onclick="event.stopPropagation();${isGuest?'bloqueioVisitante(\'comentar\')':'alert(\'Em breve\')'}">💬</button></div><div class="info"><b>${v.user}</b><div>${v.emoji||''} ${v.desc}</div></div></div>`;}).join('');grid.innerHTML=vids.map(v=>v.type==='foto'?`<img src="${v.fotoData}" style="width:100%;aspect-ratio:9/16;object-fit:cover">`:`<video src="${URL.createObjectURL(v.blob)}" muted loop style="width:100%;aspect-ratio:9/16;object-fit:cover"></video>`).join('');}
+document.getElementById('btnPost').onclick=async()=>{if(isGuest){bloqueioVisitante('postar');return;}const me=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');const desc=document.getElementById('leg').value||'Filtro '+currentFiltro.nome+' '+currentFiltro.emoji;if(!tempBlob&&!tempFoto){alert('Tira foto ou vídeo!');return;}document.getElementById('btnPost').innerText='Salvando...';if(tempFoto){await addVideo({user:me.usuario,desc,type:'foto',fotoData:tempFoto,emoji:currentFiltro.emoji,likes:0});}else{await addVideo({user:me.usuario,desc,type:'video',blob:tempBlob,emoji:currentFiltro.emoji,likes:0});}fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('btnPost').innerText='Postar';showFeed();};
 openDB().then(()=>{const users=getUsers();if(users.length==0){saveUsers([{usuario:'@taki',senha:'123456'}]);}checarLogin();render();});
 </script>
 </body>
