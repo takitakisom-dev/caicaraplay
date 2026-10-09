@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Caiçara Play V50 Audio Auto</title>
+<title>Caiçara Play V51 - Botão Mata Áudio</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#000;color:#fff;height:100dvh;overflow:hidden}
@@ -13,7 +13,7 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .btn{width:100%;background:#0080c0;color:#fff;border:none;padding:16px;border-radius:12px;font-weight:900;margin-top:18px}
 .btn-guest{width:100%;background:transparent;border:2px solid #fff;color:#fff;padding:14px;border-radius:12px;font-weight:800;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px}
 .link{color:#4da3ff;font-size:13px;text-align:center;margin-top:14px;display:block;background:none;border:none;width:100%}
-.top{position:fixed;top:0;left:0;right:0;z-index:40;padding:12px 14px;display:flex;gap:10px;background:linear-gradient(to bottom,rgba(0,0,0,.85),transparent);align-items:center}
+.top{position:fixed;top:0;left:0;right:0;z-index:40;padding:8px 10px;display:flex;gap:6px;background:linear-gradient(to bottom,rgba(0,0,0,.95),transparent);align-items:center;flex-wrap:wrap}
 .feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory}
 .card{height:100dvh;width:100vw;scroll-snap-align:start;position:relative;background:#0a0a0a;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .card video,.card img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
@@ -46,7 +46,7 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .btnStop{width:56px;height:56px;border-radius:50%;background:#fff;border:3px solid #ff2d55;display:none;align-items:center;justify-content:center;font-size:20px;color:#ff2d55;font-weight:900}
 .btnRec.recording{background:#fff;border-color:#ff2d55;color:#ff2d55;animation:pulseRec 1s infinite}
 @keyframes pulseRec{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.8);background:rgba(0,0,0,0.9);border:2px solid #ff2d55;color:#fff;padding:18px 28px;border-radius:16px;font-weight:800;font-size:16px;z-index:500;display:none;align-items:center;gap:10px;box-shadow:0 0 30px rgba(255,45,85,0.5);text-align:center}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.8);background:rgba(0,0,0,0.95);border:2px solid #ff2d55;color:#fff;padding:18px 28px;border-radius:16px;font-weight:800;font-size:16px;z-index:500;display:none;align-items:center;gap:10px;box-shadow:0 0 30px rgba(255,45,85,0.5);text-align:center}
 .toast.show{display:flex;animation:toastPop 0.3s ease forwards, toastOut 0.3s ease 1.8s forwards}
 @keyframes toastPop{0%{transform:translate(-50%,-50%) scale(0.8);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
 @keyframes toastOut{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(0.8);opacity:0}}
@@ -54,16 +54,18 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 .btnMore{position:absolute;top:50px;right:14px;z-index:20;width:40px;height:40px;background:rgba(0,0,0,.5)!important;border:1px solid rgba(255,255,255,.2)!important;border-radius:50%!important;font-size:20px!important}
 .dashCard{background:#111;border:1px solid #222;border-radius:16px;padding:14px;margin-bottom:10px}
 .dashNum{font-size:28px;font-weight:900;color:#ff2d55}
-.btnMutePreview{position:absolute;top:50px;left:14px;z-index:25;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.3);color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px;display:none;align-items:center;justify-content:center}
+.btnMutePreview{position:absolute;top:60px;left:14px;z-index:25;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.3);color:#fff;width:46px;height:46px;border-radius:50%;font-size:20px;display:none;align-items:center;justify-content:center}
 .btnMutePreview.show{display:flex}
+.btnKillAudio{background:#ff2d55;color:#fff;border:2px solid #fff;padding:8px 14px;border-radius:20px;font-weight:900;font-size:12px;animation:pulseKill 1.2s infinite}
+@keyframes pulseKill{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,45,85,.7)}50%{transform:scale(1.05);box-shadow:0 0 0 8px rgba(255,45,85,0)}}
 </style>
 </head>
 <body>
-<div id="toast" class="toast">🗑️ Apagado!</div>
+<div id="toast" class="toast">🔇 Tudo mutado!</div>
 <div id="loginScreen" class="loginBg">
 <div style="font-size:52px">🌊🍓</div>
-<h2>Caiçara Play V50</h2>
-<p style="opacity:.7;font-size:11px">Áudio Automático no Preview</p>
+<h2>Caiçara Play V51</h2>
+<p style="opacity:.7;font-size:11px">Botão Mata-Áudio + Anti-Embolar</p>
 <div class="box" id="boxCadastro">
 <label>NOME</label><input id="nome" placeholder="André Taki">
 <label>USUÁRIO</label><input id="usuario" placeholder="@taki">
@@ -88,11 +90,13 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 <div class="guestBadge" id="guestBadge">👀 Modo visitante</div>
 <div class="liveBadge" id="liveBadge" style="display:none"><span style="width:8px;height:8px;background:#fff;border-radius:50%"></span> AO VIVO</div>
 <div class="top">
-<button id="btnTopLive" onclick="iniciarLive()" style="background:#ff2d55;color:#fff;padding:6px 14px;border-radius:20px;border:none;font-weight:900;font-size:12px;display:flex;align-items:center;gap:4px">🔴 LIVE</button>
-<b id="topTitle">Caiçara V50</b>
-<button id="btnDash" onclick="abrirDashboard()" style="display:none;background:#00c950;color:#fff;padding:6px 12px;border-radius:20px;border:none;font-weight:900;font-size:11px;margin-left:6px">📊 Dashboard</button>
-<span id="eu" style="margin-left:auto;font-size:11px;font-weight:700"></span>
-<button id="btnSairVisitante" onclick="sairVisitante()" style="display:none;background:#ff2d55;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;margin-left:8px">Criar conta</button>
+<button id="btnTopLive" onclick="iniciarLive()" style="background:#ff2d55;color:#fff;padding:6px 12px;border-radius:20px;border:none;font-weight:900;font-size:11px">🔴 LIVE</button>
+<b id="topTitle">Caiçara V51</b>
+<button id="btnDash" onclick="abrirDashboard()" style="display:none;background:#00c950;color:#fff;padding:6px 10px;border-radius:20px;border:none;font-weight:900;font-size:10px">📊 Dash</button>
+<!-- BOTÃO MATA ÁUDIO - NOVO -->
+<button id="btnKill" onclick="pararTUDO(true)" class="btnKillAudio">🔇 PARAR ÁUDIO</button>
+<span id="eu" style="margin-left:auto;font-size:10px;font-weight:700"></span>
+<button id="btnSairVisitante" onclick="sairVisitante()" style="display:none;background:#ff2d55;color:#fff;border:none;padding:6px 10px;border-radius:20px;font-size:10px;font-weight:800">Criar conta</button>
 </div>
 <div class="feed" id="feed"></div>
 <div class="grid" id="grid" style="display:none"></div>
@@ -133,7 +137,7 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 </div>
 </div>
 <div class="modal" id="dashModal" style="background:#0a0a0a;z-index:250">
-<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222;align-items:center;background:#000;position:sticky;top:0">
+<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222;align-items:center;background:#000">
 <button onclick="document.getElementById('dashModal').classList.remove('show')" style="background:none;border:none;color:#fff;font-size:22px">✕</button>
 <b>📊 Dashboard ADMIN</b>
 <button onclick="exportarRelease()" style="background:#00c950;border:none;color:#fff;padding:8px 14px;border-radius:20px;font-weight:800;font-size:12px">📄 Exportar</button>
@@ -161,7 +165,6 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 <div style="position:absolute;left:14px;top:14px;background:rgba(0,0,0,.75);padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.4">
 <div>👑 <b id="liveUser">@taki</b></div>
 <div id="liveViewerReal">👁️ 0 espectadores</div>
-<div id="liveViewerStatus" style="font-size:10px;opacity:.7;margin-top:2px">Aguardando público...</div>
 </div>
 </div>
 </div>
@@ -175,10 +178,10 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 </div>
 </div>
 <div class="modal" id="editor">
-<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Filtros - Tela Cheia</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
+<div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Filtros</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
 <div style="flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden">
-<!-- BOTÃO MUDO NO PREVIEW -->
 <button id="btnMutePreview" class="btnMutePreview" onclick="toggleMutePreview()">🔊</button>
+<button onclick="pararTUDO(true)" style="position:absolute;top:60px;right:14px;z-index:26;background:#ff2d55;border:2px solid #fff;color:#fff;padding:8px 12px;border-radius:20px;font-weight:900;font-size:11px">🔇 PARAR</button>
 <video id="prevVideo" loop playsinline style="width:100%;height:100%;object-fit:cover;display:none"></video>
 <img id="prevFoto" style="display:none;width:100%;height:100%;object-fit:cover">
 <video id="camVideo" autoplay muted playsinline style="display:none"></video>
@@ -206,7 +209,7 @@ body{background:#000;color:#fff;height:100dvh;overflow:hidden}
 </div>
 </div>
 <script>
-let db;const DB_NAME='caicara_v50';let isGuest=false;let idParaDeletar=null;
+let db;const DB_NAME='caicara_v51';let isGuest=false;let idParaDeletar=null;let audioTravado=false;
 const ADMINS=['@taki','@andretac','@andre','@admin','taki','andretac'];
 function isAdmin(user){if(!user) return false;let u=user.toLowerCase();return ADMINS.some(a=>u.includes(a.replace('@','')))||u==='@taki';}
 function openDB(){return new Promise(res=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('videos')) e.target.result.createObjectStore('videos',{keyPath:'id',autoIncrement:true});};req.onsuccess=e=>{db=e.target.result;res();};});}
@@ -217,53 +220,63 @@ function getUsers(){try{return JSON.parse(localStorage.getItem('caicara_users')|
 function saveUsers(u){localStorage.setItem('caicara_users',JSON.stringify(u));}
 function idadeCalc(d){const h=new Date(),n=new Date(d);let i=h.getFullYear()-n.getFullYear(),m=h.getMonth()-n.getMonth();if(m<0||(m===0&&h.getDate()<n.getDate()))i--;return i;}
 
-function pararTUDO(){
+// === TRAVA MESTRE ANTI-EMBOLAR V51 ===
+function pararTUDO(mostrarToastFlag=false){
 try{
-document.querySelectorAll('.feed video, #grid video').forEach(v=>{v.pause(); v.muted=true; v.volume=0;});
-if(window._streamGlobal){window._streamGlobal.getTracks().forEach(t=>t.stop());window._streamGlobal=null;}
-if(window._liveStreamGlobal){window._liveStreamGlobal.getTracks().forEach(t=>t.stop());window._liveStreamGlobal=null;}
+audioTravado=true;
+// Mata TODOS os vídeos, em QUALQUER lugar
+document.querySelectorAll('video').forEach(v=>{
+try{
+v.pause();
+v.muted=true;
+v.volume=0;
+v.currentTime=0;
+}catch(e){}
+});
+// Mata câmera/mic que tiver aberta
+if(window._streamGlobal){window._streamGlobal.getTracks().forEach(t=>{try{t.stop();}catch(e){}});window._streamGlobal=null;}
+if(window._liveStreamGlobal){window._liveStreamGlobal.getTracks().forEach(t=>{try{t.stop();}catch(e){}});window._liveStreamGlobal=null;}
 if(typeof stream!=='undefined' && stream){try{stream.getTracks().forEach(t=>t.stop());}catch(e){}}
 if(typeof liveStream!=='undefined' && liveStream){try{liveStream.getTracks().forEach(t=>t.stop());}catch(e){}}
 if(window.recorder && window.recorder.state!=='inactive'){try{window.recorder.stop();}catch(e){}}
-}catch(e){}
+setTimeout(()=>{audioTravado=false;},500);
+if(mostrarToastFlag){
+const t=document.getElementById('toast');
+t.innerText='🔇 Todos os áudios parados! Zap liberado!';
+t.classList.remove('show');void t.offsetWidth;t.classList.add('show');
+setTimeout(()=>t.classList.remove('show'),2200);
+}
+}catch(e){console.log(e);}
 }
 window.pararTUDO=pararTUDO;
 
-// MUDO DO PREVIEW - AGORA COM CONTROLE
 function toggleMutePreview(){
 const pv=document.getElementById('prevVideo');
 const btn=document.getElementById('btnMutePreview');
 if(!pv) return;
 pv.muted=!pv.muted;
-if(pv.muted){btn.innerText='🔇';pv.volume=0; mostrarToast('🔇 Mudo');}
-else{btn.innerText='🔊';pv.volume=1; pv.play(); mostrarToast('🔊 Com som');}
+if(pv.muted){btn.innerText='🔇';pv.volume=0;}else{btn.innerText='🔊';pv.volume=1;pv.play();}
 }
-
 function registrarAcesso(tipo){try{let analytics=JSON.parse(localStorage.getItem('caicara_analytics')||'[]');let cidade=localStorage.getItem('caicara_cidade')||'Caraguatatuba, SP';let entry={id:Date.now()+Math.random(),data:new Date().toISOString(),dia:new Date().toLocaleDateString('pt-BR'),hora:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),tipo:tipo,user:(JSON.parse(localStorage.getItem('caicara_user')||'null')||{}).usuario||(tipo==='guest'?'👀 Visitante':'@anonimo'),cidade:cidade,device:navigator.userAgent.includes('Mobile')?'Celular':'PC'};analytics.push(entry);if(analytics.length>500) analytics=analytics.slice(-500);localStorage.setItem('caicara_analytics',JSON.stringify(analytics));}catch(e){}}
 function getAnalytics(){try{return JSON.parse(localStorage.getItem('caicara_analytics')||'[]');}catch(e){return [];}}
 function abrirDashboard(){
-let analytics=getAnalytics();let users=getUsers();let total=analytics.length;let unicos=new Set(analytics.map(a=>a.device+a.cidade)).size || analytics.length;let cidades={};analytics.forEach(a=>{let c=a.cidade||'Caraguatatuba, SP';cidades[c]=(cidades[c]||0)+1;});let dias={};analytics.slice(-30).forEach(a=>{dias[a.dia]=(dias[a.dia]||0)+1;});
-document.getElementById('dashTotal').innerText=total||1;document.getElementById('dashUnicos').innerText=unicos||1;document.getElementById('dashContas').innerText=users.length||0;getVideos().then(vs=>{document.getElementById('dashVideos').innerText=vs.length||0;});
-let cidadeHtml=Object.entries(cidades).sort((a,b)=>b[1]-a[1]).map(([cid,qtd])=>{let perc=Math.round(qtd/total*100)||0;return `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222"><span>📍 ${cid}</span><span><b>${qtd}</b> (${perc}%)</span></div>`;}).join('')||'<div style="opacity:.5">Ainda sem dados</div>';
-document.getElementById('dashCidades').innerHTML=cidadeHtml;
-let diasHtml=Object.entries(dias).slice(-7).map(([dia,qtd])=>{return `<div style="display:flex;justify-content:space-between;padding:4px 0"><span>${dia}</span><span style="background:#ff2d55;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:800">${qtd} acessos</span></div>`;}).join('')||'<div style="opacity:.5">Sem dados</div>';
-document.getElementById('dashDias').innerHTML=diasHtml;
-let listaHtml=analytics.slice(-20).reverse().map(a=>{return `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:11px"><span>${a.hora} - ${a.user}</span><span style="opacity:.6">${a.cidade} • ${a.tipo}</span></div>`;}).join('')||'<div style="opacity:.5">Nenhum acesso ainda</div>';
-document.getElementById('dashLista').innerHTML=listaHtml;
+let analytics=getAnalytics();let users=getUsers();let total=analytics.length;let unicos=new Set(analytics.map(a=>a.device+a.cidade)).size || 1;
+let cidades={};analytics.forEach(a=>{cidades[a.cidade||'Caraguá']=(cidades[a.cidade||'Caraguá']||0)+1;});
+let dias={};analytics.slice(-30).forEach(a=>{dias[a.dia]=(dias[a.dia]||0)+1;});
+document.getElementById('dashTotal').innerText=total||1;document.getElementById('dashUnicos').innerText=unicos;document.getElementById('dashContas').innerText=users.length;getVideos().then(vs=>{document.getElementById('dashVideos').innerText=vs.length;});
+document.getElementById('dashCidades').innerHTML=Object.entries(cidades).map(([c,q])=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222"><span>📍 ${c}</span><span><b>${q}</b></span></div>`).join('')||'Sem dados';
+document.getElementById('dashDias').innerHTML=Object.entries(dias).slice(-7).map(([d,q])=>`<div style="display:flex;justify-content:space-between;padding:4px 0"><span>${d}</span><span style="background:#ff2d55;padding:2px 8px;border-radius:10px;font-size:11px">${q}</span></div>`).join('')||'Sem dados';
+document.getElementById('dashLista').innerHTML=analytics.slice(-20).reverse().map(a=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:11px"><span>${a.hora} - ${a.user}</span><span style="opacity:.6">${a.cidade} • ${a.tipo}</span></div>`).join('')||'Vazio';
 document.getElementById('dashModal').classList.add('show');
 }
-function exportarRelease(){let analytics=getAnalytics();let texto=`RELEASE - CAIÇARA PLAY - ${new Date().toLocaleDateString('pt-BR')}\nTotal: ${analytics.length} acessos\n`;navigator.clipboard.writeText(texto).then(()=>{mostrarToast('📄 Release copiado!');}).catch(()=>{alert(texto);});}
+function exportarRelease(){let a=getAnalytics();let txt=`RELEASE - ${new Date().toLocaleDateString('pt-BR')} - ${a.length} acessos`;navigator.clipboard.writeText(txt).then(()=>{mostrarToast('📄 Copiado!');});}
 function checarLogin(){
 const guest=localStorage.getItem('caicara_guest');
 if(guest==='true'){isGuest=true;document.getElementById('loginScreen').style.display='none';document.getElementById('eu').innerText='👀 Visitante';document.getElementById('guestBadge').style.display='block';document.getElementById('btnSairVisitante').style.display='block';document.getElementById('txtPerfil').innerText='Entrar';document.getElementById('btnTopLive').style.display='none';document.getElementById('btnDash').style.display='none';registrarAcesso('guest');return true;}
-const raw=localStorage.getItem('caicara_user');
-if(!raw){mostrarLogin();return false;}
+const raw=localStorage.getItem('caicara_user');if(!raw){mostrarLogin();return false;}
 try{
-const user=JSON.parse(raw);
-document.getElementById('eu').innerText=user.usuario+(isAdmin(user.usuario)?' 👑':'');
-document.getElementById('loginScreen').style.display='none';document.getElementById('guestBadge').style.display='none';document.getElementById('btnSairVisitante').style.display='none';document.getElementById('txtPerfil').innerText='Perfil';document.getElementById('btnTopLive').style.display='flex';
-isGuest=false;
-if(isAdmin(user.usuario)){document.getElementById('topTitle').innerText='Caiçara ADMIN 👑';document.getElementById('btnDash').style.display='flex';registrarAcesso('login_admin');}else{document.getElementById('btnDash').style.display='none';registrarAcesso('login');}
+const user=JSON.parse(raw);document.getElementById('eu').innerText=user.usuario+(isAdmin(user.usuario)?' 👑':'');document.getElementById('loginScreen').style.display='none';document.getElementById('guestBadge').style.display='none';document.getElementById('btnSairVisitante').style.display='none';document.getElementById('txtPerfil').innerText='Perfil';document.getElementById('btnTopLive').style.display='flex';isGuest=false;
+if(isAdmin(user.usuario)){document.getElementById('topTitle').innerText='Caiçara ADMIN 👑';document.getElementById('btnDash').style.display='flex';}else{document.getElementById('btnDash').style.display='none';}
 return true;
 }catch(e){mostrarLogin();return false;}
 }
@@ -279,25 +292,18 @@ function sair(){pararTUDO();localStorage.removeItem('caicara_user');localStorage
 function mostrarToast(msg){const toast=document.getElementById('toast');toast.innerText=msg;toast.classList.remove('show');void toast.offsetWidth;toast.classList.add('show');setTimeout(()=>{toast.classList.remove('show');},2200);}
 function apagarFotoVideo(){
 pararTUDO();
-let tipo='conteúdo';
-if(tempFoto) tipo='foto'; else if(tempBlob) tipo='vídeo';
-else if(document.getElementById('prevFoto').style.display!=='none') tipo='foto';
-else if(document.getElementById('prevVideo').style.display!=='none') tipo='vídeo';
-tempBlob=null;tempFoto=null;chunks=[];recSec=0;
-document.getElementById('timer').innerText='00:00';document.getElementById('leg').value='';
+tempBlob=null;tempFoto=null;chunks=[];recSec=0;document.getElementById('timer').innerText='00:00';document.getElementById('leg').value='';
 const pv=document.getElementById('prevVideo');const pf=document.getElementById('prevFoto');const cv=document.getElementById('camVideo');
-pv.pause();pv.muted=true;pv.volume=0;pv.removeAttribute('src');pv.src='';pv.style.display='none';pf.removeAttribute('src');pf.style.display='none';cv.style.display='block';
+try{pv.pause();}catch(e){}pv.muted=true;pv.volume=0;pv.removeAttribute('src');pv.src='';pv.style.display='none';pf.removeAttribute('src');pf.style.display='none';cv.style.display='block';
 document.getElementById('btnMutePreview').classList.remove('show');
 document.getElementById('stickerLayer').style.display='flex';
 if(modo==='video'){
 document.getElementById('recControlsVideo').style.display='flex';document.getElementById('recControlsFoto').style.display='none';
 document.getElementById('btnRec').style.display='flex';document.getElementById('btnRec').classList.remove('recording');document.getElementById('btnRec').innerText='● REC';document.getElementById('btnStop').style.display='none';
 isRecording=false;if(recorder && recorder.state!=='inactive'){try{recorder.stop();}catch(e){}}clearInterval(recTimer);
-if(stream){stream.getTracks().forEach(t=>t.stop());}
-startCamera(false);
+if(stream){try{stream.getTracks().forEach(t=>t.stop());}catch(e){}}startCamera(false);
 }else{document.getElementById('recControlsFoto').style.display='flex';document.getElementById('recControlsVideo').style.display='none';}
-applyFilter();
-if(tipo==='foto'){mostrarToast('🗑️ Foto apagada!');}else if(tipo==='vídeo'){mostrarToast('🗑️ Vídeo apagado!');}else{mostrarToast('🗑️ Apagado!');}
+applyFilter();mostrarToast('🗑️ Apagado! Áudio parado');
 }
 let liveStream=null;
 async function iniciarLive(){
@@ -310,10 +316,8 @@ document.getElementById('escolha').classList.remove('show');
 document.getElementById('liveModal').classList.add('show');
 document.getElementById('liveUser').innerText=username;
 document.getElementById('liveBadge').style.display='flex';
-document.getElementById('liveViewerReal').innerText='👁️ 0 espectadores';
-document.getElementById('liveViewerStatus').innerText='Aguardando público... Só você por enquanto';
 try{
-liveStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480}},audio:true});
+liveStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:true});
 window._liveStreamGlobal=liveStream;
 document.getElementById('liveVideo').srcObject=liveStream;
 }catch(err){alert('Libere câmera e microfone para LIVE');fecharLive();}
@@ -329,51 +333,15 @@ let jaSegue=lista.includes(username);
 if(jaSegue){lista=lista.filter(u=>u!==username);mostrarToast('🚫 Deixou de seguir '+username);btn.querySelector('.plusFollow').innerText='+';}else{lista.push(username);mostrarToast('✅ Seguindo '+username+'!');btn.querySelector('.plusFollow').innerText='✓';}
 saveSeguindo(lista);
 }
-function abrirMensagem(username){
-if(bloqueioVisitante('enviar mensagem'))return;
-document.getElementById('msgParaUser').innerText=username;
-document.getElementById('modalMsg').classList.add('show');
-}
-function enviarMensagem(){
-let txt=document.getElementById('msgTexto').value.trim();
-let para=document.getElementById('msgParaUser').innerText;
-if(!txt){mostrarToast('Digite uma mensagem!');return;}
-document.getElementById('modalMsg').classList.remove('show');
-document.getElementById('msgTexto').value='';
-mostrarToast('💬 Mensagem enviada para '+para+'!');
-let msgs=JSON.parse(localStorage.getItem('caicara_msgs')||'[]');
-msgs.push({para,de:JSON.parse(localStorage.getItem('caicara_user')||'{}').usuario||'@taki',texto:txt,data:new Date().toISOString()});
-localStorage.setItem('caicara_msgs',JSON.stringify(msgs));
-}
+function abrirMensagem(username){if(bloqueioVisitante('enviar mensagem'))return;document.getElementById('msgParaUser').innerText=username;document.getElementById('modalMsg').classList.add('show');}
+function enviarMensagem(){let txt=document.getElementById('msgTexto').value.trim();let para=document.getElementById('msgParaUser').innerText;if(!txt){mostrarToast('Digite!');return;}document.getElementById('modalMsg').classList.remove('show');document.getElementById('msgTexto').value='';mostrarToast('💬 Enviada para '+para+'!');}
 function abrirMenuMais(id){if(bloqueioVisitante('deletar')) return;idParaDeletar=id;document.getElementById('modalDel').classList.add('show');}
-async function confirmarDeletar(){if(idParaDeletar!==null){pararTUDO();await deleteVideo(idParaDeletar);document.getElementById('modalDel').classList.remove('show');mostrarToast('🗑️ Vídeo deletado!');idParaDeletar=null;render();}}
+async function confirmarDeletar(){if(idParaDeletar!==null){pararTUDO();await deleteVideo(idParaDeletar);document.getElementById('modalDel').classList.remove('show');mostrarToast('🗑️ Deletado!');idParaDeletar=null;render();}}
 let currentTab='frutinha';
 const allFiltros={
-frutinha:[
-{id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7) brightness(1.08)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},
-{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},
-{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4) brightness(1.08)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},
-{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.25) hue-rotate(230deg) saturate(1.3)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},
-{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.5) hue-rotate(15deg) saturate(1.2) brightness(1.08)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},
-],
-normal:[
-{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3) brightness(1.05) contrast(1.05)',stickers:[],emoji:'☀️'},
-{id:'suave',nome:'Suave',icon:'✨',filter:'brightness(1.18) contrast(0.92) saturate(1.15)',stickers:[],emoji:'✨'},
-{id:'nitido',nome:'Nítido',icon:'💎',filter:'contrast(1.35) saturate(1.25) brightness(1.08)',stickers:[],emoji:'💎'},
-{id:'pb',nome:'P&B',icon:'⚫',filter:'grayscale(1) contrast(1.15) brightness(1.08)',stickers:[],emoji:'⚫'},
-{id:'vintage',nome:'Vintage',icon:'📼',filter:'sepia(0.75) contrast(1.15) brightness(0.92) saturate(0.7)',stickers:[],emoji:'📼'},
-],
-desenho:[
-{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
-{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.9) saturate(2) brightness(1.15) sepia(0.1)',stickers:[],emoji:'🎨'},
-{id:'hq',nome:'HQ',icon:'💥',filter:'contrast(2.8) saturate(2.5) brightness(1.25)',stickers:[],emoji:'💥'},
-{id:'lapis',nome:'Lápis',icon:'✏️',filter:'grayscale(1) contrast(2.5) brightness(1.35) invert(0.05)',stickers:[],emoji:'✏️'},
-{id:'oleo',nome:'Óleo',icon:'🖌️',filter:'contrast(1.6) saturate(1.8) brightness(1.1) blur(0.7px)',stickers:[],emoji:'🖌️'},
-{id:'anime',nome:'Anime',icon:'🌸',filter:'contrast(1.7) saturate(2.2) brightness(1.18) hue-rotate(-8deg)',stickers:[],emoji:'🌸'},
-{id:'pop',nome:'Pop',icon:'🌈',filter:'contrast(2) saturate(3) hue-rotate(15deg) brightness(1.1)',stickers:[],emoji:'🌈'},
-]
+frutinha:[{id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7) brightness(1.08)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'}],
+normal:[{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3) brightness(1.05)',stickers:[],emoji:'☀️'}],
+desenho:[{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.9) saturate(2) brightness(1.15)',stickers:[],emoji:'🎨'}]
 };
 let currentFiltro=allFiltros.frutinha[0],tempBlob=null,tempFoto=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,modo='foto';
 function setTab(tab){currentTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');currentFiltro=allFiltros[tab][0];montarFiltros();}
@@ -385,8 +353,8 @@ function abrirGaleria(){pararTUDO();document.getElementById('escolha').classList
 function tirarFotoAgora(){pararTUDO();document.getElementById('escolha').classList.remove('show');modo='foto';abrirCameraFoto();}
 function gravarVideoAgora(){pararTUDO();document.getElementById('escolha').classList.remove('show');modo='video';abrirCameraVideo();}
 async function startCamera(comAudio=false){
-if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}
-const constraints={video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio: comAudio?{echoCancellation:true,noiseSuppression:true}:false};
+if(stream){try{stream.getTracks().forEach(t=>t.stop());}catch(e){}stream=null;}
+const constraints={video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:comAudio?{echoCancellation:true,noiseSuppression:true}:false};
 stream=await navigator.mediaDevices.getUserMedia(constraints);
 window._streamGlobal=stream;
 const v=document.getElementById('camVideo');v.srcObject=stream;v.muted=true;v.volume=0;await v.play();applyFilter();
@@ -429,8 +397,8 @@ document.getElementById('prevFoto').style.display='block';
 document.getElementById('camVideo').style.display='none';
 document.getElementById('stickerLayer').style.display='none';
 document.getElementById('recControlsFoto').style.display='none';
-if(stream){stream.getTracks().forEach(t=>t.stop());window._streamGlobal=null;}
-mostrarToast('📸 Foto capturada!');
+if(stream){try{stream.getTracks().forEach(t=>t.stop());window._streamGlobal=null;}catch(e){}}
+mostrarToast('📸 Foto! Sem áudio, Zap ok!');
 }
 async function iniciarGravacao(){
 if(isRecording) return;
@@ -444,40 +412,27 @@ recorder.onstop=()=>{
 tempBlob=new Blob(chunks,{type:'video/webm'});
 const url=URL.createObjectURL(tempBlob);
 const pv=document.getElementById('prevVideo');
-pv.src=url;
-// AGORA COM SOM AUTOMATICO
-pv.muted=false;
-pv.volume=1;
-pv.style.display='block';
+pv.src=url;pv.muted=false;pv.volume=1;pv.style.display='block';
 document.getElementById('camVideo').style.display='none';
 document.getElementById('stickerLayer').style.display='none';
 document.getElementById('recControlsVideo').style.display='none';
 document.getElementById('btnMutePreview').classList.add('show');
 document.getElementById('btnMutePreview').innerText='🔊';
-pv.play().then(()=>{mostrarToast('🔊 Tocando com som! Confira seu áudio!');}).catch(()=>{pv.muted=false; pv.play();});
-if(stream){stream.getTracks().forEach(t=>t.stop());window._streamGlobal=null;}
+pv.play().then(()=>{mostrarToast('🔊 Com som! Confira!');});
+if(stream){try{stream.getTracks().forEach(t=>t.stop());window._streamGlobal=null;}catch(e){}}
 };
-recorder.start(100);
-isRecording=true;
-document.getElementById('btnRec').classList.add('recording');
-document.getElementById('btnRec').innerText='● Gravando';
-document.getElementById('btnStop').style.display='flex';
+recorder.start(100);isRecording=true;
+document.getElementById('btnRec').classList.add('recording');document.getElementById('btnRec').innerText='● Gravando';document.getElementById('btnStop').style.display='flex';
 recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText=String(Math.floor(recSec/60)).padStart(2,'0')+':'+String(recSec%60).padStart(2,'0');},1000);
 }
 function pararGravacao(){
 if(!isRecording ||!recorder) return;
 isRecording=false;recorder.stop();
 document.getElementById('btnRec').classList.remove('recording');document.getElementById('btnRec').innerText='● REC';document.getElementById('btnStop').style.display='none';clearInterval(recTimer);
-mostrarToast('⏹️ Gravado! Ouça o áudio agora');
+mostrarToast('⏹️ Gravado!');
 }
-document.getElementById('fileGaleria').addEventListener('change',e=>{
-pararTUDO();
-const f=e.target.files[0];if(!f)return;tempBlob=f;tempFoto=null;const url=URL.createObjectURL(f);
-const pv=document.getElementById('prevVideo');pv.src=url;pv.muted=false;pv.volume=1;pv.style.display='block';document.getElementById('camVideo').style.display='none';
-document.getElementById('btnMutePreview').classList.add('show');
-document.getElementById('btnMutePreview').innerText='🔊';
-pv.play();document.getElementById('editor').classList.add('show');document.getElementById('recControlsVideo').style.display='none';document.getElementById('recControlsFoto').style.display='none';montarFiltros();mostrarToast('🔊 Vídeo com som!');});
-document.getElementById('fileFoto').addEventListener('change',e=>{pararTUDO();const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{tempFoto=ev.target.result;document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('editor').classList.add('show');document.getElementById('recControlsVideo').style.display='none';document.getElementById('recControlsFoto').style.display='none';montarFiltros();mostrarToast('🖼️ Foto carregada');};r.readAsDataURL(f);});
+document.getElementById('fileGaleria').addEventListener('change',e=>{pararTUDO();const f=e.target.files[0];if(!f)return;tempBlob=f;tempFoto=null;const url=URL.createObjectURL(f);const pv=document.getElementById('prevVideo');pv.src=url;pv.muted=false;pv.volume=1;pv.style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('btnMutePreview').classList.add('show');pv.play();document.getElementById('editor').classList.add('show');montarFiltros();});
+document.getElementById('fileFoto').addEventListener('change',e=>{pararTUDO();const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{tempFoto=ev.target.result;document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('editor').classList.add('show');montarFiltros();};r.readAsDataURL(f);});
 function fecharEditor(){
 pararTUDO();
 document.getElementById('editor').classList.remove('show');document.getElementById('camVideo').style.display='none';document.getElementById('stickerLayer').style.display='none';document.getElementById('recControlsVideo').style.display='none';document.getElementById('recControlsFoto').style.display='none';
@@ -489,24 +444,22 @@ document.getElementById('btnRec').classList.remove('recording');document.getElem
 setTimeout(()=>{render();},150);
 }
 function togglePlay(card){
+if(audioTravado) return;
 const v=card.querySelector('video');if(!v)return;
-document.querySelectorAll('.feed video').forEach(vv=>{if(vv!==v){vv.pause(); vv.muted=true; vv.volume=0;}});
-if(v.paused){v.muted=false;v.volume=1;v.play();}else{v.pause();v.muted=true;v.volume=0;}
-}
-function showFeed(){
+// TRAVA: só 1 por vez, nunca 2
 pararTUDO();
-document.getElementById('feed').style.display='block';document.getElementById('grid').style.display='none';render();
+setTimeout(()=>{
+if(v.paused){v.muted=false;v.volume=1;v.play().catch(()=>{});}else{v.pause();v.muted=true;}
+},100);
 }
-function showGrid(){
-pararTUDO();
-document.getElementById('feed').style.display='none';document.getElementById('grid').style.display='grid';render();
-}
+function showFeed(){pararTUDO();document.getElementById('feed').style.display='block';document.getElementById('grid').style.display='none';render();}
+function showGrid(){pararTUDO();document.getElementById('feed').style.display='none';document.getElementById('grid').style.display='grid';render();}
 function curtir(btn,id){if(bloqueioVisitante('curtir'))return;const tx=db.transaction('videos','readwrite');const s=tx.objectStore('videos');s.get(id).onsuccess=e=>{const v=e.target.result;if(!v)return;v.liked=!v.liked;v.likes=(v.likes||0)+(v.liked?1:-1);if(v.likes<0)v.likes=0;s.put(v);btn.innerText=v.liked?'❤️':'🤍';btn.nextElementSibling.innerText=v.likes;};}
 async function render(){
 const vids=await getVideos();
 const feed=document.getElementById('feed');const grid=document.getElementById('grid');
 const seguindo=getSeguindo();
-if(!vids.length){feed.innerHTML=`<div class="card" style="flex-direction:column"><p style="font-size:56px">🌊🍓🎨</p><p style="font-weight:900;margin-top:10px">V50 Audio Auto!</p><p style="opacity:.6;font-size:11px">Preview já toca com som!</p><button onclick="abrirEscolha()" style="margin-top:18px;background:#ff2d55;color:#fff;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Postar / 🔴 LIVE</button></div>`;grid.innerHTML='';return;}
+if(!vids.length){feed.innerHTML=`<div class="card" style="flex-direction:column"><p style="font-size:56px">🌊🍓🎨</p><p style="font-weight:900;margin-top:10px">V51 Anti-Embolar</p><p style="opacity:.6;font-size:11px">Use o botão 🔇 PARAR ÁUDIO se embolar</p><button onclick="abrirEscolha()" style="margin-top:18px;background:#ff2d55;color:#fff;border:none;padding:12px 24px;border-radius:20px;font-weight:900">+ Postar</button></div>`;grid.innerHTML='';return;}
 feed.innerHTML=vids.map(v=>{
 const jaSegue=seguindo.includes(v.user);
 const media=v.type==='foto'?`<img src="${v.fotoData}">`:`<video loop playsinline muted src="${URL.createObjectURL(v.blob)}"></video>`;
@@ -514,29 +467,27 @@ return `<div class="card" onclick="togglePlay(this)">
 <button class="btnMore" onclick="event.stopPropagation();abrirMenuMais(${v.id})">⋯</button>
 ${media}
 <div class="side">
-<div style="display:flex;flex-direction:column;align-items:center"><button class="followBtn ${jaSegue?'seguindo':''}" onclick="event.stopPropagation();toggleSeguir(this,'${v.user}')"><span style="font-size:22px">${v.user.charAt(1).toUpperCase()}</span><div class="plusFollow">${jaSegue?'✓':'+'}</div></button><span class="sideLabel">${jaSegue?'Seguindo':'Seguir'}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center"><button onclick="event.stopPropagation();toggleSeguir(this,'${v.user}')"><span>${v.user.charAt(1).toUpperCase()}</span><div class="plusFollow">${jaSegue?'✓':'+'}</div></button><span class="sideLabel">${jaSegue?'Seguindo':'Seguir'}</span></div>
 <div style="display:flex;flex-direction:column;align-items:center"><button onclick="event.stopPropagation();curtir(this,${v.id})">${v.liked?'❤️':'🤍'}</button><span class="sideLabel">${v.likes||0}</span></div>
-<div style="display:flex;flex-direction:column;align-items:center"><button onclick="event.stopPropagation();abrirMensagem('${v.user}')">💬</button><span class="sideLabel">Mensagem</span></div>
-<button onclick="event.stopPropagation();navigator.share?navigator.share({title:'Caiçara',text:'${v.desc}'}):(navigator.clipboard.writeText(location.href),mostrarToast('🔗 Link copiado!'))">↗️</button>
+<div style="display:flex;flex-direction:column;align-items:center"><button onclick="event.stopPropagation();abrirMensagem('${v.user}')">💬</button><span class="sideLabel">Msg</span></div>
+<button onclick="event.stopPropagation();pararTUDO(true)">🔇</button>
 </div>
-<div class="info"><b>${v.user}</b><div>${v.emoji||''} ${v.desc}</div><div style="font-size:10px;opacity:.6;margin-top:4px">Toque para som 🔊 • ⋯ para deletar</div></div>
+<div class="info"><b>${v.user}</b><div>${v.emoji||''} ${v.desc}</div><div style="font-size:10px;opacity:.6">Toque p/ som • Se embolar clique 🔇 PARAR ÁUDIO no topo</div></div>
 </div>`;}).join('');
-grid.innerHTML=vids.map(v=>v.type==='foto'?`<div style="position:relative"><img src="${v.fotoData}" style="width:100%;aspect-ratio:9/16;object-fit:cover"><button onclick="abrirMenuMais(${v.id})" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;border:none;width:28px;height:28px;border-radius:50%">⋯</button></div>`:`<div style="position:relative"><video src="${URL.createObjectURL(v.blob)}" muted loop style="width:100%;aspect-ratio:9/16;object-fit:cover"></video><button onclick="abrirMenuMais(${v.id})" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;border:none;width:28px;height:28px;border-radius:50%">⋯</button></div>`).join('');
 setTimeout(()=>{pararTUDO();},200);
 }
 document.getElementById('btnPost').onclick=async()=>{
 if(isGuest){bloqueioVisitante('postar');return;}
 const me=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');
-const desc=document.getElementById('leg').value||'Filtro '+currentFiltro.nome+' '+currentFiltro.emoji;
+const desc=document.getElementById('leg').value||'Filtro '+currentFiltro.nome;
 if(!tempBlob&&!tempFoto){alert('Tira foto ou vídeo!');return;}
 document.getElementById('btnPost').innerText='Salvando...';
 pararTUDO();
 if(tempFoto){await addVideo({user:me.usuario,desc,type:'foto',fotoData:tempFoto,emoji:currentFiltro.emoji,likes:0});}
 else{await addVideo({user:me.usuario,desc,type:'video',blob:tempBlob,emoji:currentFiltro.emoji,likes:0});}
-fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('btnPost').innerText='Postar';showFeed();mostrarToast('🚀 Postado!');registrarAcesso('video_postado');
+fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('btnPost').innerText='Postar';showFeed();mostrarToast('🚀 Postado!');
 };
 openDB().then(()=>{const users=getUsers();if(users.length==0){saveUsers([{usuario:'@taki',senha:'123456'},{usuario:'@andretac',senha:'123456'}]);}checarLogin();render();pararTUDO();});
-window.addEventListener('pagehide',()=>{pararTUDO();});
 </script>
 </body>
 </html>
