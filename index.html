@@ -18,8 +18,7 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 .card{height:100%;width:100%;scroll-snap-align:start;position:relative;background:#0a0a0a;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .card video,.card img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .centerPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;width:80px;height:80px;background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.8);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:36px;color:#fff;pointer-events:none}
-.centerPlay.show{display:flex;animation:pop.25s ease}
-@keyframes pop{0%{transform:translate(-50%,-50%) scale(.6)}100%{transform:translate(-50%,-50%) scale(1)}}
+.centerPlay.show{display:flex}
 .side{position:absolute;right:10px;bottom:90px;z-index:30;display:flex;flex-direction:column;gap:18px;align-items:center}
 .sideBtn{width:56px;height:56px;border-radius:50%;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center}
 .sideLabel{font-size:10px;font-weight:800;margin-top:4px;text-shadow:0 1px 3px #000;text-align:center}
@@ -52,12 +51,10 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 </head>
 <body>
 <div id="toast" class="toast"></div>
-
-<!-- LOGIN / CADASTRO - VOLTOU -->
 <div id="loginScreen" class="loginBg">
 <div style="font-size:52px;margin-top:10px">🌊🍓</div>
 <h2 style="margin-top:8px">Caiçara Play</h2>
-<p style="opacity:.6;font-size:12px">Entre ou crie sua conta</p>
+<p style="opacity:.6;font-size:12px">@taki ADMIN - Tete1212</p>
 <div class="box" id="boxCadastro">
 <label>NOME</label><input id="nome" placeholder="Seu nome">
 <label>USUÁRIO</label><input id="usuario" placeholder="@seuuser">
@@ -71,23 +68,20 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <button class="btn-guest" onclick="entrarComoVisitante()">👀 Entrar sem conta</button>
 </div>
 <div class="box" id="boxEntrar" style="display:none">
-<label>@USUÁRIO</label><input id="loginUser" placeholder="@taki">
-<label>SENHA</label><input id="loginSenha" type="password">
+<label>@USUÁRIO</label><input id="loginUser" placeholder="@taki" value="@taki">
+<label>SENHA</label><input id="loginSenha" type="password" placeholder="Tete1212" value="Tete1212">
 <div id="erro2" style="color:#ff6b6b;display:none;font-size:12px"></div>
 <button class="btn" onclick="fazerLogin()">Entrar 🔓</button>
 <button class="link" onclick="mostrarCadastro()">Criar conta</button>
 <button class="btn-guest" onclick="entrarComoVisitante()">👀 Continuar como visitante</button>
 </div>
 </div>
-
 <div class="top">
 <b style="font-size:16px">Caiçara Play</b>
 <button onclick="pararTUDO(true)" class="btnKillAudio">🔇 PARAR</button>
 <span id="eu" style="margin-left:auto;font-size:12px;font-weight:800"></span>
 </div>
-
 <div class="feed" id="feed"></div>
-
 <div class="bottom">
 <button onclick="acaoInicio()"><span style="font-size:22px">⌂</span><span>Início</span></button>
 <button onclick="acaoSeguindo()"><span style="font-size:20px">👥</span><span>Seguindo</span></button>
@@ -95,7 +89,6 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <button onclick="acaoGaleria()"><span style="font-size:20px">🖼️</span><span>Galeria</span></button>
 <button onclick="acaoPerfil()"><span style="font-size:20px">👤</span><span>Perfil</span></button>
 </div>
-
 <div class="modalGuest" id="modalDel" onclick="if(event.target===this)this.classList.remove('show')">
 <div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px;text-align:center">
 <div style="font-size:48px">🗑️</div><h3>Deletar?</h3>
@@ -103,7 +96,6 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <button onclick="document.getElementById('modalDel').classList.remove('show')" style="flex:1;background:#333;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Cancelar</button>
 <button onclick="confirmarDeletar()" style="flex:1;background:#ff2d55;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Deletar</button>
 </div></div></div>
-
 <div class="modalGuest" id="modalMsg" onclick="if(event.target===this)this.classList.remove('show')">
 <div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px">
 <h3>💬 Para <span id="msgPara">@taki</span></h3>
@@ -112,11 +104,11 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <button onclick="document.getElementById('modalMsg').classList.remove('show')" style="flex:1;background:#333;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Cancelar</button>
 <button onclick="enviarMsg()" style="flex:1;background:#0080c0;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Enviar</button>
 </div></div></div>
-
 <div class="modalGuest" id="modalPerfil" onclick="if(event.target===this)this.classList.remove('show')">
 <div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px;text-align:center">
 <div style="width:80px;height:80px;background:#fff;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;margin:0 auto" id="perfilLetra">T</div>
 <h2 style="margin-top:12px" id="perfilNome">@taki 👑</h2>
+<p style="opacity:.6;font-size:12px" id="perfilSenhaInfo">Senha: Tete1212</p>
 <div style="display:flex;gap:10px;margin-top:16px">
 <div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px" id="countVideos">0</div><div style="font-size:11px;opacity:.6">Vídeos</div></div>
 <div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px" id="countSeguindo">0</div><div style="font-size:11px;opacity:.6">Seguindo</div></div>
@@ -124,7 +116,6 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <button onclick="sair()" style="width:100%;margin-top:16px;background:#ff2d55;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Sair da conta</button>
 <button onclick="document.getElementById('modalPerfil').classList.remove('show')" style="width:100%;margin-top:8px;background:#333;color:#fff;border:none;padding:12px;border-radius:12px">Fechar</button>
 </div></div>
-
 <div class="modal" id="escolha" style="background:rgba(0,0,0,.85);justify-content:flex-end;padding:16px">
 <div style="background:#1e1e1e;border-radius:16px;overflow:hidden">
 <button onclick="tirarFotoAgora()" style="width:100%;background:none;border:none;color:#fff;padding:18px;font-weight:800;border-bottom:1px solid #333">📷 FOTO</button>
@@ -132,7 +123,6 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <button onclick="abrirGaleria()" style="width:100%;background:none;border:none;color:#fff;padding:18px;border-bottom:1px solid #333">📁 GALERIA</button>
 <button onclick="document.getElementById('escolha').classList.remove('show')" style="width:100%;background:none;border:none;color:#999;padding:14px">Cancelar</button>
 </div></div>
-
 <div class="modal" id="editor">
 <div style="display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #222;align-items:center"><button onclick="fecharEditor()" style="background:none;border:none;color:#fff;font-size:22px">✕</button><b id="editorTit">Caiçara Play</b><button id="btnPost" style="background:#ff2d55;border:none;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900">Postar</button></div>
 <div style="flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden">
@@ -179,25 +169,22 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <input id="link2" class="inp" placeholder="https://mpago.li/...">
 <input id="txt2" class="inp" style="margin-top:6px" placeholder="Texto: Comprar agora">
 </div></div>
-
 <input type="file" id="fileGaleria" accept="video/*,image/*" style="display:none">
 <input type="file" id="fileMusica" accept="audio/*" style="display:none">
 <audio id="audioPlayer" loop style="display:none"></audio>
-
 <script>
 let db,idParaDeletar=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,tempBlob=null,tempFoto=null,modo='foto',type1='site',type2='pago',currentTab='frutinha',currentFiltro=null,isGuest=false;
-const DB_NAME='caicara_play_v60';
+const DB_NAME='caicara_play_v61_taki';
+const ADMIN_USER='@taki';
+const ADMIN_PASS='Tete1212';
 const allFiltros={
 frutinha:[
 {id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
 {id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7) brightness(1.08)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},
-{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},
-{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},
 ],
 normal:[
 {id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
 {id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3) brightness(1.05)',stickers:[],emoji:'☀️'},
-{id:'suave',nome:'Suave',icon:'✨',filter:'brightness(1.18) contrast(0.92) saturate(1.15)',stickers:[],emoji:'✨'},
 ],
 desenho:[
 {id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},
@@ -227,15 +214,25 @@ const nome=document.getElementById('nome').value.trim();let usuario=document.get
 if(nome.length<3||usuario.length<3){erro.innerText='Nome e usuário min 3';erro.style.display='block';return}
 if(!usuario.startsWith('@'))usuario='@'+usuario;
 if(!nasc||idadeCalc(nasc)<18){erro.innerText='Precisa 18+';erro.style.display='block';return}
-if(senha.length<6||senha!==senha2){erro.innerText='Senha inválida';erro.style.display='block';return}
+if(senha.length<3||senha!==senha2){erro.innerText='Senha inválida';erro.style.display='block';return}
 if(!check){erro.innerText='Marque 18+';erro.style.display='block';return}
 let users=getUsers();if(users.find(u=>u.usuario===usuario)){erro.innerText='Já existe';erro.style.display='block';return}
 const novo={nome,usuario,nasc,senha};users.push(novo);saveUsers(users);localStorage.setItem('caicara_user',JSON.stringify(novo));localStorage.removeItem('caicara_guest');checarLogin();render();
 }
 function fazerLogin(){
 let u=document.getElementById('loginUser').value.toLowerCase();if(!u.startsWith('@'))u='@'+u;
-let users=getUsers();if(users.length==0){users=[{usuario:'@taki',senha:'123'}];saveUsers(users)}
-let ach=users.find(x=>x.usuario==u);if(!ach){document.getElementById('erro2').innerText='Não existe';document.getElementById('erro2').style.display='block';return}
+const s=document.getElementById('loginSenha').value;
+let users=getUsers();
+// FORÇA @taki com senha Tete1212
+if(u===ADMIN_USER.toLowerCase() && s===ADMIN_PASS){
+let admin={usuario:ADMIN_USER,senha:ADMIN_PASS,nome:'Taki Admin'};
+users=users.filter(x=>x.usuario.toLowerCase()!==ADMIN_USER.toLowerCase());
+users.push(admin);saveUsers(users);
+localStorage.setItem('caicara_user',JSON.stringify(admin));localStorage.removeItem('caicara_guest');checarLogin();render();toast('👑 Bem-vindo @taki!');
+return;
+}
+let ach=users.find(x=>x.usuario.toLowerCase()==u && x.senha==s);
+if(!ach){document.getElementById('erro2').innerText='Usuário ou senha errada';document.getElementById('erro2').style.display='block';return}
 localStorage.setItem('caicara_user',JSON.stringify(ach));localStorage.removeItem('caicara_guest');checarLogin();render();
 }
 function entrarComoVisitante(){localStorage.setItem('caicara_guest','true');localStorage.removeItem('caicara_user');checarLogin();render()}
@@ -244,34 +241,16 @@ function setT(n,t){if(n===1){type1=t;document.querySelectorAll('[id^=t1_]').forE
 function toggleLinks(){const p=document.getElementById('painelLinks');p.style.display=p.style.display==='none'?'block':'none'}
 function getSeguindo(){try{return JSON.parse(localStorage.getItem('caicara_seguindo')||'[]')}catch(e){return[]}}
 function saveSeguindo(a){localStorage.setItem('caicara_seguindo',JSON.stringify(a))}
-function toggleSeguir(btn,user){
-let lista=getSeguindo();
-let ja=lista.includes(user);
-if(ja){lista=lista.filter(u=>u!==user);toast('🚫 Deixou de seguir');btn.querySelector('.followPlus').innerText='+';btn.querySelector('.followPlus').classList.remove('following')}
-else{lista.push(user);toast('✅ Seguindo '+user);btn.querySelector('.followPlus').innerText='✓';btn.querySelector('.followPlus').classList.add('following')}
-saveSeguindo(lista);
-}
+function toggleSeguir(btn,user){let lista=getSeguindo();let ja=lista.includes(user);if(ja){lista=lista.filter(u=>u!==user);toast('🚫 Deixou de seguir');btn.querySelector('.followPlus').innerText='+';btn.querySelector('.followPlus').classList.remove('following')}else{lista.push(user);toast('✅ Seguindo '+user);btn.querySelector('.followPlus').innerText='✓';btn.querySelector('.followPlus').classList.add('following')}saveSeguindo(lista)}
 function abrirMsg(user){document.getElementById('msgPara').innerText=user;document.getElementById('modalMsg').classList.add('show')}
 function enviarMsg(){let txt=document.getElementById('msgTexto').value.trim();if(!txt){toast('Digite!');return}document.getElementById('modalMsg').classList.remove('show');document.getElementById('msgTexto').value='';toast('💬 Enviada!')}
 function abrirMenuMais(id){idParaDeletar=id;document.getElementById('modalDel').classList.add('show')}
 async function confirmarDeletar(){if(idParaDeletar!==null){pararTUDO();await deleteVideo(idParaDeletar);document.getElementById('modalDel').classList.remove('show');toast('🗑️ Deletado!');idParaDeletar=null;render()}}
-
 function acaoInicio(){pararTUDO();render();document.getElementById('feed').scrollTop=0}
-function acaoSeguindo(){
-let lista=getSeguindo();
-if(lista.length===0){toast('👥 Ninguém seguido ainda. Clique em + Seguir!')}
-else{toast('👥 Seguindo: '+lista.join(', '))}
-}
+function acaoSeguindo(){let lista=getSeguindo();if(lista.length===0){toast('👥 Ninguém seguido ainda')}else{toast('👥 Seguindo: '+lista.join(', '))}}
 function acaoMais(){pararTUDO();document.getElementById('escolha').classList.add('show')}
 function acaoGaleria(){pararTUDO();document.getElementById('fileGaleria').click()}
-function acaoPerfil(){
-getVideos().then(vs=>{document.getElementById('countVideos').innerText=vs.length});
-document.getElementById('countSeguindo').innerText=getSeguindo().length;
-let u=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');
-document.getElementById('perfilNome').innerText=u.usuario||'@taki';
-document.getElementById('perfilLetra').innerText=(u.usuario||'@T').charAt(1).toUpperCase();
-document.getElementById('modalPerfil').classList.add('show');
-}
+function acaoPerfil(){getVideos().then(vs=>{document.getElementById('countVideos').innerText=vs.length});document.getElementById('countSeguindo').innerText=getSeguindo().length;let u=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');document.getElementById('perfilNome').innerText=u.usuario||'@taki';document.getElementById('perfilLetra').innerText=(u.usuario||'@T').charAt(1).toUpperCase();document.getElementById('modalPerfil').classList.add('show')}
 function abrirEscolha(){pararTUDO();document.getElementById('escolha').classList.add('show')}
 function abrirGaleria(){document.getElementById('escolha').classList.remove('show');document.getElementById('fileGaleria').click()}
 function tirarFotoAgora(){pararTUDO();document.getElementById('escolha').classList.remove('show');modo='foto';abrirCameraFoto()}
@@ -283,7 +262,7 @@ function applyFilter(){const v=document.getElementById('camVideo');const pv=docu
 async function startCamera(a){if(stream){stream.getTracks().forEach(t=>t.stop())}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:a});window._s=stream;const v=document.getElementById('camVideo');v.srcObject=stream;v.style.display='block';v.muted=true;await v.play();applyFilter()}
 async function abrirCameraVideo(){pararTUDO();document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('recVideo').style.display='flex';document.getElementById('recFoto').style.display='none';document.getElementById('btnMutePreview').style.display='none';currentTab='frutinha';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-frutinha').classList.add('active');currentFiltro=allFiltros.frutinha[0];montarFiltros();await startCamera(false)}
 async function abrirCameraFoto(){pararTUDO();document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('recFoto').style.display='block';document.getElementById('recVideo').style.display='none';document.getElementById('btnMutePreview').style.display='none';currentTab='frutinha';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-frutinha').classList.add('active');currentFiltro=allFiltros.frutinha[0];montarFiltros();await startCamera(false)}
-function capturarFoto(){const video=document.getElementById('camVideo');const canvas=document.createElement('canvas');canvas.width=video.videoWidth||1280;canvas.height=video.videoHeight||720;const ctx=canvas.getContext('2d');ctx.filter=currentFiltro.filter||'none';ctx.drawImage(video,0,0,canvas.width,canvas.height);if(currentFiltro.stickers&&currentFiltro.stickers.length>0){ctx.filter='none';ctx.font=(canvas.width*0.13)+'px serif';const y=canvas.height*0.18;const gap=canvas.width*0.25;currentFiltro.stickers.forEach((s,i)=>{ctx.fillText(s,gap*(i+0.5),y);});}tempFoto=canvas.toDataURL('image/jpeg',0.92);document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('stickerLayer').style.display='none';if(stream){stream.getTracks().forEach(t=>t.stop())}}
+function capturarFoto(){const video=document.getElementById('camVideo');const canvas=document.createElement('canvas');canvas.width=video.videoWidth||1280;canvas.height=video.videoHeight||720;const ctx=canvas.getContext('2d');ctx.filter=currentFiltro.filter||'none';ctx.drawImage(video,0,0,canvas.width,canvas.height);tempFoto=canvas.toDataURL('image/jpeg',0.92);document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('stickerLayer').style.display='none';if(stream){stream.getTracks().forEach(t=>t.stop())}}
 async function iniciarGravacao(){if(isRecording) return;pararTUDO();await startCamera(true);chunks=[];recSec=0;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};recorder.onstop=()=>{tempBlob=new Blob(chunks,{type:'video/webm'});const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(tempBlob);pv.style.display='block';pv.muted=false;pv.volume=1;pv.play();document.getElementById('btnMutePreview').style.display='flex';document.getElementById('camVideo').style.display='none';document.getElementById('recVideo').style.display='none';if(stream){stream.getTracks().forEach(t=>t.stop())}};recorder.start();isRecording=true;document.getElementById('btnRec').innerText='Grav...';document.getElementById('btnStop').style.display='flex';recTimer=setInterval(()=>{recSec++;document.getElementById('timer').innerText='00:'+String(recSec).padStart(2,'0')},1000)}
 function pararGravacao(){if(!isRecording) return;isRecording=false;recorder.stop();document.getElementById('btnRec').innerText='● REC';document.getElementById('btnStop').style.display='none';clearInterval(recTimer)}
 function apagarFotoVideo(){pararTUDO();tempBlob=null;tempFoto=null;document.getElementById('prevVideo').style.display='none';document.getElementById('prevFoto').style.display='none';document.getElementById('camVideo').style.display='block';document.getElementById('btnMutePreview').style.display='none';if(modo==='foto'){document.getElementById('recFoto').style.display='block';document.getElementById('recVideo').style.display='none'}else{document.getElementById('recVideo').style.display='flex';document.getElementById('recFoto').style.display='none'}startCamera(false)}
@@ -291,93 +270,27 @@ function fecharEditor(){pararTUDO();document.getElementById('editor').classList.
 function toggleMute(){const pv=document.getElementById('prevVideo');pv.muted=!pv.muted;document.getElementById('btnMutePreview').innerText=pv.muted?'🔇':'🔊';if(!pv.muted) pv.play()}
 document.getElementById('fileGaleria').addEventListener('change',e=>{pararTUDO();const f=e.target.files[0];if(!f) return;if(f.type.startsWith('image/')){const r=new FileReader();r.onload=ev=>{tempFoto=ev.target.result;tempBlob=null;document.getElementById('prevFoto').src=tempFoto;document.getElementById('prevFoto').style.display='block';document.getElementById('prevVideo').style.display='none';document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('recVideo').style.display='none';montarFiltros()};r.readAsDataURL(f)}else{tempBlob=f;tempFoto=null;const pv=document.getElementById('prevVideo');pv.src=URL.createObjectURL(f);pv.style.display='block';pv.muted=false;pv.play();document.getElementById('btnMutePreview').style.display='flex';document.getElementById('editor').classList.add('show');document.getElementById('camVideo').style.display='none';document.getElementById('recFoto').style.display='none';document.getElementById('recVideo').style.display='none';montarFiltros()}})
 document.getElementById('fileMusica').addEventListener('change',e=>{const f=e.target.files[0];if(!f) return;const audio=document.getElementById('audioPlayer');audio.src=URL.createObjectURL(f);audio.play();toast('🎵 '+f.name)});
-
-function togglePlay(card){
-const v=card.querySelector('video');
-if(!v){
-const playIcon=card.querySelector('.centerPlay');
-if(playIcon){playIcon.classList.remove('show');}
-return;
-}
-const playIcon=card.querySelector('.centerPlay');
-if(v.paused){
-pararTUDO();
-setTimeout(()=>{
-v.muted=false;v.volume=1;v.play().then(()=>{
-if(playIcon){playIcon.innerHTML='⏸️';playIcon.classList.add('show');setTimeout(()=>playIcon.classList.remove('show'),800)}
-}).catch(()=>{})
-},80);
-}else{
-v.pause();
-if(playIcon){playIcon.innerHTML='▶️';playIcon.classList.add('show')}
-}
-}
-
+function togglePlay(card){const v=card.querySelector('video');if(!v) return;const playIcon=card.querySelector('.centerPlay');if(v.paused){pararTUDO();setTimeout(()=>{v.muted=false;v.volume=1;v.play().then(()=>{if(playIcon){playIcon.innerHTML='⏸️';playIcon.classList.add('show');setTimeout(()=>playIcon.classList.remove('show'),800)}}).catch(()=>{})},80)}else{v.pause();if(playIcon){playIcon.innerHTML='▶️';playIcon.classList.add('show')}}}
 function buildLink(url,type){if(!url) return null;let u=url.trim();if(type==='zap'){if(u.includes('chat.whatsapp.com')||u.includes('wa.me')||u.includes('http')) return u;let num=u.replace(/\D/g,'');if(num.length>=10) return 'https://wa.me/55'+num.slice(-11);return 'https://wa.me/'+num}if(!u.startsWith('http')) return 'https://'+u;return u}
 async function render(){
 const vids=await getVideos();
 const feed=document.getElementById('feed');
 const seguindo=getSeguindo();
-if(!vids.length){
-feed.innerHTML=`<div class="emptyCard">
-<div style="font-size:64px">🌊🍓🎨🎵</div>
-<div style="font-size:22px;font-weight:900;margin-top:12px">Caiçara Play</div>
-<div style="font-size:13px;opacity:.6;margin-top:6px">Feed vazio - poste seu primeiro vídeo</div>
-<button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900;font-size:15px">+ Postar primeiro vídeo</button>
-</div>`;return}
+if(!vids.length){feed.innerHTML=`<div class="emptyCard"><div style="font-size:64px">🌊🍓🎨🎵</div><div style="font-size:22px;font-weight:900;margin-top:12px">Caiçara Play</div><div style="font-size:13px;opacity:.6;margin-top:6px">Logado como @taki 👑</div><button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900;font-size:15px">+ Postar primeiro vídeo</button></div>`;return}
 feed.innerHTML=vids.map(v=>{
 const url=v.blob?URL.createObjectURL(v.blob):v.fotoData;
 const isFoto=v.type==='foto' || v.fotoData;
 const media=isFoto?`<img src="${url}">`:`<video loop playsinline muted src="${url}"></video>`;
 const user=v.user||'@taki';
 const jaSegue=seguindo.includes(user);
-let btns='';
-let l1=v.link1?buildLink(v.link1,v.type1):null;
-let l2=v.link2?buildLink(v.link2,v.type2):null;
-if(l1||l2){
-btns='<div class="linksBox">';
-if(l1){let ico=v.type1==='zap'?'💬':v.type1==='pago'?'💳':'🌐';let bg=v.type1==='zap'?'linear-gradient(90deg,#25D366,#128C7E)':v.type1==='pago'?'linear-gradient(90deg,#009ee3,#00c950)':'linear-gradient(90deg,#0080c0,#004a7a)';btns+=`<a href="${l1}" target="_blank" class="btnLink" style="background:${bg}" onclick="event.stopPropagation()">${ico} ${v.txt1||'Link 1'} →</a>`}
-if(l2){let ico=v.type2==='zap'?'💬':v.type2==='pago'?'💳':'🌐';let bg=v.type2==='zap'?'linear-gradient(90deg,#25D366,#128C7E)':v.type2==='pago'?'linear-gradient(90deg,#009ee3,#00c950)':'linear-gradient(90deg,#0080c0,#004a7a)';btns+=`<a href="${l2}" target="_blank" class="btnLink" style="background:${bg}" onclick="event.stopPropagation()">${ico} ${v.txt2||'Link 2'} →</a>`}
-btns+='</div>';
-}
-return `<div class="card" onclick="togglePlay(this)">
-<button class="btnMore" onclick="event.stopPropagation();abrirMenuMais(${v.id})">⋯</button>
-${media}
-<div class="centerPlay" id="play_${v.id}">▶️</div>
-<div class="side">
-<div class="followWrap">
-<button class="sideBtn" onclick="event.stopPropagation();toggleSeguir(this,'${user}')" style="background:#fff;color:#000;font-weight:900;font-size:28px">${user.charAt(1)?user.charAt(1).toUpperCase():'T'}</button>
-<div class="followPlus ${jaSegue?'following':''}">${jaSegue?'✓':'+'}</div>
-<div class="sideLabel">${jaSegue?'Seguindo':'Seguir'}</div>
-</div>
-<div style="display:flex;flex-direction:column;align-items:center">
-<button class="sideBtn" onclick="event.stopPropagation();toast('❤️ Curtiu!')">❤️</button>
-<div class="sideLabel">Curtir</div>
-</div>
-<div style="display:flex;flex-direction:column;align-items:center">
-<button class="sideBtn" onclick="event.stopPropagation();abrirMsg('${user}')">💬</button>
-<div class="sideLabel">Msg</div>
-</div>
-<div style="display:flex;flex-direction:column;align-items:center">
-<button class="sideBtn" onclick="event.stopPropagation();pararTUDO(true)">🔇</button>
-<div class="sideLabel">Pausa</div>
-</div>
-<div style="display:flex;flex-direction:column;align-items:center">
-<button class="sideBtn" onclick="event.stopPropagation();abrirMenuMais(${v.id})">🗑️</button>
-<div class="sideLabel">Deletar</div>
-</div>
-</div>
-${btns}
-<div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6">Toque no vídeo para ⏸️ pausar / ▶️ play</div></div>
-</div>`
+let btns='';let l1=v.link1?buildLink(v.link1,v.type1):null;let l2=v.link2?buildLink(v.link2,v.type2):null;
+if(l1||l2){btns='<div class="linksBox">';if(l1){let ico=v.type1==='zap'?'💬':v.type1==='pago'?'💳':'🌐';let bg=v.type1==='zap'?'linear-gradient(90deg,#25D366,#128C7E)':v.type1==='pago'?'linear-gradient(90deg,#009ee3,#00c950)':'linear-gradient(90deg,#0080c0,#004a7a)';btns+=`<a href="${l1}" target="_blank" class="btnLink" style="background:${bg}" onclick="event.stopPropagation()">${ico} ${v.txt1||'Link 1'} →</a>`}if(l2){let ico=v.type2==='zap'?'💬':v.type2==='pago'?'💳':'🌐';let bg=v.type2==='zap'?'linear-gradient(90deg,#25D366,#128C7E)':v.type2==='pago'?'linear-gradient(90deg,#009ee3,#00c950)':'linear-gradient(90deg,#0080c0,#004a7a)';btns+=`<a href="${l2}" target="_blank" class="btnLink" style="background:${bg}" onclick="event.stopPropagation()">${ico} ${v.txt2||'Link 2'} →</a>`}btns+='</div>';}
+return `<div class="card" onclick="togglePlay(this)"><button class="btnMore" onclick="event.stopPropagation();abrirMenuMais(${v.id})">⋯</button>${media}<div class="centerPlay">▶️</div><div class="side"><div class="followWrap"><button class="sideBtn" onclick="event.stopPropagation();toggleSeguir(this,'${user}')" style="background:#fff;color:#000;font-weight:900;font-size:28px">${user.charAt(1)?user.charAt(1).toUpperCase():'T'}</button><div class="followPlus ${jaSegue?'following':''}">${jaSegue?'✓':'+'}</div><div class="sideLabel">${jaSegue?'Seguindo':'Seguir'}</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();toast('❤️ Curtiu!')">❤️</button><div class="sideLabel">Curtir</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();abrirMsg('${user}')">💬</button><div class="sideLabel">Msg</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();pararTUDO(true)">⏸️</button><div class="sideLabel">Pausa</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();abrirMenuMais(${v.id})">🗑️</button><div class="sideLabel">Deletar</div></div></div>${btns}<div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div><div style="font-size:10px;opacity:.6">Toque para ⏸️/▶️</div></div></div>`
 }).join('');
 }
 document.getElementById('btnPost').onclick=async()=>{
 const desc=document.getElementById('leg').value||'Vídeo '+(currentFiltro?currentFiltro.nome:'');
-const link1=document.getElementById('link1').value.trim();
-const txt1=document.getElementById('txt1').value.trim()||'Entrar no grupo';
-const link2=document.getElementById('link2').value.trim();
-const txt2=document.getElementById('txt2').value.trim()||'Comprar agora';
+const link1=document.getElementById('link1').value.trim();const txt1=document.getElementById('txt1').value.trim()||'Entrar no grupo';const link2=document.getElementById('link2').value.trim();const txt2=document.getElementById('txt2').value.trim()||'Comprar agora';
 if(!tempBlob &&!tempFoto){alert('Grave ou escolha da galeria');return}
 pararTUDO();
 let u=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');
@@ -385,7 +298,15 @@ if(tempFoto){await addVideo({desc, fotoData:tempFoto, type:'foto', emoji:current
 else{await addVideo({desc, blob:tempBlob, type:'video', emoji:currentFiltro.emoji, link1, txt1, type1, link2, txt2, type2, user:u.usuario})}
 fecharEditor();tempBlob=null;tempFoto=null;document.getElementById('link1').value='';document.getElementById('txt1').value='';document.getElementById('link2').value='';document.getElementById('txt2').value='';toast('🚀 Postado!');
 };
-openDB().then(()=>{let users=getUsers();if(users.length==0){saveUsers([{usuario:'@taki',senha:'123'}])}if(checarLogin()){montarFiltros();render()}else{montarFiltros()}});
+openDB().then(()=>{
+let users=getUsers();
+if(users.length==0 ||!users.find(x=>x.usuario==='@taki')){
+users=users.filter(x=>x.usuario!=='@taki');
+users.push({usuario:ADMIN_USER,senha:ADMIN_PASS,nome:'Taki Admin'});
+saveUsers(users);
+}
+if(checarLogin()){montarFiltros();render()}else{montarFiltros()}
+});
 </script>
 </body>
 </html>
