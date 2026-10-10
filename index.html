@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#003366">
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQ0FJw4dBUkEgUExBWSIsInNob3J0X25hbWUiOiJDQUnDp0FSQSIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMDAwMDAwIiwidGhlbWVfY29sb3IiOiIjMDAzMzY2IiwiaWNvbnMiOlt7InNyYyI6Imh0dHBzOi8vY2RuLWljb25zLXBuZy5mbGF0aWNvbi5jb20vNTEyLzI5NDIvMjk0MjgwNDMucG5nIiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3BuZyJ9XX0=">
-<title>Caiçara Play - Sua rede social do litoral</title>
+<title>CAIÇARA PLAY - a sua rede social do litoral</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
@@ -14,13 +12,12 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 .brand h1{font-size:38px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#fff;text-shadow:0 2px 12px rgba(0,120,255,.5);line-height:1}
 .brand h1 span{color:#00d4ff}
 .brand p{margin-top:10px;font-size:16px;font-weight:600;color:#cfe8ff;letter-spacing:.5px;font-style:italic;opacity:.95}
-.brand.line{width:60px;height:3px;background:#ff2d55;margin:14px auto;border-radius:10px}
+.line{width:60px;height:3px;background:#ff2d55;margin:14px auto;border-radius:10px}
 .box{background:#121212;border:1px solid #2a2a2a;border-radius:18px;padding:16px;width:100%;max-width:380px;margin-top:24px}
 .box input{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#000;color:#fff;margin-top:6px}
+.box input::placeholder{color:#666}
 .btn{width:100%;background:#ff2d55;color:#fff;border:none;padding:16px;border-radius:12px;font-weight:900;margin-top:18px}
 .btn-guest{width:100%;background:transparent;border:2px solid #fff;color:#fff;padding:14px;border-radius:12px;font-weight:800;margin-top:12px}
-.btn-install{width:100%;max-width:380px;background:linear-gradient(90deg,#00c950,#00d4ff);color:#fff;border:none;padding:14px;border-radius:12px;font-weight:900;margin-top:16px;display:none;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(0,212,255,.4)}
-.btn-install.show{display:flex}
 .link{color:#4da3ff;font-size:13px;text-align:center;margin-top:14px;display:block;background:none;border:none;width:100%}
 .top{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;padding:0 14px;display:flex;align-items:center;gap:10px;background:#000;border-bottom:1px solid #1a1a1a}
 .feed{position:fixed;top:56px;bottom:88px;left:0;right:0;overflow-y:scroll;scroll-snap-type:y mandatory;background:#000}
@@ -64,30 +61,25 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <div id="loginScreen" class="loginBg">
 <div class="brand">
 <h1>CAIÇARA <span>PLAY</span></h1>
-<div class="line" style="width:60px;height:3px;background:#ff2d55;margin:14px auto;border-radius:10px"></div>
+<div class="line"></div>
 <p>a sua rede social do litoral</p>
 </div>
 
 <div class="box" id="boxEntrar">
-<label>@USUÁRIO</label><input id="loginUser" value="@taki">
-<label>SENHA</label><input id="loginSenha" type="password" value="Tete1212">
+<label>@USUÁRIO</label><input id="loginUser" placeholder="@seuuser" value="">
+<label>SENHA</label><input id="loginSenha" type="password" placeholder="sua senha" value="">
 <div id="erro2" style="color:#ff6b6b;display:none;margin-top:8px;font-size:12px"></div>
-<button class="btn" onclick="fazerLogin()">Entrar @taki 👑</button>
+<button class="btn" onclick="fazerLogin()">Entrar 👑</button>
 <button class="link" onclick="mostrarCadastro()">Criar conta</button>
 <button class="btn-guest" onclick="entrarComoVisitante()">👀 Sem conta</button>
 </div>
 
 <div class="box" id="boxCadastro" style="display:none">
-<label>NOME</label><input id="nome"><label>USUÁRIO</label><input id="usuario"><label>NASCIMENTO</label><input id="nasc" type="date" style="color-scheme:dark"><label>SENHA</label><input id="senha" type="password"><label>CONFIRMAR</label><input id="senha2" type="password">
+<label>NOME</label><input id="nome" placeholder="Seu nome"><label>USUÁRIO</label><input id="usuario" placeholder="@seuuser"><label>NASCIMENTO</label><input id="nasc" type="date" style="color-scheme:dark"><label>SENHA</label><input id="senha" type="password" placeholder="crie uma senha"><label>CONFIRMAR</label><input id="senha2" type="password" placeholder="repita a senha">
 <div style="display:flex;gap:8px;margin-top:12px"><input type="checkbox" id="check" style="width:18px;height:18px"><label style="margin:0;font-size:12px">Tenho 18+</label></div>
 <div id="erro" style="color:#ff6b6b;display:none;background:#2a0a0a;padding:8px;border-radius:8px;margin-top:8px;font-size:12px"></div>
 <button class="btn" onclick="cadastrar()">Criar 🚀</button><button class="link" onclick="mostrarLogin()">Voltar</button>
 </div>
-
-<!-- BOTÃO INSTALAR - ESTAVA FALTANDO -->
-<button id="installBtn" class="btn-install" onclick="instalarApp()">📲 Instalar CAIÇARA PLAY no celular</button>
-<div id="installHint" style="font-size:11px;opacity:.7;margin-top:8px;text-align:center;max-width:380px;display:none">No iPhone: toque em compartilhar <span style="font-size:14px">⬆️</span> e depois "Adicionar à Tela de Início"<br>No Android: toque em Instalar acima</div>
-
 </div>
 
 <div class="top"><b>CAIÇARA PLAY</b><button onclick="stopAll(true)" class="btnKillAudio">⏹️ STOP</button><span id="eu" style="margin-left:auto;font-size:12px;font-weight:800"></span></div>
@@ -101,7 +93,7 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 </div>
 
 <div class="modalGuest" id="modalDel" onclick="if(event.target===this)this.classList.remove('show')"><div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px;text-align:center"><h3>Deletar?</h3><div style="display:flex;gap:10px;margin-top:16px"><button onclick="document.getElementById('modalDel').classList.remove('show')" style="flex:1;background:#333;color:#fff;border:none;padding:14px;border-radius:12px">Cancelar</button><button onclick="confirmarDeletar()" style="flex:1;background:#ff2d55;color:#fff;border:none;padding:14px;border-radius:12px">Deletar</button></div></div></div>
-<div class="modalGuest" id="modalPerfil" onclick="if(event.target===this)this.classList.remove('show')"><div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px;text-align:center"><div style="width:80px;height:80px;background:#fff;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;margin:0 auto" id="perfilLetra">T</div><h2 style="margin-top:12px" id="perfilNome">@taki</h2><div style="display:flex;gap:10px;margin-top:16px"><div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px" id="countVideos">0</div><div style="font-size:11px;opacity:.6">Vídeos</div></div><div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px" id="countSeguindo">0</div><div style="font-size:11px;opacity:.6">Seguindo</div></div></div><button onclick="sair()" style="width:100%;margin-top:16px;background:#ff2d55;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Sair</button><button onclick="document.getElementById('modalPerfil').classList.remove('show')" style="width:100%;margin-top:8px;background:#333;color:#fff;border:none;padding:12px;border-radius:12px">Fechar</button></div></div>
+<div class="modalGuest" id="modalPerfil" onclick="if(event.target===this)this.classList.remove('show')"><div style="background:#1e1e1e;border-radius:20px;width:100%;max-width:360px;padding:20px;text-align:center"><div style="width:80px;height:80px;background:#fff;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;margin:0 auto" id="perfilLetra">T</div><h2 style="margin-top:12px" id="perfilNome">@user</h2><div style="display:flex;gap:10px;margin-top:16px"><div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px" id="countVideos">0</div><div style="font-size:11px;opacity:.6">Vídeos</div></div><div style="flex:1;background:#111;border-radius:12px;padding:10px"><div style="font-weight:900;font-size:18px" id="countSeguindo">0</div><div style="font-size:11px;opacity:.6">Seguindo</div></div></div><button onclick="sair()" style="width:100%;margin-top:16px;background:#ff2d55;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800">Sair</button><button onclick="document.getElementById('modalPerfil').classList.remove('show')" style="width:100%;margin-top:8px;background:#333;color:#fff;border:none;padding:12px;border-radius:12px">Fechar</button></div></div>
 
 <div class="modal" id="escolha" style="background:rgba(0,0,0,.85);justify-content:flex-end;padding:16px">
 <div style="background:#1e1e1e;border-radius:16px;overflow:hidden">
@@ -128,7 +120,7 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 </div></div>
 
 <div id="boxAudioEdit" style="display:none;background:#0a0a0a;border-top:2px solid #ff2d55;padding:12px;max-height:68vh;overflow-y:auto">
-<div style="font-size:13px;font-weight:900">🎧 Som isolado - sem embolar</div>
+<div style="font-size:13px;font-weight:900">🎧 Som isolado</div>
 <div class="volRow" id="volVideoRow">
 <span style="font-size:12px;width:80px">🔊 Vídeo</span>
 <input type="range" id="volVideo" min="0" max="1" step="0.05" value="1" style="flex:1;accent-color:#00c950" oninput="onVolVideoChange(this.value)">
@@ -175,42 +167,9 @@ html,body{height:100dvh;background:#000;color:#fff;overflow:hidden}
 <audio id="audioNarrPreview" style="display:none" preload="auto"></audio>
 
 <script>
-// --- INSTALAÇÃO PWA - BOTÃO QUE FALTAVA ---
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',(e)=>{
-e.preventDefault();
-deferredPrompt=e;
-document.getElementById('installBtn').classList.add('show');
-document.getElementById('installHint').style.display='block';
-});
-function instalarApp(){
-if(deferredPrompt){
-deferredPrompt.prompt();
-deferredPrompt.userChoice.then((r)=>{
-if(r.outcome==='accepted'){toast('✅ Instalando CAIÇARA PLAY...');}
-deferredPrompt=null;
-document.getElementById('installBtn').classList.remove('show');
-});
-}else{
-document.getElementById('installHint').style.display='block';
-document.getElementById('installHint').innerHTML='📲 No iPhone: toque em compartilhar ⬆️ e "Adicionar à Tela de Início"<br>No Android: use o menu ⋮ e "Instalar app"';
-toast('📲 Use o menu do navegador para instalar');
-}
-}
-// mostra hint sempre no iOS
-if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
-document.getElementById('installBtn').classList.add('show');
-document.getElementById('installBtn').innerHTML='📲 Como instalar CAIÇARA PLAY';
-document.getElementById('installHint').style.display='block';
-}
-// registra service worker fake para ativar instalação
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register(URL.createObjectURL(new Blob([`self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>new Response(''))})`],{type:'text/javascript'}))).catch(()=>{});
-}
-
 let db,idParaDeletar=null,stream=null,recorder=null,chunks=[],recSec=0,isRecording=false,recTimer=null,tempBlob=null,tempFoto=null,currentTab='frutinha',currentFiltro=null,tempMusicaBlob=null,tempMusicaNome='',tempNarracaoBlob=null,isNarrRecording=false,narrRecorder=null,narrChunks=[];
 let currentVolVideo=1, currentVolMusica=0.25, currentVolNarr=1, currentCardId=null, feedMutedForEditor=false;
-const DB_NAME='caicara_v80_install';const ADMIN_USER='@taki'; const ADMIN_PASS='Tete1212';
+const DB_NAME='caicara_v81_zerado';const ADMIN_USER='@taki'; const ADMIN_PASS='Tete1212';
 const allFiltros={frutinha:[{id:'none',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'morango',nome:'Morango',icon:'🍓',filter:'sepia(0.2) hue-rotate(-15deg) saturate(1.7)',stickers:['🍓','🍓','🍓'],emoji:'🍓'},{id:'laranja',nome:'Laranja',icon:'🍊',filter:'sepia(0.3) hue-rotate(-20deg) saturate(1.5)',stickers:['🍊','🍊','🍊'],emoji:'🍊'},{id:'limao',nome:'Limão',icon:'🍋',filter:'sepia(0.15) hue-rotate(25deg) saturate(1.4)',stickers:['🍋','🍋','🍋'],emoji:'🍋'},{id:'uva',nome:'Uva',icon:'🍇',filter:'sepia(0.25) hue-rotate(230deg) saturate(1.3)',stickers:['🍇','🍇','🍇'],emoji:'🍇'},{id:'banana',nome:'Banana',icon:'🍌',filter:'sepia(0.5) hue-rotate(15deg) saturate(1.2)',stickers:['🍌','🍌','🍌'],emoji:'🍌'},],normal:[{id:'none2',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'bronze',nome:'Bronze',icon:'☀️',filter:'sepia(0.4) saturate(1.3)',stickers:[],emoji:'☀️'},{id:'suave',nome:'Suave',icon:'✨',filter:'brightness(1.18) contrast(0.92) saturate(1.15)',stickers:[],emoji:'✨'},{id:'nitido',nome:'Nítido',icon:'💎',filter:'contrast(1.35) saturate(1.25)',stickers:[],emoji:'💎'},{id:'pb',nome:'P&B',icon:'⚫',filter:'grayscale(1)',stickers:[],emoji:'⚫'},{id:'vintage',nome:'Vintage',icon:'📼',filter:'sepia(0.75)',stickers:[],emoji:'📼'},],desenho:[{id:'none3',nome:'Normal',icon:'☀️',filter:'none',stickers:[],emoji:''},{id:'cartoon',nome:'Cartoon',icon:'🎨',filter:'contrast(1.9) saturate(2)',stickers:[],emoji:'🎨'},{id:'hq',nome:'HQ',icon:'💥',filter:'contrast(2.8) saturate(2.5)',stickers:[],emoji:'💥'},{id:'lapis',nome:'Lápis',icon:'✏️',filter:'grayscale(1) contrast(2.5)',stickers:[],emoji:'✏️'},{id:'anime',nome:'Anime',icon:'🌸',filter:'contrast(1.7) saturate(2.2)',stickers:[],emoji:'🌸'},]};
 currentFiltro=allFiltros.frutinha[0];
 function onVolVideoChange(v){currentVolVideo=parseFloat(v);document.getElementById('volVideoTxt').innerText=Math.round(currentVolVideo*100)+'%';const pv=document.getElementById('prevVideo');if(pv){pv.volume=currentVolVideo;pv.muted=currentVolVideo===0;}if(currentVolVideo===0){document.getElementById('volVideoRow').classList.add('muted');}else{document.getElementById('volVideoRow').classList.remove('muted');}}
@@ -233,7 +192,7 @@ function checarLogin(){const g=localStorage.getItem('caicara_guest');if(g==='tru
 function mostrarCadastro(){document.getElementById('boxEntrar').style.display='none';document.getElementById('boxCadastro').style.display='block'}
 function mostrarLogin(){document.getElementById('boxCadastro').style.display='none';document.getElementById('boxEntrar').style.display='block'}
 function cadastrar(){const nome=document.getElementById('nome').value.trim();let usuario=document.getElementById('usuario').value.trim().toLowerCase();const nasc=document.getElementById('nasc').value;const senha=document.getElementById('senha').value;const senha2=document.getElementById('senha2').value;const check=document.getElementById('check').checked;const erro=document.getElementById('erro');erro.style.display='none';if(nome.length<3||usuario.length<3){erro.innerText='Min 3 letras';erro.style.display='block';return}if(!usuario.startsWith('@'))usuario='@'+usuario;if(!nasc||idadeCalc(nasc)<18){erro.innerText='Precisa 18+';erro.style.display='block';return}if(senha.length<3||senha!==senha2){erro.innerText='Senha inválida';erro.style.display='block';return}if(!check){erro.innerText='Marque 18+';erro.style.display='block';return}let users=getUsers();if(users.find(u=>u.usuario===usuario)){erro.innerText='Já existe';erro.style.display='block';return}const novo={nome,usuario,nasc,senha};users.push(novo);saveUsers(users);localStorage.setItem('caicara_user',JSON.stringify(novo));localStorage.removeItem('caicara_guest');checarLogin();render()}
-function fazerLogin(){let u=document.getElementById('loginUser').value.toLowerCase();if(!u.startsWith('@'))u='@'+u;const s=document.getElementById('loginSenha').value;let users=getUsers();if(u===ADMIN_USER.toLowerCase()&&s===ADMIN_PASS){let admin={usuario:ADMIN_USER,senha:ADMIN_PASS,nome:'Taki Admin'};users=users.filter(x=>x.usuario.toLowerCase()!==ADMIN_USER.toLowerCase());users.push(admin);saveUsers(users);localStorage.setItem('caicara_user',JSON.stringify(admin));localStorage.removeItem('caicara_guest');checarLogin();render();toast('👑 @taki!');return}let ach=users.find(x=>x.usuario.toLowerCase()==u&&x.senha==s);if(!ach){document.getElementById('erro2').innerText='Use @taki / Tete1212';document.getElementById('erro2').style.display='block';return}localStorage.setItem('caicara_user',JSON.stringify(ach));localStorage.removeItem('caicara_guest');checarLogin();render()}
+function fazerLogin(){let u=document.getElementById('loginUser').value.trim().toLowerCase();if(!u){document.getElementById('erro2').innerText='Digite seu @usuário';document.getElementById('erro2').style.display='block';return}if(!u.startsWith('@'))u='@'+u;const s=document.getElementById('loginSenha').value;if(!s){document.getElementById('erro2').innerText='Digite sua senha';document.getElementById('erro2').style.display='block';return}let users=getUsers();if(u===ADMIN_USER.toLowerCase()&&s===ADMIN_PASS){let admin={usuario:ADMIN_USER,senha:ADMIN_PASS,nome:'Taki Admin'};users=users.filter(x=>x.usuario.toLowerCase()!==ADMIN_USER.toLowerCase());users.push(admin);saveUsers(users);localStorage.setItem('caicara_user',JSON.stringify(admin));localStorage.removeItem('caicara_guest');checarLogin();render();toast('👑 @taki!');return}let ach=users.find(x=>x.usuario.toLowerCase()==u&&x.senha==s);if(!ach){document.getElementById('erro2').innerText='Usuário ou senha inválidos';document.getElementById('erro2').style.display='block';return}localStorage.setItem('caicara_user',JSON.stringify(ach));localStorage.removeItem('caicara_guest');checarLogin();render()}
 function entrarComoVisitante(){localStorage.setItem('caicara_guest','true');localStorage.removeItem('caicara_user');checarLogin();render()}
 function sair(){stopAll();localStorage.removeItem('caicara_user');localStorage.removeItem('caicara_guest');location.reload()}
 function getSeguindo(){try{return JSON.parse(localStorage.getItem('caicara_seguindo')||'[]')}catch(e){return[]}}
@@ -272,7 +231,7 @@ function handleCardTap(card){if(feedMutedForEditor) return;const v=card.querySel
 async function render(){const vids=await getVideos();const feed=document.getElementById('feed');const seguindo=getSeguindo();if(!vids.length){feed.innerHTML=`<div class="emptyCard"><div style="font-size:64px">🌊</div><div style="font-size:22px;font-weight:900;margin-top:12px">CAIÇARA PLAY</div><div style="font-size:13px;opacity:.7;margin-top:4px;font-style:italic">a sua rede social do litoral</div><button onclick="acaoMais()" style="margin-top:22px;background:#ff2d55;color:#fff;border:none;padding:14px 28px;border-radius:24px;font-weight:900">+ Postar vídeo</button></div>`;return}
 feed.innerHTML=vids.map(v=>{const url=v.blob?URL.createObjectURL(v.blob):v.fotoData;const isFoto=v.type==='foto'||v.fotoData;const media=isFoto?`<img src="${url}">`:`<video playsinline preload="metadata" src="${url}" muted onended="stopCard(this.closest('.card'))"></video>`;let musicaHtml=''; let narrHtml=''; let badge='';if(v.musicaBlob){const mUrl=URL.createObjectURL(v.musicaBlob);musicaHtml=`<audio class="musicaFundo" src="${mUrl}" preload="auto"></audio>`;}if(v.narracaoBlob){const nUrl=URL.createObjectURL(v.narracaoBlob);narrHtml=`<audio class="narrFundo" src="${nUrl}" preload="auto"></audio>`;}const volV=v.volVideo!=null?v.volVideo:1;const volM=v.volMusica!=null?v.volMusica:0.25;const volN=v.volNarr!=null?v.volNarr:1;let badgeTxt='';if(volV===0) badgeTxt+='🔇 ';if(v.musicaBlob) badgeTxt+='🎵';if(v.narracaoBlob) badgeTxt+='🎙️';if(badgeTxt) badge=`<div class="musicaTag">${badgeTxt}</div>`;const user=v.user||'@taki';const jaSegue=seguindo.includes(user);return `<div class="card" data-id="${v.id}" data-vol-video="${volV}" data-vol-musica="${volM}" data-vol-narr="${volN}" onclick="handleCardTap(this)">${badge}${musicaHtml}${narrHtml}<button class="btnMore" onclick="event.stopPropagation();abrirMenuMais(${v.id})">⋯</button>${media}<div class="centerPlay">▶️</div><div class="side"><div class="followWrap"><button class="sideBtn" onclick="event.stopPropagation();toggleSeguir(this,'${user}')" style="background:#fff;color:#000;font-weight:900">${user.charAt(1)?user.charAt(1).toUpperCase():'T'}</button><div class="followPlus ${jaSegue?'following':''}">${jaSegue?'✓':'+'}</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn sideBtnPlay" onclick="event.stopPropagation();playCard(this.closest('.card'))">▶️</button><div class="sideLabel" style="color:#00c950">PLAY</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn sideBtnStop" onclick="event.stopPropagation();stopCard(this.closest('.card'))">⏹️</button><div class="sideLabel" style="color:#ff6b6b">STOP</div></div><div style="display:flex;flex-direction:column;align-items:center"><button class="sideBtn" onclick="event.stopPropagation();abrirMenuMais(${v.id})">🗑️</button><div class="sideLabel">Del</div></div></div><div class="info"><b>${user}</b><div>${v.emoji||''} ${v.desc||''}</div></div></div>`}).join('');}
 document.getElementById('btnPost').onclick=async()=>{const desc=document.getElementById('leg').value||'Vídeo '+(currentFiltro?currentFiltro.nome:'');if(!tempBlob&&!tempFoto){alert('Grave ou escolha da galeria');return}stopAll();let u=JSON.parse(localStorage.getItem('caicara_user')||'{"usuario":"@taki"}');const videoData={desc,emoji:currentFiltro.emoji,user:u.usuario,musicaBlob:tempMusicaBlob,musicaNome:tempMusicaNome,volVideo:currentVolVideo,volMusica:currentVolMusica,volNarr:currentVolNarr,narracaoBlob:tempNarracaoBlob};if(tempFoto){videoData.fotoData=tempFoto;videoData.type='foto'}else{videoData.blob=tempBlob;videoData.type='video'}await addVideo(videoData);fecharEditor();tempBlob=null;tempFoto=null;tempMusicaBlob=null;tempMusicaNome='';tempNarracaoBlob=null;currentVolVideo=1;document.getElementById('volVideo').value=1;document.getElementById('volVideoTxt').innerText='100%';document.getElementById('volVideoRow').classList.remove('muted');document.getElementById('musicaBox').style.display='none';document.getElementById('narrBox').style.display='none';toast('🚀 Postado!');};
-openDB().then(()=>{let users=getUsers();if(users.length===0||!users.find(x=>x.usuario==='@taki')){users=users.filter(x=>x.usuario!=='@taki');users.push({usuario:ADMIN_USER,senha:ADMIN_PASS,nome:'Taki Admin'});saveUsers(users);}checarLogin();montarFiltros();render();});
+openDB().then(()=>{let users=getUsers();if(users.length===0||!users.find(x=>x.usuario.toLowerCase()!=='@taki')){users=users.filter(x=>x.usuario.toLowerCase()!=='@taki');}checarLogin();montarFiltros();render();});
 </script>
 </body>
 </html>
